@@ -180,10 +180,13 @@ if (faq.length >= 2) {
         <p class="note">
           {cem.notable_interments_total} notable figure{cem.notable_interments_total === 1 ? ' is' : 's are'} documented here in Wikidata,
           each with a Wikipedia article and recorded burial place.
-          {cem.notable_interments_total > cem.notable_interments.length &&
-            ` The ${cem.notable_interments.length} most widely covered are listed below; the full list is in the `}
-          {cem.notable_interments_total > cem.notable_interments.length && <a href={`/api/cemeteries/${cem.slug}.json`}>data API</a>}
-          {cem.notable_interments_total > cem.notable_interments.length && '.'}
+          {cem.notable_interments_total > cem.notable_interments.length && (
+            <>
+              {' '}The {cem.notable_interments.length} most widely covered are listed below.
+              {' '}<a href={`/cemeteries/${cem.slug}/interments/`}>Browse all {cem.notable_interments_total}</a>, or take the
+              {' '}<a href={`/api/cemeteries/${cem.slug}.json`}>JSON record</a>.
+            </>
+          )}
         </p>
         <ul class="plain">
           {cem.notable_interments.map((p) => (

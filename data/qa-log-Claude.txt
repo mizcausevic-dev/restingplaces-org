@@ -1,0 +1,122 @@
+[qa] 16373 HTML files, 33464 total files in dist/
+{
+  "html_files": 16373,
+  "internal_links_checked": 504471,
+  "broken_internal_links": 0,
+  "broken_sample": [],
+  "orphan_pages": 0,
+  "orphan_sample": [],
+  "compliance": {
+    "findagrave_linkouts": 2167,
+    "findagrave_img_or_data": 0,
+    "billiongraves_src_or_href": 0,
+    "billiongraves_text_mentions": 2,
+    "cache_buckets": [
+      "commons",
+      "mediawiki",
+      "nominatim",
+      "wdqs"
+    ]
+  },
+  "images": {
+    "total_rendered": 1887,
+    "violations": 0,
+    "violation_sample": []
+  },
+  "freshness": {
+    "pages_showing_hours": 0,
+    "note": "expected 0: no live hours source configured"
+  },
+  "schema_samples": [
+    {
+      "page": "index.html",
+      "blocks": 2,
+      "types": [
+        "WebSite",
+        "Organization"
+      ],
+      "valid": true
+    },
+    {
+      "page": "cemeteries/pere-lachaise-cemetery/index.html",
+      "blocks": 3,
+      "types": [
+        "Cemetery",
+        "BreadcrumbList",
+        "FAQPage"
+      ],
+      "valid": true
+    },
+    {
+      "page": "country/france/index.html",
+      "blocks": 2,
+      "types": [
+        "ItemList",
+        "BreadcrumbList"
+      ],
+      "valid": true
+    },
+    {
+      "page": "type/historic-heritage/index.html",
+      "blocks": 2,
+      "types": [
+        "ItemList",
+        "BreadcrumbList"
+      ],
+      "valid": true
+    },
+    {
+      "page": "era/1800s/index.html",
+      "blocks": 2,
+      "types": [
+        "ItemList",
+        "BreadcrumbList"
+      ],
+      "valid": true
+    },
+    {
+      "page": "guides/most-documented-notable-interments/index.html",
+      "blocks": 2,
+      "types": [
+        "ItemList",
+        "BreadcrumbList"
+      ],
+      "valid": true
+    },
+    {
+      "page": "buried/a-c-benson/index.html",
+      "blocks": 2,
+      "types": [
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "valid": true
+    }
+  ],
+  "endpoints": {
+    "sitemap-index.xml": "ok (0.2 KB)",
+    "robots.txt": "ok (0.3 KB)",
+    "llms.txt": "ok (1.4 KB)",
+    "llms-full.txt": "ok (681.2 KB)",
+    "rss.xml": "ok (3.6 KB)",
+    "api/cemeteries.json": "ok (1166.7 KB)",
+    "api/interments.json": "ok (9052.3 KB)"
+  },
+  "external_hosts": {
+    "en.wikipedia.org": 69444,
+    "restingplaces.org": 16373,
+    "www.openstreetmap.org": 14128,
+    "www.wikidata.org": 13970,
+    "commons.wikimedia.org": 5662,
+    "creativecommons.org": 3229,
+    "www.google.com": 2430,
+    "www.findagrave.com": 2167,
+    "www.cem.va.gov": 48,
+    "www.dignitymemorial.com": 11,
+    "www.abmc.gov": 10,
+    "www.gmct.com.au": 6,
+    "www.catholiccemeterieschicago.org": 6,
+    "www.nps.gov": 5,
+    "www.paris.fr": 5
+  }
+}

@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base-Claude.astro';
+
+// Complete directory index. Guarantees every cemetery page has at least one
+// inbound link, including entries whose source records carry no country.
+const all = (await getCollection('cemeteries')).map((c) => c.data);
+const byCountry = new Map<string, any[]>();
+for (const c of all) {
+  const key = c.country ?? 'No recorded country';
+  if (!byCountry.has(key)) byCountry.set(key, []);
+  byCountry.get(key)!.push(c);
+}
+const groups = [...byCountry.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+for (const [, list] of groups) list.sort((a, b) => a.name.localeCompare(b.name));
+---
+
+<Base
+  title="All cemeteries | Resting Places"
+  description={`The complete index: ${all.length} documented cemeteries, alphabetical by country.`}
+>
+  <h1>All cemeteries</h1>
+  <p class="lede">
+    The complete directory, {all.length.toLocaleString('en-US')} entries, alphabetical by country.
+    Entries whose source records carry no country are listed at the end.
+  </p>
+  {groups.map(([country, list]) => (
+    <>
+      <h2>{country} ({list.length})</h2>
+      <ul class="plain">
+        {list.map((c) => (
+          <li>
+            <a href={`/cemeteries/${c.slug}/`}>{c.name}</a>
+            {c.region && <span class="note">, {c.region}</span>}
+          </li>
+        ))}
+      </ul>
+    </>
+  ))}
+</Base>

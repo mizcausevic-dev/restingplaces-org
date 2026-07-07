@@ -1,0 +1,19 @@
+{
+  "spot_check": {
+    "sample": 10,
+    "passed": 10,
+    "note": "deterministic sample incl. Pere Lachaise; rendered name/QID/established/coordinates/interment-count match the enriched dataset; one apparent failure was HTML entity escaping of an apostrophe, verified byte-identical content"
+  },
+  "lighthouse": {
+    "home": {
+      "performance": 0.51,
+      "accessibility": 0.91,
+      "best_practices": 0.81,
+      "seo": 1,
+      "environment": "astro preview on localhost, headless Chrome"
+    },
+    "cemetery_page": "could not run: chrome-launcher kill crash on Windows, 3 attempts (bash + PowerShell + headless=new)",
+    "guide_page": "could not run: same crash",
+    "note": "home perf 0.51 driven by Pagefind UI JS and large country chip list; optimization follow-up, not a launch blocker on localhost numbers"
+  }
+}

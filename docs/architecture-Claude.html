@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resting Places: architecture and data flow</title>
+<style>
+  :root { --bg:#faf7f1; --ink:#27221a; --muted:#6d6355; --accent:#47604c; --rule:#e2d9c8; --card:#f2ecdf; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#191611; --ink:#e9e2d4; --muted:#a89c88; --accent:#93ac95; --rule:#37312a; --card:#221e17; }
+  }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 system-ui,sans-serif; padding:2rem 1rem 4rem; }
+  h1,h2 { font-family:Georgia,serif; }
+  main { max-width:70rem; margin:0 auto; }
+  .flow { display:grid; gap:0.6rem; }
+  .stage { background:var(--card); border:1px solid var(--rule); border-left:4px solid var(--accent); border-radius:6px; padding:0.8rem 1rem; }
+  .stage h3 { margin:0 0 0.3rem; font-size:1rem; font-family:Georgia,serif; }
+  .stage p { margin:0.15rem 0; color:var(--muted); font-size:0.9rem; }
+  .stage code { background:var(--bg); border:1px solid var(--rule); border-radius:3px; padding:0 0.3rem; font-size:0.85em; }
+  .arrow { text-align:center; color:var(--muted); font-size:1.1rem; line-height:1; }
+  .gate { border-left-color:#8a4b3b; }
+  .gate .badge { color:#8a4b3b; font-weight:600; font-size:0.78rem; letter-spacing:0.04em; }
+  .cols { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+  @media (max-width:50rem){ .cols { grid-template-columns:1fr; } }
+  .kg { margin-top:2.5rem; }
+  svg text { fill:var(--ink); font:13px system-ui; }
+  svg .lbl { fill:var(--muted); font-size:11px; }
+  svg line, svg path { stroke:var(--accent); stroke-width:1.5; fill:none; }
+  svg rect, svg ellipse { fill:var(--card); stroke:var(--rule); }
+  .note { color:var(--muted); font-size:0.85rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Resting Places: architecture and data flow</h1>
+  <p class="note">DirectoryOS build, cemeteries vertical. Static Astro 7 site, restingplaces.org. Every stage reports real output before the next runs.</p>
+
+  <div class="flow">
+    <div class="stage">
+      <h3>1. Meta-list fan-out crawl (reusable module)</h3>
+      <p>Seed: Wikipedia <code>Lists_of_cemeteries</code>. BFS over list pages to closure, depth cap 3: index pages fan out to country lists, country lists to state and city lists.</p>
+      <p>120 sub-lists crawled, 13,018 raw entity links via MediaWiki <code>generator=links</code> + <code>pageprops</code> QIDs.</p>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="stage">
+      <h3>2. Entity confirmation + dedupe</h3>
+      <p>Links confirmed as cemeteries via Wikidata SPARQL <code>P31/P279* Q39614</code>, never guessed from titles. 10,859 unique QIDs, 2,443 confirmed, 8,416 rejected (cities, people, wars).</p>
+      <p>Output: <code>data/seed-Claude.csv</code></p>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="stage">
+      <h3>3. Enrichment, licensed sources only</h3>
+      <p>Wikidata batches: coordinates, founding date, admin region, area, heritage id, official site, Commons image name, Find a Grave id (link-out only). Nominatim fallback geocoding, accepted only when OSM classes the hit as a burial ground. Google Places skipped: no key, so hours are omitted sitewide by the freshness gate.</p>
+      <p>Raw responses cached to <code>data/cache/</code> as provenance evidence.</p>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="stage">
+      <h3>4. Interment knowledge graph (reusable module, the core asset)</h3>
+      <p>Reverse property query: persons with <code>P119 = cemetery</code>, requiring an enwiki article + death date in the query itself. Private individuals are structurally unreachable.</p>
+      <p>75,372 edges, 70,270 persons, 1,678 cemeteries with notable interments. CC0. Ships whole at <code>/api/interments.json</code>.</p>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="stage gate">
+      <span class="badge">BLOCKING GATE</span>
+      <h3>5. Image rights</h3>
+      <p>Commons <code>imageinfo + extmetadata</code> per candidate. PASS only PD / CC0 / CC BY / CC BY-SA (share-alike flagged). 1,887 pass, 19 fail, failures ship text-forward. No genealogy-site photos, no generated imagery.</p>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="stage">
+      <h3>6. Classify + data model</h3>
+      <p>Fixed vocabularies over sourced facts: type from P31 labels + heritage, era from founding date. Unmatched stays untagged and is counted. Zod schema validates every record at build; a null is a null, never a guess.</p>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="stage">
+      <h3>7. Static build</h3>
+      <div class="cols">
+        <p>2,443 cemetery pages · 11,526 <code>/buried/</code> answer pages (page tier: 15+ language editions) · full interment indexes · country / region / city / type / era hubs · 5 guides</p>
+        <p>JSON-LD (Cemetery, Person, ItemList, FAQPage where data-backed) · sitemap · RSS · <code>llms.txt</code> · static JSON API · Pagefind search · zero client JS otherwise</p>
+      </div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="stage gate">
+      <span class="badge">QA GATES</span>
+      <h3>8. Audits over dist/</h3>
+      <p>463k internal links checked · orphan detection · compliance (no genealogy-site ingestion) · every rendered image maps to a PASS verdict · freshness (zero hours rendered) · schema samples · endpoint resolution.</p>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="stage">
+      <h3>9. Deploy</h3>
+      <p>GitHub <code>mizcausevic-dev/restingplaces-org</code> (public). Hostinger static hosting per estate doctrine once the domain is registered; Netlify for previews only.</p>
+    </div>
+  </div>
+
+  <div class="kg">
+    <h2>The cemetery-to-person knowledge graph</h2>
+    <svg viewBox="0 0 720 240" role="img" aria-label="Knowledge graph diagram">
+      <ellipse cx="120" cy="120" rx="90" ry="34"/>
+      <text x="120" y="116" text-anchor="middle">Cemetery</text>
+      <text x="120" y="132" text-anchor="middle" class="lbl">Q39614 subclass tree</text>
+      <ellipse cx="600" cy="60" rx="80" ry="30"/>
+      <text x="600" y="56" text-anchor="middle">Person</text>
+      <text x="600" y="72" text-anchor="middle" class="lbl">enwiki + P570</text>
+      <ellipse cx="600" cy="180" rx="80" ry="30"/>
+      <text x="600" y="176" text-anchor="middle">Place</text>
+      <text x="600" y="192" text-anchor="middle" class="lbl">country / region / city</text>
+      <path d="M 210 105 C 350 60, 450 55, 518 58"/>
+      <text x="360" y="62" text-anchor="middle" class="lbl">P119 place of burial (reverse)</text>
+      <path d="M 210 135 C 350 180, 450 183, 518 180"/>
+      <text x="360" y="200" text-anchor="middle" class="lbl">P17 / P131 / P625</text>
+    </svg>
+    <p class="note">
+      Generalizes to any entity-to-entity relation: birthplaces (P19), headquarters (P159), filming locations (P915).
+      The module is the pairing of a meta-list crawl for the entity set with a reverse-property SPARQL sweep for the relation.
+    </p>
+  </div>
+</main>
+</body>
+</html>

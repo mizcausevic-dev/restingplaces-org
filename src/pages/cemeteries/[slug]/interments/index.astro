@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../../layouts/Base-Claude.astro';
+import graph from '../../../../../data/interment-graph-Claude.json';
+import personsData from '../../../../../data/persons-Claude.json';
+import buriedData from '../../../../../data/buried-Claude.json';
+
+// Full interment index for cemeteries whose notable count exceeds what the
+// main page shows. Every documented person is listed; those above the page
+// tier link to their /buried/ page, the rest to their Wikipedia article.
+
+export async function getStaticPaths() {
+  const all = await getCollection('cemeteries');
+  const slugByQid = new Map((buriedData as any[]).map((p) => [p.qid, p.slug]));
+  return all
+    .filter((c) => c.data.notable_interments_total > c.data.notable_interments.length)
+    .map((c) => {
+      const qids: string[] = (graph as any).edges[c.data.wikidata_qid] ?? [];
+      const people = qids
+        .map((qid) => {
+          const p = (personsData as any)[qid];
+          if (!p) return null;
+          return { ...p, slug: slugByQid.get(qid) ?? null };
+        })
+        .filter(Boolean)
+        .sort((a: any, b: any) => a.person_name.localeCompare(b.person_name));
+      return { params: { slug: c.data.slug }, props: { cem: c.data, people } };
+    });
+}
+
+const { cem, people } = Astro.props;
+const place = [cem.city ?? cem.region, cem.country].filter(Boolean).join(', ');
+const desc = `All ${people.length} notable figures documented at ${cem.name}${place ? `, ${place}` : ''} in Wikidata's burial records.`;
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `Notable interments at ${cem.name}`,
+    numberOfItems: people.length,
+    itemListElement: people.slice(0, 100).map((p: any, i: number) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.person_name,
+      ...(p.slug ? { url: new URL(`/buried/${p.slug}/`, Astro.site).href } : {}),
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Resting Places', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: cem.name, item: new URL(`/cemeteries/${cem.slug}/`, Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: 'Notable interments', item: new URL(`/cemeteries/${cem.slug}/interments/`, Astro.site).href },
+    ],
+  },
+];
+---
+
+<Base title={`Notable interments at ${cem.name} | Resting Places`} description={desc} jsonld={jsonld}>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    {cem.country_slug && <> › <a href={`/country/${cem.country_slug}/`}>{cem.country}</a></>}
+    {' '}› <a href={`/cemeteries/${cem.slug}/`}>{cem.name}</a>
+  </nav>
+
+  <article data-pagefind-body>
+    <h1>Notable interments at {cem.name}</h1>
+    <p class="lede">
+      {people.length} notable figures are documented at <a href={`/cemeteries/${cem.slug}/`}>{cem.name}</a> in Wikidata's
+      burial records, each with a Wikipedia article and a recorded place of burial. Listed alphabetically.
+    </p>
+    <ul class="plain">
+      {people.map((p: any) => (
+        <li>
+          {p.slug ? (
+            <a href={`/buried/${p.slug}/`}>{p.person_name}</a>
+          ) : p.wikipedia_url ? (
+            <a href={p.wikipedia_url} rel="nofollow">{p.person_name}</a>
+          ) : (
+            p.person_name
+          )}
+          {(p.birth_year || p.death_year) && ` (${p.birth_year ?? '?'}–${p.death_year ?? '?'})`}
+          {p.known_for && <span class="note">, {p.known_for}</span>}
+        </li>
+      ))}
+    </ul>
+  </article>
+</Base>

@@ -1,0 +1,27 @@
+# Manual-only deploy, estate doctrine: Hostinger cannot build Astro on git
+# pull, so the build runs here and static dist/ ships over FTPS. Requires
+# repo secrets FTP_HOST, FTP_USER, FTP_PASS once the domain is live.
+name: deploy
+on:
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Deploy dist over FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          protocol: ftps
+          local-dir: dist/
+          server-dir: public_html/

@@ -70,10 +70,16 @@ for (const rel of allFiles) {
 }
 
 // ---------- compliance audit ----------
-const compliance = { findagrave_img_or_data: [], billiongraves_any: [], findagrave_linkouts: 0 };
+// Distinguish resource ingestion (src/href pointing at genealogy sites,
+// which is prohibited except the documented findagrave link-out) from policy
+// text that merely names them.
+const compliance = { findagrave_img_or_data: [], billiongraves_src_or_href: [], billiongraves_text_mentions: 0, findagrave_linkouts: 0 };
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
-  if (/billiongraves/i.test(html)) compliance.billiongraves_any.push(path.relative(DIST, file));
+  if (/billiongraves/i.test(html)) {
+    if (/(?:src|href)="[^"]*billiongraves/i.test(html)) compliance.billiongraves_src_or_href.push(path.relative(DIST, file));
+    else compliance.billiongraves_text_mentions++;
+  }
   for (const m of html.matchAll(/<img[^>]+src="([^"]+)"/g)) {
     if (/findagrave|billiongraves/i.test(m[1])) compliance.findagrave_img_or_data.push({ file: path.relative(DIST, file), src: m[1] });
   }
@@ -111,7 +117,7 @@ for (const file of htmlFiles) {
 let hoursPages = 0;
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
-  if (html.includes('Opening hours')) hoursPages++;
+  if (html.includes('<h2>Opening hours</h2>')) hoursPages++;
 }
 
 // ---------- structural JSON-LD validation on a sample ----------
@@ -179,9 +185,10 @@ const report = {
   orphan_pages: orphans.length,
   orphan_sample: orphans.slice(0, 15),
   compliance: {
-    ...compliance,
+    findagrave_linkouts: compliance.findagrave_linkouts,
     findagrave_img_or_data: compliance.findagrave_img_or_data.length,
-    billiongraves_any: compliance.billiongraves_any.length,
+    billiongraves_src_or_href: compliance.billiongraves_src_or_href.length,
+    billiongraves_text_mentions: compliance.billiongraves_text_mentions,
     cache_buckets: cacheBuckets,
   },
   images: { total_rendered: imgCount, violations: imgViolations.length, violation_sample: imgViolations.slice(0, 10) },

@@ -1,0 +1,17 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# raw API response cache (provenance evidence, kept local, regenerable)
+data/cache/
+
+# environment
+.env
+.env.*
+
+# os
+Thumbs.db
+.DS_Store

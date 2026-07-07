@@ -1,0 +1,19 @@
+---
+// Placeholder home for the empty-scaffold build gate. Replaced in Phase 5.
+import { getCollection } from 'astro:content';
+const cemeteries = await getCollection('cemeteries');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Resting Places</title>
+    <meta name="description" content="A reference directory of the world's cemeteries, built from licensed open data." />
+  </head>
+  <body>
+    <h1>Resting Places</h1>
+    <p>{cemeteries.length} cemeteries in the collection.</p>
+  </body>
+</html>

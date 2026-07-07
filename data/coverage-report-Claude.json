@@ -1,0 +1,18 @@
+{
+  "total_entities": 2443,
+  "coordinates": 2430,
+  "coordinates_wikidata": 2425,
+  "coordinates_nominatim": 5,
+  "established_year": 1041,
+  "country": 2437,
+  "admin_region": 2386,
+  "area": 285,
+  "commons_image_candidate": 1906,
+  "official_website": 595,
+  "heritage_id": 1056,
+  "osm_id": 171,
+  "findagrave_linkout": 2167,
+  "with_notable_interments": 1678,
+  "google_places": 0,
+  "google_places_note": "skipped: no GOOGLE_PLACES_KEY configured; hours omitted sitewide per freshness gate"
+}

@@ -1,0 +1,80 @@
+[seed] 2443 entities loaded
+[wd] 150/2443 enriched
+[wd] 300/2443 enriched
+[wd] 450/2443 enriched
+[wd] 600/2443 enriched
+[wd] 750/2443 enriched
+[wd] 900/2443 enriched
+[wd] 1050/2443 enriched
+[wd] 1200/2443 enriched
+[wd] 1350/2443 enriched
+[wd] 1500/2443 enriched
+[wd] 1650/2443 enriched
+[wd] 1800/2443 enriched
+[wd] 1950/2443 enriched
+[wd] 2100/2443 enriched
+[wd] 2250/2443 enriched
+[wd] 2400/2443 enriched
+[wd] 2443/2443 enriched
+[graph] 60/2443 cemeteries queried, 5461 persons, 5802 edges
+[graph] 120/2443 cemeteries queried, 14045 persons, 14931 edges
+[graph] 180/2443 cemeteries queried, 15621 persons, 16625 edges
+[graph] 240/2443 cemeteries queried, 16664 persons, 17733 edges
+[graph] 300/2443 cemeteries queried, 20228 persons, 21572 edges
+[graph] 360/2443 cemeteries queried, 24332 persons, 26019 edges
+[graph] 420/2443 cemeteries queried, 27743 persons, 29712 edges
+[graph] 480/2443 cemeteries queried, 28040 persons, 30016 edges
+[graph] 540/2443 cemeteries queried, 31678 persons, 33714 edges
+[graph] 600/2443 cemeteries queried, 32758 persons, 34819 edges
+[graph] 660/2443 cemeteries queried, 35043 persons, 37265 edges
+[graph] 720/2443 cemeteries queried, 37957 persons, 40385 edges
+[graph] 780/2443 cemeteries queried, 39479 persons, 41961 edges
+[graph] 840/2443 cemeteries queried, 40773 persons, 43360 edges
+[graph] 900/2443 cemeteries queried, 41179 persons, 43787 edges
+[graph] 960/2443 cemeteries queried, 44240 persons, 47186 edges
+[graph] 1020/2443 cemeteries queried, 45340 persons, 48394 edges
+[graph] 1080/2443 cemeteries queried, 45916 persons, 49017 edges
+[graph] 1140/2443 cemeteries queried, 52116 persons, 55889 edges
+[graph] 1200/2443 cemeteries queried, 52694 persons, 56504 edges
+[graph] 1260/2443 cemeteries queried, 53410 persons, 57295 edges
+[graph] 1320/2443 cemeteries queried, 54968 persons, 58972 edges
+[graph] 1380/2443 cemeteries queried, 56233 persons, 60345 edges
+[graph] 1440/2443 cemeteries queried, 57361 persons, 61536 edges
+[graph] 1500/2443 cemeteries queried, 57727 persons, 61926 edges
+[graph] 1560/2443 cemeteries queried, 59297 persons, 63624 edges
+[graph] 1620/2443 cemeteries queried, 60124 persons, 64495 edges
+[graph] 1680/2443 cemeteries queried, 60812 persons, 65229 edges
+[graph] 1740/2443 cemeteries queried, 60852 persons, 65274 edges
+[graph] 1800/2443 cemeteries queried, 61207 persons, 65654 edges
+[graph] 1860/2443 cemeteries queried, 61522 persons, 65987 edges
+[graph] 1920/2443 cemeteries queried, 61751 persons, 66231 edges
+[graph] 1980/2443 cemeteries queried, 62371 persons, 66886 edges
+[graph] 2040/2443 cemeteries queried, 62683 persons, 67214 edges
+[graph] 2100/2443 cemeteries queried, 63140 persons, 67708 edges
+[graph] 2160/2443 cemeteries queried, 63662 persons, 68249 edges
+[graph] 2220/2443 cemeteries queried, 63775 persons, 68373 edges
+[graph] 2280/2443 cemeteries queried, 65553 persons, 70307 edges
+[graph] 2340/2443 cemeteries queried, 68112 persons, 73058 edges
+[graph] 2400/2443 cemeteries queried, 68867 persons, 73883 edges
+[graph] 2443/2443 cemeteries queried, 70270 persons, 75372 edges
+[nominatim] 18 entities lack Wikidata coordinates, trying fallback
+[nominatim] recovered coordinates for 5/18
+
+[coverage] {
+  "total_entities": 2443,
+  "coordinates": 2430,
+  "coordinates_wikidata": 2425,
+  "coordinates_nominatim": 5,
+  "established_year": 1041,
+  "country": 2437,
+  "admin_region": 2386,
+  "area": 285,
+  "commons_image_candidate": 1906,
+  "official_website": 595,
+  "heritage_id": 1056,
+  "osm_id": 171,
+  "findagrave_linkout": 2167,
+  "with_notable_interments": 1678,
+  "google_places": 0,
+  "google_places_note": "skipped: no GOOGLE_PLACES_KEY configured; hours omitted sitewide per freshness gate"
+}

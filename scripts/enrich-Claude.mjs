@@ -111,7 +111,7 @@ const enriched = new Map();
         official_website: b.site?.value ?? null,
         heritage_id: b.nrhpId?.value ? `NRHP ${b.nrhpId.value}` : b.heritageLabel?.value ?? null,
         osm_id: b.osmRel ? `relation/${b.osmRel.value}` : null,
-        findagrave_url: b.fag?.value ? `https://www.findagrave.com/cemetery/${b.fag.value}` : null,
+        findagrave_url: b.fagId?.value ? `https://www.findagrave.com/cemetery/${b.fagId.value}` : null,
         wd_types: b.types?.value ? b.types.value.split('|').filter(Boolean) : [],
         name_variants: b.aliases?.value ? b.aliases.value.split('|').filter(Boolean).slice(0, 6) : [],
       });

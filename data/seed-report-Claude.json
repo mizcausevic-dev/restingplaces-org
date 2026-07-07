@@ -1,0 +1,834 @@
+{
+  "generated_from": "https://en.wikipedia.org/wiki/Lists_of_cemeteries",
+  "method": "MediaWiki Action API BFS over list pages (generator=links + pageprops), Wikidata SPARQL P31/P279* Q39614 confirmation",
+  "sublist_count": 120,
+  "sublists": [
+    {
+      "title": "List of necropolises",
+      "depth": 1,
+      "entity_links": 86,
+      "child_lists": 0
+    },
+    {
+      "title": "List of mausolea",
+      "depth": 1,
+      "entity_links": 567,
+      "child_lists": 1
+    },
+    {
+      "title": "List of cemeteries in Canada",
+      "depth": 1,
+      "entity_links": 129,
+      "child_lists": 6
+    },
+    {
+      "title": "List of cemeteries in the United States",
+      "depth": 1,
+      "entity_links": 588,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Hungary",
+      "depth": 1,
+      "entity_links": 6,
+      "child_lists": 13
+    },
+    {
+      "title": "List of cemeteries in Germany",
+      "depth": 1,
+      "entity_links": 237,
+      "child_lists": 14
+    },
+    {
+      "title": "List of cemeteries in Russia",
+      "depth": 1,
+      "entity_links": 89,
+      "child_lists": 23
+    },
+    {
+      "title": "List of cemeteries in England",
+      "depth": 1,
+      "entity_links": 262,
+      "child_lists": 2
+    },
+    {
+      "title": "List of cemeteries in Australia",
+      "depth": 1,
+      "entity_links": 194,
+      "child_lists": 0
+    },
+    {
+      "title": "List of cemeteries in China",
+      "depth": 1,
+      "entity_links": 30,
+      "child_lists": 12
+    },
+    {
+      "title": "List of cemeteries in France",
+      "depth": 1,
+      "entity_links": 130,
+      "child_lists": 13
+    },
+    {
+      "title": "List of cemeteries in Estonia",
+      "depth": 1,
+      "entity_links": 17,
+      "child_lists": 13
+    },
+    {
+      "title": "List of cemeteries in Turkey",
+      "depth": 1,
+      "entity_links": 38,
+      "child_lists": 23
+    },
+    {
+      "title": "List of cemeteries in the Philippines",
+      "depth": 1,
+      "entity_links": 26,
+      "child_lists": 13
+    },
+    {
+      "title": "List of cemeteries in Ireland",
+      "depth": 1,
+      "entity_links": 53,
+      "child_lists": 0
+    },
+    {
+      "title": "List of cemeteries in New Zealand",
+      "depth": 1,
+      "entity_links": 32,
+      "child_lists": 0
+    },
+    {
+      "title": "List of cemeteries in Malaysia",
+      "depth": 1,
+      "entity_links": 14,
+      "child_lists": 12
+    },
+    {
+      "title": "List of cemeteries in Lithuania",
+      "depth": 1,
+      "entity_links": 11,
+      "child_lists": 13
+    },
+    {
+      "title": "List of cemeteries in Italy",
+      "depth": 1,
+      "entity_links": 40,
+      "child_lists": 13
+    },
+    {
+      "title": "List of cemeteries in Iran",
+      "depth": 1,
+      "entity_links": 35,
+      "child_lists": 12
+    },
+    {
+      "title": "List of cemeteries in Belgium",
+      "depth": 1,
+      "entity_links": 72,
+      "child_lists": 13
+    },
+    {
+      "title": "List of cemeteries in Japan",
+      "depth": 1,
+      "entity_links": 10,
+      "child_lists": 12
+    },
+    {
+      "title": "List of cemeteries in Slovenia",
+      "depth": 1,
+      "entity_links": 22,
+      "child_lists": 13
+    },
+    {
+      "title": "List of cemeteries in Hong Kong",
+      "depth": 1,
+      "entity_links": 45,
+      "child_lists": 12
+    },
+    {
+      "title": "List of cemeteries in Macau",
+      "depth": 1,
+      "entity_links": 6,
+      "child_lists": 12
+    },
+    {
+      "title": "List of cemeteries in Pakistan",
+      "depth": 1,
+      "entity_links": 62,
+      "child_lists": 14
+    },
+    {
+      "title": "List of cemeteries in South Africa",
+      "depth": 1,
+      "entity_links": 36,
+      "child_lists": 0
+    },
+    {
+      "title": "List of cemeteries in Israel",
+      "depth": 1,
+      "entity_links": 38,
+      "child_lists": 12
+    },
+    {
+      "title": "List of cemeteries in Uruguay",
+      "depth": 1,
+      "entity_links": 34,
+      "child_lists": 0
+    },
+    {
+      "title": "List of cemeteries in Kenya",
+      "depth": 1,
+      "entity_links": 10,
+      "child_lists": 1
+    },
+    {
+      "title": "List of cemeteries in Latvia",
+      "depth": 1,
+      "entity_links": 8,
+      "child_lists": 13
+    },
+    {
+      "title": "List of cemeteries in Georgia (country)",
+      "depth": 1,
+      "entity_links": 11,
+      "child_lists": 23
+    },
+    {
+      "title": "List of tombs and mausoleums",
+      "depth": 2,
+      "entity_links": 688,
+      "child_lists": 5
+    },
+    {
+      "title": "List of cemeteries in Toronto",
+      "depth": 2,
+      "entity_links": 78,
+      "child_lists": 5
+    },
+    {
+      "title": "List of cemeteries in York Region",
+      "depth": 2,
+      "entity_links": 60,
+      "child_lists": 4
+    },
+    {
+      "title": "List of Jewish cemeteries in the Greater Toronto Area",
+      "depth": 2,
+      "entity_links": 58,
+      "child_lists": 0
+    },
+    {
+      "title": "List of cemeteries in Peel Region",
+      "depth": 2,
+      "entity_links": 12,
+      "child_lists": 4
+    },
+    {
+      "title": "List of cemeteries in Durham Region",
+      "depth": 2,
+      "entity_links": 10,
+      "child_lists": 4
+    },
+    {
+      "title": "List of cemeteries in New Jersey",
+      "depth": 2,
+      "entity_links": 346,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Ogle County, Illinois",
+      "depth": 2,
+      "entity_links": 35,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Warren County, Indiana",
+      "depth": 2,
+      "entity_links": 32,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Omaha",
+      "depth": 2,
+      "entity_links": 120,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Vermilion County, Illinois",
+      "depth": 2,
+      "entity_links": 34,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Kansas",
+      "depth": 2,
+      "entity_links": 56,
+      "child_lists": 66
+    },
+    {
+      "title": "List of cemeteries in San Diego",
+      "depth": 2,
+      "entity_links": 33,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Alaska",
+      "depth": 2,
+      "entity_links": 129,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Porter County, Indiana",
+      "depth": 2,
+      "entity_links": 5,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Cook County, Illinois",
+      "depth": 2,
+      "entity_links": 106,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Boston",
+      "depth": 2,
+      "entity_links": 44,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in California",
+      "depth": 2,
+      "entity_links": 236,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Wyoming",
+      "depth": 2,
+      "entity_links": 81,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Idaho",
+      "depth": 2,
+      "entity_links": 114,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Hudson County, New Jersey",
+      "depth": 2,
+      "entity_links": 52,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Riverside County, California",
+      "depth": 2,
+      "entity_links": 91,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Connecticut",
+      "depth": 2,
+      "entity_links": 128,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in New York",
+      "depth": 2,
+      "entity_links": 220,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Pennsylvania",
+      "depth": 2,
+      "entity_links": 124,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Tennessee",
+      "depth": 2,
+      "entity_links": 73,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Massachusetts",
+      "depth": 2,
+      "entity_links": 71,
+      "child_lists": 66
+    },
+    {
+      "title": "List of cemeteries in North Dakota",
+      "depth": 2,
+      "entity_links": 44,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in San Bernardino County, California",
+      "depth": 2,
+      "entity_links": 73,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Florida",
+      "depth": 2,
+      "entity_links": 124,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Georgia (U.S. state)",
+      "depth": 2,
+      "entity_links": 66,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Delaware",
+      "depth": 2,
+      "entity_links": 59,
+      "child_lists": 65
+    },
+    {
+      "title": "List of African-American cemeteries in New York",
+      "depth": 2,
+      "entity_links": 27,
+      "child_lists": 65
+    },
+    {
+      "title": "List of Jewish cemeteries in New York City",
+      "depth": 2,
+      "entity_links": 47,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Boone County, Missouri",
+      "depth": 2,
+      "entity_links": 63,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in New York City",
+      "depth": 2,
+      "entity_links": 107,
+      "child_lists": 65
+    },
+    {
+      "title": "List of rural cemeteries in the United States",
+      "depth": 2,
+      "entity_links": 255,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Utah",
+      "depth": 2,
+      "entity_links": 228,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Sonoma County, California",
+      "depth": 2,
+      "entity_links": 50,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Arizona",
+      "depth": 2,
+      "entity_links": 578,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Mississippi",
+      "depth": 2,
+      "entity_links": 52,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Alabama",
+      "depth": 2,
+      "entity_links": 55,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Texas",
+      "depth": 2,
+      "entity_links": 104,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Arkansas",
+      "depth": 2,
+      "entity_links": 168,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Colorado",
+      "depth": 2,
+      "entity_links": 33,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Hawaii",
+      "depth": 2,
+      "entity_links": 26,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Louisiana",
+      "depth": 2,
+      "entity_links": 50,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Nevada",
+      "depth": 2,
+      "entity_links": 21,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in New Mexico",
+      "depth": 2,
+      "entity_links": 20,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Rhode Island",
+      "depth": 2,
+      "entity_links": 59,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Illinois",
+      "depth": 2,
+      "entity_links": 67,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Indiana",
+      "depth": 2,
+      "entity_links": 73,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Iowa",
+      "depth": 2,
+      "entity_links": 56,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Kentucky",
+      "depth": 2,
+      "entity_links": 50,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Missouri",
+      "depth": 2,
+      "entity_links": 52,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Maine",
+      "depth": 2,
+      "entity_links": 51,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Maryland",
+      "depth": 2,
+      "entity_links": 53,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Montana",
+      "depth": 2,
+      "entity_links": 18,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in New Hampshire",
+      "depth": 2,
+      "entity_links": 21,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Vermont",
+      "depth": 2,
+      "entity_links": 17,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Oklahoma",
+      "depth": 2,
+      "entity_links": 19,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in North Carolina",
+      "depth": 2,
+      "entity_links": 105,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Michigan",
+      "depth": 2,
+      "entity_links": 53,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Minnesota",
+      "depth": 2,
+      "entity_links": 19,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Ohio",
+      "depth": 2,
+      "entity_links": 67,
+      "child_lists": 66
+    },
+    {
+      "title": "List of cemeteries in Oregon",
+      "depth": 2,
+      "entity_links": 72,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in South Carolina",
+      "depth": 2,
+      "entity_links": 65,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in South Dakota",
+      "depth": 2,
+      "entity_links": 166,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Nebraska",
+      "depth": 2,
+      "entity_links": 35,
+      "child_lists": 65
+    },
+    {
+      "title": "List of African American cemeteries",
+      "depth": 2,
+      "entity_links": 182,
+      "child_lists": 65
+    },
+    {
+      "title": "List of Jewish cemeteries in the United States",
+      "depth": 2,
+      "entity_links": 130,
+      "child_lists": 65
+    },
+    {
+      "title": "List of cemeteries in Jersey",
+      "depth": 2,
+      "entity_links": 5,
+      "child_lists": 13
+    },
+    {
+      "title": "List of cemeteries in Poland",
+      "depth": 2,
+      "entity_links": 62,
+      "child_lists": 13
+    },
+    {
+      "title": "List of cemeteries in Berlin",
+      "depth": 2,
+      "entity_links": 106,
+      "child_lists": 0
+    },
+    {
+      "title": "List of cemeteries in London",
+      "depth": 2,
+      "entity_links": 173,
+      "child_lists": 3
+    },
+    {
+      "title": "List of burials at Southern Cemetery, Manchester",
+      "depth": 2,
+      "entity_links": 184,
+      "child_lists": 2
+    },
+    {
+      "title": "List of cemeteries in Metro Manila",
+      "depth": 2,
+      "entity_links": 151,
+      "child_lists": 1
+    },
+    {
+      "title": "List of mausolea and shrines in Pakistan",
+      "depth": 2,
+      "entity_links": 182,
+      "child_lists": 0
+    },
+    {
+      "title": "List of cemeteries in Karachi",
+      "depth": 2,
+      "entity_links": 40,
+      "child_lists": 2
+    },
+    {
+      "title": "List of burials in the Valley of the Kings",
+      "depth": 3,
+      "entity_links": 142,
+      "child_lists": 1
+    },
+    {
+      "title": "List of pyramid mausoleums in North America",
+      "depth": 3,
+      "entity_links": 59,
+      "child_lists": 0
+    },
+    {
+      "title": "List of burials in the Valley of the Queens",
+      "depth": 3,
+      "entity_links": 107,
+      "child_lists": 1
+    },
+    {
+      "title": "List of cemeteries in Halton Region",
+      "depth": 3,
+      "entity_links": 21,
+      "child_lists": 4
+    },
+    {
+      "title": "List of national cemeteries",
+      "depth": 3,
+      "entity_links": 150,
+      "child_lists": 1
+    },
+    {
+      "title": "List of burials at Mount Auburn Cemetery",
+      "depth": 3,
+      "entity_links": 301,
+      "child_lists": 0
+    },
+    {
+      "title": "List of burial mounds in the United States",
+      "depth": 3,
+      "entity_links": 969,
+      "child_lists": 0
+    },
+    {
+      "title": "List of Jewish cemeteries in London",
+      "depth": 3,
+      "entity_links": 71,
+      "child_lists": 1
+    },
+    {
+      "title": "List of burials at Kensal Green Cemetery",
+      "depth": 3,
+      "entity_links": 641,
+      "child_lists": 0
+    }
+  ],
+  "raw_link_rows": 13018,
+  "links_without_wikidata_item": 0,
+  "unique_qids": 10859,
+  "confirmed_cemeteries": 2443,
+  "rejected_non_cemeteries": 8416,
+  "rejected_sample": [
+    {
+      "qid": "Q262",
+      "name": "Algeria"
+    },
+    {
+      "qid": "Q38",
+      "name": "Italy"
+    },
+    {
+      "qid": "Q794",
+      "name": "Iran"
+    },
+    {
+      "qid": "Q33057",
+      "name": "ISBN"
+    },
+    {
+      "qid": "Q8660",
+      "name": "Karachi"
+    },
+    {
+      "qid": "Q1028",
+      "name": "Morocco"
+    },
+    {
+      "qid": "Q843",
+      "name": "Pakistan"
+    },
+    {
+      "qid": "Q82070",
+      "name": "Tyre, Lebanon"
+    },
+    {
+      "qid": "Q17161",
+      "name": "Etruscan civilization"
+    },
+    {
+      "qid": "Q132564",
+      "name": "Mycenae"
+    },
+    {
+      "qid": "Q3551",
+      "name": "Rabat"
+    },
+    {
+      "qid": "Q188856",
+      "name": "Panthéon"
+    },
+    {
+      "qid": "Q39614",
+      "name": "Cemetery"
+    },
+    {
+      "qid": "Q205976",
+      "name": "Mount of Olives"
+    },
+    {
+      "qid": "Q987296",
+      "name": "Colma, California"
+    },
+    {
+      "qid": "Q2008735",
+      "name": "Siwa Oasis"
+    },
+    {
+      "qid": "Q213916",
+      "name": "Vergina"
+    },
+    {
+      "qid": "Q242711",
+      "name": "Kyiv Pechersk Lavra"
+    },
+    {
+      "qid": "Q94936",
+      "name": "Marzabotto"
+    },
+    {
+      "qid": "Q1017205",
+      "name": "Hafun"
+    },
+    {
+      "qid": "Q242505",
+      "name": "Cerveteri"
+    },
+    {
+      "qid": "Q428570",
+      "name": "Kharga Oasis"
+    },
+    {
+      "qid": "Q1518125",
+      "name": "Qubbet el-Hawa"
+    },
+    {
+      "qid": "Q953204",
+      "name": "Palacios de la Sierra"
+    },
+    {
+      "qid": "Q755514",
+      "name": "Ħal Saflieni Hypogeum"
+    }
+  ]
+}

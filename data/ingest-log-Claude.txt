@@ -1,0 +1,171 @@
+[list d0] Lists of cemeteries: 367 entity links, 32 child lists
+[list d1] List of necropolises: 86 entity links, 0 child lists
+[list d1] List of mausolea: 567 entity links, 1 child lists
+[list d1] List of cemeteries in Canada: 129 entity links, 6 child lists
+[list d1] List of cemeteries in the United States: 588 entity links, 65 child lists
+[list d1] List of cemeteries in Hungary: 6 entity links, 13 child lists
+[list d1] List of cemeteries in Germany: 237 entity links, 14 child lists
+[list d1] List of cemeteries in Russia: 89 entity links, 23 child lists
+[list d1] List of cemeteries in England: 262 entity links, 2 child lists
+[list d1] List of cemeteries in Australia: 194 entity links, 0 child lists
+[list d1] List of cemeteries in China: 30 entity links, 12 child lists
+[list d1] List of cemeteries in France: 130 entity links, 13 child lists
+[list d1] List of cemeteries in Estonia: 17 entity links, 13 child lists
+[list d1] List of cemeteries in Turkey: 38 entity links, 23 child lists
+[list d1] List of cemeteries in the Philippines: 26 entity links, 13 child lists
+[list d1] List of cemeteries in Ireland: 53 entity links, 0 child lists
+[list d1] List of cemeteries in New Zealand: 32 entity links, 0 child lists
+[list d1] List of cemeteries in Malaysia: 14 entity links, 12 child lists
+[list d1] List of cemeteries in Lithuania: 11 entity links, 13 child lists
+[list d1] List of cemeteries in Italy: 40 entity links, 13 child lists
+[list d1] List of cemeteries in Iran: 35 entity links, 12 child lists
+[list d1] List of cemeteries in Belgium: 72 entity links, 13 child lists
+[list d1] List of cemeteries in Japan: 10 entity links, 12 child lists
+[list d1] List of cemeteries in Slovenia: 22 entity links, 13 child lists
+[list d1] List of cemeteries in Hong Kong: 45 entity links, 12 child lists
+[list d1] List of cemeteries in Macau: 6 entity links, 12 child lists
+[list d1] List of cemeteries in Pakistan: 62 entity links, 14 child lists
+[list d1] List of cemeteries in South Africa: 36 entity links, 0 child lists
+[list d1] List of cemeteries in Israel: 38 entity links, 12 child lists
+[list d1] List of cemeteries in Uruguay: 34 entity links, 0 child lists
+[list d1] List of cemeteries in Kenya: 10 entity links, 1 child lists
+[list d1] List of cemeteries in Latvia: 8 entity links, 13 child lists
+[list d1] List of cemeteries in Georgia (country): 11 entity links, 23 child lists
+[list d2] List of tombs and mausoleums: 688 entity links, 5 child lists
+[list d2] List of cemeteries in Toronto: 78 entity links, 5 child lists
+[list d2] List of cemeteries in York Region: 60 entity links, 4 child lists
+[list d2] List of Jewish cemeteries in the Greater Toronto Area: 58 entity links, 0 child lists
+[list d2] List of cemeteries in Peel Region: 12 entity links, 4 child lists
+[list d2] List of cemeteries in Durham Region: 10 entity links, 4 child lists
+[list d2] List of cemeteries in New Jersey: 346 entity links, 65 child lists
+[list d2] List of cemeteries in Ogle County, Illinois: 35 entity links, 65 child lists
+[list d2] List of cemeteries in Warren County, Indiana: 32 entity links, 65 child lists
+[list d2] List of cemeteries in Omaha: 120 entity links, 65 child lists
+[list d2] List of cemeteries in Vermilion County, Illinois: 34 entity links, 65 child lists
+[list d2] List of cemeteries in Kansas: 56 entity links, 66 child lists
+[list d2] List of cemeteries in San Diego: 33 entity links, 65 child lists
+[list d2] List of cemeteries in Alaska: 129 entity links, 65 child lists
+[list d2] List of cemeteries in Porter County, Indiana: 5 entity links, 65 child lists
+[list d2] List of cemeteries in Cook County, Illinois: 106 entity links, 65 child lists
+[list d2] List of cemeteries in Boston: 44 entity links, 65 child lists
+[list d2] List of cemeteries in California: 236 entity links, 65 child lists
+[list d2] List of cemeteries in Wyoming: 81 entity links, 65 child lists
+[list d2] List of cemeteries in Idaho: 114 entity links, 65 child lists
+[list d2] List of cemeteries in Hudson County, New Jersey: 52 entity links, 65 child lists
+[list d2] List of cemeteries in Riverside County, California: 91 entity links, 65 child lists
+[list d2] List of cemeteries in Connecticut: 128 entity links, 65 child lists
+[list d2] List of cemeteries in New York: 220 entity links, 65 child lists
+[list d2] List of cemeteries in Pennsylvania: 124 entity links, 65 child lists
+[list d2] List of cemeteries in Tennessee: 73 entity links, 65 child lists
+[list d2] List of cemeteries in Massachusetts: 71 entity links, 66 child lists
+[list d2] List of cemeteries in North Dakota: 44 entity links, 65 child lists
+[list d2] List of cemeteries in San Bernardino County, California: 73 entity links, 65 child lists
+[list d2] List of cemeteries in Florida: 124 entity links, 65 child lists
+[list d2] List of cemeteries in Georgia (U.S. state): 66 entity links, 65 child lists
+[list d2] List of cemeteries in Delaware: 59 entity links, 65 child lists
+[list d2] List of African-American cemeteries in New York: 27 entity links, 65 child lists
+[list d2] List of Jewish cemeteries in New York City: 47 entity links, 65 child lists
+[list d2] List of cemeteries in Boone County, Missouri: 63 entity links, 65 child lists
+[list d2] List of cemeteries in New York City: 107 entity links, 65 child lists
+[list d2] List of rural cemeteries in the United States: 255 entity links, 65 child lists
+[list d2] List of cemeteries in Utah: 228 entity links, 65 child lists
+[list d2] List of cemeteries in Sonoma County, California: 50 entity links, 65 child lists
+[list d2] List of cemeteries in Arizona: 578 entity links, 65 child lists
+[list d2] List of cemeteries in Mississippi: 52 entity links, 65 child lists
+[list d2] List of cemeteries in Alabama: 55 entity links, 65 child lists
+[list d2] List of cemeteries in Texas: 104 entity links, 65 child lists
+[list d2] List of cemeteries in Arkansas: 168 entity links, 65 child lists
+[list d2] List of cemeteries in Colorado: 33 entity links, 65 child lists
+[list d2] List of cemeteries in Hawaii: 26 entity links, 65 child lists
+[list d2] List of cemeteries in Louisiana: 50 entity links, 65 child lists
+[list d2] List of cemeteries in Nevada: 21 entity links, 65 child lists
+[list d2] List of cemeteries in New Mexico: 20 entity links, 65 child lists
+[list d2] List of cemeteries in Rhode Island: 59 entity links, 65 child lists
+[list d2] List of cemeteries in Illinois: 67 entity links, 65 child lists
+[list d2] List of cemeteries in Indiana: 73 entity links, 65 child lists
+[list d2] List of cemeteries in Iowa: 56 entity links, 65 child lists
+[list d2] List of cemeteries in Kentucky: 50 entity links, 65 child lists
+[list d2] List of cemeteries in Missouri: 52 entity links, 65 child lists
+[list d2] List of cemeteries in Maine: 51 entity links, 65 child lists
+[list d2] List of cemeteries in Maryland: 53 entity links, 65 child lists
+[list d2] List of cemeteries in Montana: 18 entity links, 65 child lists
+[list d2] List of cemeteries in New Hampshire: 21 entity links, 65 child lists
+[list d2] List of cemeteries in Vermont: 17 entity links, 65 child lists
+[list d2] List of cemeteries in Oklahoma: 19 entity links, 65 child lists
+[list d2] List of cemeteries in North Carolina: 105 entity links, 65 child lists
+[list d2] List of cemeteries in Michigan: 53 entity links, 65 child lists
+[list d2] List of cemeteries in Minnesota: 19 entity links, 65 child lists
+[list d2] List of cemeteries in Ohio: 67 entity links, 66 child lists
+[list d2] List of cemeteries in Oregon: 72 entity links, 65 child lists
+[list d2] List of cemeteries in South Carolina: 65 entity links, 65 child lists
+[list d2] List of cemeteries in South Dakota: 166 entity links, 65 child lists
+[list d2] List of cemeteries in Nebraska: 35 entity links, 65 child lists
+[list d2] List of African American cemeteries: 182 entity links, 65 child lists
+[list d2] List of Jewish cemeteries in the United States: 130 entity links, 65 child lists
+[list d2] List of cemeteries in Jersey: 5 entity links, 13 child lists
+[list d2] List of cemeteries in Poland: 62 entity links, 13 child lists
+[list d2] List of cemeteries in Berlin: 106 entity links, 0 child lists
+[list d2] List of cemeteries in London: 173 entity links, 3 child lists
+[list d2] List of burials at Southern Cemetery, Manchester: 184 entity links, 2 child lists
+[list d2] List of cemeteries in Metro Manila: 151 entity links, 1 child lists
+[list d2] List of mausolea and shrines in Pakistan: 182 entity links, 0 child lists
+[list d2] List of cemeteries in Karachi: 40 entity links, 2 child lists
+[list d3] List of burials in the Valley of the Kings: 142 entity links, 1 child lists
+[list d3] List of pyramid mausoleums in North America: 59 entity links, 0 child lists
+[list d3] List of burials in the Valley of the Queens: 107 entity links, 1 child lists
+[list d3] List of cemeteries in Halton Region: 21 entity links, 4 child lists
+[list d3] List of national cemeteries: 150 entity links, 1 child lists
+[list d3] List of burials at Mount Auburn Cemetery: 301 entity links, 0 child lists
+[list d3] List of burial mounds in the United States: 969 entity links, 0 child lists
+[list d3] List of Jewish cemeteries in London: 71 entity links, 1 child lists
+[list d3] List of burials at Kensal Green Cemetery: 641 entity links, 0 child lists
+
+[inventory] 120 sub-lists crawled to closure (depth cap 3)
+[dedupe] raw 13018 -> unique 10859 (plus 0 links without a Wikidata item, dropped)
+[p31] 250/10859 checked, 39 confirmed
+[p31] 500/10859 checked, 51 confirmed
+[p31] 750/10859 checked, 73 confirmed
+[p31] 1000/10859 checked, 165 confirmed
+[p31] 1250/10859 checked, 255 confirmed
+[p31] 1500/10859 checked, 338 confirmed
+[p31] 1750/10859 checked, 400 confirmed
+[p31] 2000/10859 checked, 527 confirmed
+[p31] 2250/10859 checked, 657 confirmed
+[p31] 2500/10859 checked, 797 confirmed
+[p31] 2750/10859 checked, 918 confirmed
+[p31] 3000/10859 checked, 959 confirmed
+[p31] 3250/10859 checked, 963 confirmed
+[p31] 3500/10859 checked, 984 confirmed
+[p31] 3750/10859 checked, 1025 confirmed
+[p31] 4000/10859 checked, 1055 confirmed
+[p31] 4250/10859 checked, 1078 confirmed
+[p31] 4500/10859 checked, 1158 confirmed
+[p31] 4750/10859 checked, 1232 confirmed
+[p31] 5000/10859 checked, 1270 confirmed
+[p31] 5250/10859 checked, 1376 confirmed
+[p31] 5500/10859 checked, 1450 confirmed
+[p31] 5750/10859 checked, 1516 confirmed
+[p31] 6000/10859 checked, 1580 confirmed
+[p31] 6250/10859 checked, 1588 confirmed
+[p31] 6500/10859 checked, 1590 confirmed
+[p31] 6750/10859 checked, 1611 confirmed
+[p31] 7000/10859 checked, 1718 confirmed
+[p31] 7250/10859 checked, 1825 confirmed
+[p31] 7500/10859 checked, 2008 confirmed
+[p31] 7750/10859 checked, 2151 confirmed
+[p31] 8000/10859 checked, 2228 confirmed
+[p31] 8250/10859 checked, 2303 confirmed
+[p31] 8500/10859 checked, 2381 confirmed
+[p31] 8750/10859 checked, 2387 confirmed
+[p31] 9000/10859 checked, 2396 confirmed
+[p31] 9250/10859 checked, 2428 confirmed
+[p31] 9500/10859 checked, 2430 confirmed
+[p31] 9750/10859 checked, 2432 confirmed
+[p31] 10000/10859 checked, 2434 confirmed
+[p31] 10250/10859 checked, 2438 confirmed
+[p31] 10500/10859 checked, 2443 confirmed
+[p31] 10750/10859 checked, 2443 confirmed
+[p31] 10859/10859 checked, 2443 confirmed
+[p31] confirmed cemeteries: 2443, rejected non-cemetery links: 8416
+
+[done] data/seed-Claude.csv written with 2443 entities

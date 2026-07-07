@@ -1,0 +1,83 @@
+---
+// Shared hub renderer for country, region, city, type, and era pages.
+// The intro is assembled from real aggregates of the listed data, never
+// padded. ItemList schema covers the first 100 entries.
+import Base from '../layouts/Base-Claude.astro';
+import CemeteryCard from './CemeteryCard-Claude.astro';
+import EmailCapture from './EmailCapture-Claude.astro';
+
+interface Props {
+  title: string;
+  h1: string;
+  intro: string;
+  path: string;
+  cems: any[];
+  groupBy?: 'region' | 'country' | null;
+  crumb?: { name: string; href: string } | null;
+}
+const { title, h1, intro, path, cems, groupBy = null, crumb = null } = Astro.props;
+
+const groups = new Map<string, any[]>();
+if (groupBy) {
+  for (const c of cems) {
+    const key = c[groupBy] ?? 'Unassigned';
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key)!.push(c);
+  }
+}
+const sortedGroups = [...groups.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: h1,
+    numberOfItems: cems.length,
+    itemListElement: cems.slice(0, 100).map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      url: new URL(`/cemeteries/${c.slug}/`, Astro.site).href,
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Resting Places', item: new URL('/', Astro.site).href },
+      ...(crumb ? [{ '@type': 'ListItem', position: 2, name: crumb.name, item: new URL(crumb.href, Astro.site).href }] : []),
+      { '@type': 'ListItem', position: crumb ? 3 : 2, name: h1, item: new URL(path, Astro.site).href },
+    ],
+  },
+];
+---
+
+<Base title={title} description={intro.length > 155 ? intro.slice(0, 152) + '...' : intro} jsonld={jsonld} canonicalPath={path}>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    {crumb && <> › <a href={crumb.href}>{crumb.name}</a></>}
+  </nav>
+  <h1>{h1}</h1>
+  <p class="lede">{intro}</p>
+
+  {groupBy
+    ? sortedGroups.map(([group, list]) => (
+        <>
+          <h2>{group}</h2>
+          <ul class="cards">
+            {list.map((c) => (
+              <CemeteryCard {...c} />
+            ))}
+          </ul>
+        </>
+      ))
+    : (
+        <ul class="cards">
+          {cems.map((c) => (
+            <CemeteryCard {...c} />
+          ))}
+        </ul>
+      )}
+
+  <EmailCapture />
+</Base>

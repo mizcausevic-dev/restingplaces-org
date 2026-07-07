@@ -1,0 +1,149 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  jsonld?: object[];
+  ogImage?: string | null;
+  canonicalPath?: string;
+}
+const { title, description, jsonld = [], ogImage = null, canonicalPath } = Astro.props;
+const canonical = new URL(canonicalPath ?? Astro.url.pathname, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Resting Places" href="/rss.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Resting Places" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {jsonld.map((block) => (
+      <script type="application/ld+json" set:html={JSON.stringify(block)} />
+    ))}
+    <style is:global>
+      :root {
+        --bg: #faf7f1;
+        --panel: #f2ecdf;
+        --ink: #27221a;
+        --muted: #6d6355;
+        --accent: #47604c;
+        --accent-ink: #33463a;
+        --rule: #e2d9c8;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #191611;
+          --panel: #221e17;
+          --ink: #e9e2d4;
+          --muted: #a89c88;
+          --accent: #93ac95;
+          --accent-ink: #b3c6b4;
+          --rule: #37312a;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font: 17px/1.65 system-ui, 'Segoe UI', Roboto, sans-serif;
+      }
+      h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; line-height: 1.25; font-weight: 600; }
+      h1 { font-size: 1.9rem; margin: 0.4em 0; }
+      h2 { font-size: 1.35rem; margin: 1.6em 0 0.5em; }
+      h3 { font-size: 1.1rem; margin: 1.2em 0 0.4em; }
+      a { color: var(--accent-ink); text-decoration-color: var(--rule); text-underline-offset: 2px; }
+      a:hover { color: var(--accent); }
+      main { max-width: 62rem; margin: 0 auto; padding: 1rem 1.2rem 3rem; }
+      header.site {
+        border-bottom: 1px solid var(--rule);
+        background: var(--panel);
+      }
+      header.site .inner {
+        max-width: 62rem; margin: 0 auto; padding: 0.7rem 1.2rem;
+        display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 1.4rem;
+      }
+      .brand { font-family: Georgia, serif; font-size: 1.15rem; color: var(--ink); text-decoration: none; letter-spacing: 0.01em; }
+      nav.top a { margin-right: 0.9rem; font-size: 0.92rem; text-decoration: none; color: var(--muted); }
+      nav.top a:hover { color: var(--accent); }
+      footer.site {
+        border-top: 1px solid var(--rule);
+        margin-top: 2rem; padding: 1.4rem 1.2rem 2.4rem;
+        font-size: 0.85rem; color: var(--muted);
+      }
+      footer.site .inner { max-width: 62rem; margin: 0 auto; display: grid; gap: 0.5rem; }
+      footer.site a { color: var(--muted); }
+      .crumbs { font-size: 0.85rem; color: var(--muted); margin: 0.8rem 0 0; }
+      .crumbs a { color: var(--muted); }
+      table.facts { border-collapse: collapse; width: 100%; margin: 0.8rem 0; font-size: 0.95rem; }
+      table.facts th { text-align: left; padding: 0.45rem 1rem 0.45rem 0; vertical-align: top; color: var(--muted); font-weight: 500; white-space: nowrap; }
+      table.facts td { padding: 0.45rem 0; }
+      table.facts tr { border-bottom: 1px solid var(--rule); }
+      ul.cards { list-style: none; margin: 0.6rem 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); gap: 0.7rem; }
+      ul.cards li { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 0.7rem 0.85rem; }
+      ul.cards li a.title { font-weight: 600; text-decoration: none; display: block; }
+      ul.cards li .meta { font-size: 0.83rem; color: var(--muted); margin-top: 0.2rem; }
+      ul.plain { padding-left: 1.1rem; }
+      ul.plain li { margin: 0.25rem 0; }
+      .chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0.6rem 0; padding: 0; list-style: none; }
+      .chips a { display: inline-block; background: var(--panel); border: 1px solid var(--rule); border-radius: 999px; padding: 0.15rem 0.75rem; font-size: 0.86rem; text-decoration: none; }
+      figure.photo { margin: 1rem 0; }
+      figure.photo img { max-width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--rule); }
+      figure.photo figcaption { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+      .note { font-size: 0.85rem; color: var(--muted); }
+      .lede { font-size: 1.06rem; }
+      section.capture { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.2rem; margin: 2rem 0 0; }
+      section.capture input[type='email'] { padding: 0.45rem 0.6rem; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg); color: var(--ink); min-width: 15rem; }
+      section.capture button { padding: 0.45rem 1rem; border: 1px solid var(--accent); border-radius: 4px; background: var(--accent); color: #fff; cursor: pointer; }
+      .two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+      @media (max-width: 44rem) { .two-col { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <header class="site">
+      <div class="inner">
+        <a class="brand" href="/">Resting Places</a>
+        <nav class="top">
+          <a href="/#browse">Countries</a>
+          <a href="/type/">Types</a>
+          <a href="/era/">Eras</a>
+          <a href="/guides/">Guides</a>
+          <a href="/#search">Search</a>
+          <a href="/about/">About</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site">
+      <div class="inner">
+        <div>
+          Resting Places documents cemeteries as places and history, from licensed open data.
+          Facts come from <a href="/attribution/">Wikidata (CC0)</a>, images from Wikimedia Commons under verified free licenses.
+        </div>
+        <div>
+          Some pages contain affiliate links to genealogy research services. If you purchase through them we may earn a commission at no cost to you.
+          Details in our <a href="/disclosure/">disclosure</a>.
+        </div>
+        <div>
+          <a href="/about/">About</a> · <a href="/disclosure/">Disclosure</a> · <a href="/privacy/">Privacy</a> ·
+          <a href="/image-credits/">Image credits</a> · <a href="/attribution/">Attribution</a> ·
+          <a href="/api/cemeteries.json">Data API</a> · <a href="/llms.txt">llms.txt</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

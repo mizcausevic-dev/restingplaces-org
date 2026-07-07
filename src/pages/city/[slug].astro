@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import HubPage from '../../components/HubPage-Claude.astro';
+import { hubIntro } from '../../lib/hub-intro-Claude';
+
+export async function getStaticPaths() {
+  const all = await getCollection('cemeteries');
+  const byCity = new Map<string, any[]>();
+  for (const c of all) {
+    if (!c.data.city_slug) continue;
+    if (!byCity.has(c.data.city_slug)) byCity.set(c.data.city_slug, []);
+    byCity.get(c.data.city_slug)!.push(c.data);
+  }
+  return [...byCity.entries()].map(([slug, cems]) => ({
+    params: { slug },
+    props: { cems: cems.sort((a, b) => b.notable_interments_total - a.notable_interments_total) },
+  }));
+}
+const { cems } = Astro.props;
+const city = cems[0].city;
+const country = cems[0].country;
+const crumb = cems[0].country_slug ? { name: country, href: `/country/${cems[0].country_slug}/` } : null;
+---
+
+<HubPage
+  title={`Cemeteries in ${city}${country ? `, ${country}` : ''} | Resting Places`}
+  h1={`Cemeteries in ${city}`}
+  intro={hubIntro(`in ${city}${country ? `, ${country}` : ''}`, cems)}
+  path={`/city/${Astro.params.slug}/`}
+  cems={cems}
+  crumb={crumb}
+/>

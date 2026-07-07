@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base-Claude.astro';
+
+const all = await getCollection('cemeteries');
+const withPhoto = all
+  .map((c) => c.data)
+  .filter((c) => c.photo)
+  .sort((a, b) => a.name.localeCompare(b.name));
+const byLicense = new Map<string, number>();
+for (const c of withPhoto) byLicense.set(c.photo!.license, (byLicense.get(c.photo!.license) ?? 0) + 1);
+---
+
+<Base
+  title="Image credits | Resting Places"
+  description={`License and author credit for every one of the ${withPhoto.length} photographs displayed on Resting Places.`}
+>
+  <h1>Image credits</h1>
+  <p class="lede">
+    Every photograph on this site comes from Wikimedia Commons and passed an individual license check before display:
+    {[...byLicense.entries()].map(([l, n]) => `${n} under ${l}`).join(', ')}. Images under CC BY-SA carry share-alike terms.
+    Each image also carries its credit inline where it appears. Pages without a verified-free photograph are text only;
+    we never substitute generated imagery.
+  </p>
+  <table class="facts">
+    <tr><th>Cemetery</th><th>Credit</th><th>License</th></tr>
+    {withPhoto.map((c) => (
+      <tr>
+        <td><a href={`/cemeteries/${c.slug}/`}>{c.name}</a></td>
+        <td><a href={c.photo!.source} rel="nofollow">{c.photo!.credit.length > 60 ? c.photo!.credit.slice(0, 57) + '...' : c.photo!.credit}</a></td>
+        <td>{c.photo!.license_url ? <a href={c.photo!.license_url} rel="nofollow">{c.photo!.license}</a> : c.photo!.license}</td>
+      </tr>
+    ))}
+  </table>
+</Base>

@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import HubPage from '../../components/HubPage-Claude.astro';
+import { hubIntro } from '../../lib/hub-intro-Claude';
+
+export const TYPE_META: Record<string, { label: string; scope: string }> = {
+  'national-military': { label: 'National and military cemeteries', scope: 'dedicated to service members and national figures' },
+  'religious-churchyard': { label: 'Religious cemeteries and churchyards', scope: 'tied to a faith community or house of worship' },
+  'historic-heritage': { label: 'Historic and heritage cemeteries', scope: 'with recorded heritage status or ancient origins' },
+  'garden-rural': { label: 'Garden and rural cemeteries', scope: 'designed in the landscaped garden tradition' },
+  'natural-green-burial': { label: 'Natural and green burial grounds', scope: 'managed for natural burial' },
+  'municipal-public': { label: 'Municipal and public cemeteries', scope: 'operated as public burial grounds' },
+  private: { label: 'Private cemeteries', scope: 'privately operated or family grounds' },
+};
+
+export async function getStaticPaths() {
+  const all = await getCollection('cemeteries');
+  return Object.keys(TYPE_META)
+    .map((slug) => ({
+      params: { slug },
+      props: { cems: all.filter((c) => c.data.type.includes(slug as any)).map((c) => c.data).sort((a, b) => b.notable_interments_total - a.notable_interments_total) },
+    }))
+    .filter((p) => p.props.cems.length > 0);
+}
+const { cems } = Astro.props;
+const meta = TYPE_META[Astro.params.slug!];
+---
+
+<HubPage
+  title={`${meta.label} | Resting Places`}
+  h1={meta.label}
+  intro={hubIntro(meta.scope, cems)}
+  path={`/type/${Astro.params.slug}/`}
+  cems={cems}
+  groupBy="country"
+  crumb={{ name: 'Types', href: '/type/' }}
+/>

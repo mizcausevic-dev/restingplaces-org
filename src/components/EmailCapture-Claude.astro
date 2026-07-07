@@ -1,0 +1,24 @@
+---
+// Inline email capture, CAN-SPAM ready: clear identity, purpose, and consent
+// language, no popup, single opt-in. Renders nothing until a form endpoint
+// is configured, so the site never ships a dead form.
+const action = import.meta.env.PUBLIC_CAPTURE_FORM_ACTION ?? '';
+const accessKey = import.meta.env.PUBLIC_CAPTURE_ACCESS_KEY ?? '';
+---
+
+{action && accessKey && (
+  <section class="capture">
+    <h2>Cemetery history, monthly</h2>
+    <p class="note">
+      One email a month on historic burial grounds and genealogy research methods, from Resting Places.
+      Unsubscribe with one click, any time.
+    </p>
+    <form action={action} method="POST">
+      <input type="hidden" name="access_key" value={accessKey} />
+      <input type="hidden" name="subject" value="Resting Places newsletter signup" />
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+      <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address" />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+)}

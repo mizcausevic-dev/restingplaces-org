@@ -1,0 +1,21 @@
+---
+// Contextual genealogy affiliate placement. Renders nothing until affiliate
+// ids are configured and verified live, so no dead or fabricated offers ship.
+// Placement rule: research-intent sections only, never intrusive.
+interface Props {
+  context: 'interments' | 'history';
+}
+const { context } = Astro.props;
+const ancestryUrl = import.meta.env.PUBLIC_ANCESTRY_AFFILIATE_URL ?? '';
+const myheritageUrl = import.meta.env.PUBLIC_MYHERITAGE_AFFILIATE_URL ?? '';
+---
+
+{(ancestryUrl || myheritageUrl) && (
+  <p class="note">
+    Researching a family connection{context === 'interments' ? ' to someone buried here' : ''}?
+    {ancestryUrl && <a href={ancestryUrl} rel="sponsored nofollow">Search historical records on Ancestry</a>}
+    {ancestryUrl && myheritageUrl && ' or '}
+    {myheritageUrl && <a href={myheritageUrl} rel="sponsored nofollow">build a family tree on MyHeritage</a>}.
+    These are affiliate links, see our <a href="/disclosure/">disclosure</a>.
+  </p>
+)}

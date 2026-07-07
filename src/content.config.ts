@@ -13,7 +13,7 @@ const coordinates = z.object({
 const interment = z.object({
   person_name: z.string().min(1),
   person_qid: z.string().regex(/^Q\d+$/),
-  person_slug: z.string().min(1),
+  person_slug: z.string().nullable(), // null when below the /buried/ page tier
   known_for: z.string().nullable(),
   birth_year: z.number().int().nullable(),
   death_year: z.number().int().nullable(),
@@ -71,6 +71,7 @@ const cemeteries = defineCollection({
     official_website: z.string().url().nullable(),
     findagrave_url: z.string().url().nullable(), // link-out only, never scraped
     notable_interments: z.array(interment),
+    notable_interments_total: z.number().int(),
     has_notable_interments: z.boolean(),
     photo: photo.nullable(),
     google_place_id: z.string().nullable(),
@@ -84,4 +85,24 @@ const cemeteries = defineCollection({
   }),
 });
 
-export const collections = { cemeteries };
+const persons = defineCollection({
+  loader: file('data/buried-Claude.json'),
+  schema: z.object({
+    slug: z.string().min(1),
+    name: z.string().min(1),
+    qid: z.string().regex(/^Q\d+$/),
+    birth_year: z.number().int().nullable(),
+    death_year: z.number().int().nullable(),
+    known_for: z.string().nullable(),
+    sitelinks: z.number().int(),
+    wikipedia_url: z.string().url().nullable(),
+    cemetery_slug: z.string().min(1),
+    cemetery_name: z.string().min(1),
+    cemetery_city: z.string().nullable(),
+    cemetery_region: z.string().nullable(),
+    cemetery_country: z.string().nullable(),
+    cemetery_coordinates: coordinates.nullable(),
+  }),
+});
+
+export const collections = { cemeteries, persons };

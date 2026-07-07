@@ -1,0 +1,24 @@
+---
+// Renders a Commons photo that passed the image-rights gate, with the inline
+// credit the license requires. Never used for anything that did not PASS.
+interface Props {
+  photo: {
+    url: string;
+    license: string;
+    license_url: string | null;
+    credit: string;
+    source: string;
+    share_alike: boolean;
+  };
+  alt: string;
+}
+const { photo, alt } = Astro.props;
+---
+
+<figure class="photo">
+  <img src={photo.url} alt={alt} loading="lazy" decoding="async" width="960" />
+  <figcaption>
+    Photo: <a href={photo.source}>{photo.credit}</a>, Wikimedia Commons,
+    {photo.license_url ? <a href={photo.license_url}>{photo.license}</a> : photo.license}
+  </figcaption>
+</figure>

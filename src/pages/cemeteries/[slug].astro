@@ -1,0 +1,232 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base-Claude.astro';
+import PhotoFigure from '../../components/PhotoFigure-Claude.astro';
+import AffiliateNote from '../../components/AffiliateNote-Claude.astro';
+import CemeteryCard from '../../components/CemeteryCard-Claude.astro';
+
+export async function getStaticPaths() {
+  const all = await getCollection('cemeteries');
+  const bySlug = new Map(all.map((c) => [c.data.slug, c.data]));
+  return all.map((c) => ({
+    params: { slug: c.data.slug },
+    props: { cem: c.data, related: c.data.related_slugs.map((s) => bySlug.get(s)).filter(Boolean) },
+  }));
+}
+
+const { cem, related } = Astro.props;
+const place = [cem.city ?? cem.region, cem.country].filter(Boolean).join(', ');
+const title = `${cem.name}${place ? `, ${place}` : ''}`;
+
+const TYPE_LABEL: Record<string, string> = {
+  'national-military': 'National and military',
+  'religious-churchyard': 'Religious and churchyard',
+  'historic-heritage': 'Historic and heritage',
+  'garden-rural': 'Garden and rural',
+  'natural-green-burial': 'Natural and green burial',
+  'municipal-public': 'Municipal and public',
+  private: 'Private',
+};
+const ERA_LABEL: Record<string, string> = {
+  'pre-1800': 'Pre-1800',
+  '1800s': '1800s',
+  'early-1900s': 'Early 1900s',
+  'mid-1900s': 'Mid 1900s',
+  contemporary: 'Contemporary',
+};
+
+// FAQ only where the data genuinely answers the question. Schema mirrors
+// the visible text exactly.
+const faq: { q: string; a: string }[] = [];
+if (place && cem.coordinates) {
+  faq.push({
+    q: `Where is ${cem.name}?`,
+    a: `${cem.name} is in ${place}, at coordinates ${cem.coordinates.lat.toFixed(4)}, ${cem.coordinates.lng.toFixed(4)}.`,
+  });
+}
+if (cem.established_year !== null) {
+  faq.push({ q: `When was ${cem.name} established?`, a: `${cem.name} was established in ${cem.established_year}, according to Wikidata.` });
+}
+if (cem.notable_interments_total > 0) {
+  const names = cem.notable_interments.slice(0, 5).map((p) => p.person_name).join(', ');
+  faq.push({
+    q: `Who is buried at ${cem.name}?`,
+    a: `Wikidata documents ${cem.notable_interments_total} notable interment${cem.notable_interments_total === 1 ? '' : 's'} at ${cem.name}, including ${names}.`,
+  });
+}
+
+const jsonld: object[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Cemetery',
+    name: cem.name,
+    ...(cem.name_variants.length ? { alternateName: cem.name_variants } : {}),
+    description: cem.short_desc,
+    url: new URL(`/cemeteries/${cem.slug}/`, Astro.site).href,
+    ...(cem.coordinates
+      ? { geo: { '@type': 'GeoCoordinates', latitude: cem.coordinates.lat, longitude: cem.coordinates.lng } }
+      : {}),
+    address: {
+      '@type': 'PostalAddress',
+      ...(cem.city ? { addressLocality: cem.city } : {}),
+      ...(cem.region ? { addressRegion: cem.region } : {}),
+      ...(cem.country ? { addressCountry: cem.country } : {}),
+    },
+    ...(cem.photo
+      ? {
+          image: {
+            '@type': 'ImageObject',
+            contentUrl: cem.photo.url,
+            license: cem.photo.license_url ?? cem.photo.source,
+            creditText: cem.photo.credit,
+            acquireLicensePage: cem.photo.source,
+          },
+        }
+      : {}),
+    sameAs: [
+      `https://www.wikidata.org/wiki/${cem.wikidata_qid}`,
+      ...(cem.wikipedia_url ? [cem.wikipedia_url] : []),
+      ...(cem.official_website ? [cem.official_website] : []),
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Resting Places', item: new URL('/', Astro.site).href },
+      ...(cem.country_slug
+        ? [{ '@type': 'ListItem', position: 2, name: cem.country, item: new URL(`/country/${cem.country_slug}/`, Astro.site).href }]
+        : []),
+      { '@type': 'ListItem', position: cem.country_slug ? 3 : 2, name: cem.name, item: new URL(`/cemeteries/${cem.slug}/`, Astro.site).href },
+    ],
+  },
+];
+if (faq.length >= 2) {
+  jsonld.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  });
+}
+---
+
+<Base
+  title={`${title} | Resting Places`}
+  description={cem.short_desc.length > 155 ? cem.short_desc.slice(0, 152) + '...' : cem.short_desc}
+  jsonld={jsonld}
+  ogImage={cem.photo?.url ?? null}
+>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    {cem.country_slug && <> › <a href={`/country/${cem.country_slug}/`}>{cem.country}</a></>}
+    {cem.region_slug && <> › <a href={`/region/${cem.region_slug}/`}>{cem.region}</a></>}
+    {cem.city_slug && <> › <a href={`/city/${cem.city_slug}/`}>{cem.city}</a></>}
+  </nav>
+
+  <article data-pagefind-body>
+    <h1>{cem.name}</h1>
+    <p class="lede">{cem.short_desc}</p>
+
+    {cem.photo && <PhotoFigure photo={cem.photo} alt={`${cem.name}${place ? `, ${place}` : ''}`} />}
+
+    <h2>At a glance</h2>
+    <table class="facts">
+      {place && <tr><th>Location</th><td>{place}</td></tr>}
+      {cem.coordinates && (
+        <tr>
+          <th>Coordinates</th>
+          <td>
+            {cem.coordinates.lat.toFixed(5)}, {cem.coordinates.lng.toFixed(5)}
+            <span class="note"> (source: {cem.coordinates_source === 'wikidata' ? 'Wikidata' : 'OpenStreetMap Nominatim'})</span>
+          </td>
+        </tr>
+      )}
+      {cem.established_year !== null && <tr><th>Established</th><td>{cem.established_year}</td></tr>}
+      {cem.type.length > 0 && (
+        <tr>
+          <th>Type</th>
+          <td>{cem.type.map((t, i) => <>{i > 0 && ', '}<a href={`/type/${t}/`}>{TYPE_LABEL[t]}</a></>)}</td>
+        </tr>
+      )}
+      {cem.era && <tr><th>Era</th><td><a href={`/era/${cem.era}/`}>{ERA_LABEL[cem.era]}</a></td></tr>}
+      {cem.area_hectares !== null && <tr><th>Area</th><td>{cem.area_hectares} hectares</td></tr>}
+      {cem.heritage_id && <tr><th>Heritage status</th><td>{cem.heritage_id}</td></tr>}
+      {cem.official_website && <tr><th>Website</th><td><a href={cem.official_website} rel="nofollow">{new URL(cem.official_website).hostname}</a></td></tr>}
+    </table>
+
+    {cem.coordinates && (
+      <p class="note">
+        <a href={`https://www.openstreetmap.org/?mlat=${cem.coordinates.lat}&mlon=${cem.coordinates.lng}#map=16/${cem.coordinates.lat}/${cem.coordinates.lng}`} rel="nofollow">View on OpenStreetMap</a>
+        {' · '}
+        <a href={`https://www.google.com/maps/dir/?api=1&destination=${cem.coordinates.lat},${cem.coordinates.lng}`} rel="nofollow">Get directions</a>
+      </p>
+    )}
+
+    {cem.hours && (
+      <>
+        <h2>Opening hours</h2>
+        <ul class="plain">{cem.hours.weekday_text.map((d) => <li>{d}</li>)}</ul>
+        <p class="note">Last checked {cem.hours.last_checked}. Hours can change, confirm with the cemetery before visiting.</p>
+      </>
+    )}
+
+    {cem.notable_interments_total > 0 && (
+      <>
+        <h2>Notable interments</h2>
+        <p class="note">
+          {cem.notable_interments_total} notable figure{cem.notable_interments_total === 1 ? ' is' : 's are'} documented here in Wikidata,
+          each with a Wikipedia article and recorded burial place.
+          {cem.notable_interments_total > cem.notable_interments.length &&
+            ` The ${cem.notable_interments.length} most widely covered are listed below; the full list is in the `}
+          {cem.notable_interments_total > cem.notable_interments.length && <a href={`/api/cemeteries/${cem.slug}.json`}>data API</a>}
+          {cem.notable_interments_total > cem.notable_interments.length && '.'}
+        </p>
+        <ul class="plain">
+          {cem.notable_interments.map((p) => (
+            <li>
+              {p.person_slug ? <a href={`/buried/${p.person_slug}/`}>{p.person_name}</a> : p.person_name}
+              {(p.birth_year || p.death_year) && ` (${p.birth_year ?? '?'}–${p.death_year ?? '?'})`}
+              {p.known_for && <span class="note">, {p.known_for}</span>}
+            </li>
+          ))}
+        </ul>
+        <AffiliateNote context="interments" />
+      </>
+    )}
+
+    {faq.length >= 2 && (
+      <>
+        <h2>Common questions</h2>
+        {faq.map((f) => (
+          <>
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </>
+        ))}
+      </>
+    )}
+
+    <h2>Records and sources</h2>
+    <ul class="plain">
+      <li><a href={`https://www.wikidata.org/wiki/${cem.wikidata_qid}`} rel="nofollow">Wikidata: {cem.wikidata_qid}</a> (CC0, the source for the facts on this page)</li>
+      {cem.wikipedia_url && <li><a href={cem.wikipedia_url} rel="nofollow">Wikipedia article</a></li>}
+      {cem.findagrave_url && <li><a href={cem.findagrave_url} rel="nofollow">Burial records on Find a Grave</a> (external, not affiliated)</li>}
+      {cem.osm_id && <li><a href={`https://www.openstreetmap.org/${cem.osm_id}`} rel="nofollow">OpenStreetMap {cem.osm_id}</a></li>}
+    </ul>
+  </article>
+
+  {related.length > 0 && (
+    <>
+      <h2>Related cemeteries</h2>
+      <ul class="cards">
+        {related.map((r) => (
+          <CemeteryCard {...r} />
+        ))}
+      </ul>
+    </>
+  )}
+</Base>

@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base-Claude.astro';
+import { GUIDES } from '../../lib/guides-Claude';
+
+const all = (await getCollection('cemeteries')).map((c) => c.data);
+const guides = Object.entries(GUIDES)
+  .map(([slug, g]) => ({ slug, title: g.title, count: g.select(all).length }))
+  .filter((g) => g.count > 0);
+---
+
+<Base
+  title="Guides | Resting Places"
+  description="Curated guides to historic burial grounds: garden cemeteries, heritage-listed sites, national cemeteries, and the most documented resting places."
+>
+  <h1>Guides</h1>
+  <p class="lede">
+    Curated readings of the directory data: where the garden cemetery movement left its mark, which grounds hold heritage status,
+    and where the most documented public figures rest.
+  </p>
+  <ul class="cards">
+    {guides.map((g) => (
+      <li>
+        <a class="title" href={`/guides/${g.slug}/`}>{g.title}</a>
+        <div class="meta">{g.count} entries</div>
+      </li>
+    ))}
+  </ul>
+</Base>

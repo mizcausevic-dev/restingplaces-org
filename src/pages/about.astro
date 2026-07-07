@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base-Claude.astro';
+const all = await getCollection('cemeteries');
+const persons = await getCollection('persons');
+---
+
+<Base
+  title="About | Resting Places"
+  description="What Resting Places is, where its data comes from, and the rules it follows for dignity, privacy, and licensing."
+>
+  <h1>About Resting Places</h1>
+  <p class="lede">
+    Resting Places is a reference directory of the world's cemeteries. It treats burial grounds as places and history:
+    where they are, when they were founded, what heritage status they hold, and which public figures rest there.
+  </p>
+
+  <h2>Where the data comes from</h2>
+  <p>
+    Every fact on this site is drawn from licensed open data and linked to its source record.
+    Structured facts ({all.length.toLocaleString('en-US')} cemeteries and their locations, dates, and interments) come from
+    Wikidata, which publishes under the CC0 public domain dedication. Photographs come from Wikimedia Commons and are shown
+    only after their license has been individually verified as free. Fallback coordinates come from OpenStreetMap's Nominatim
+    geocoder. We link out to Wikipedia articles for narrative history rather than reproducing their text.
+  </p>
+
+  <h2>Dignity and privacy rules</h2>
+  <ul class="plain">
+    <li>
+      Interment records cover notable public figures only: {persons.length.toLocaleString('en-US')} people who have a Wikipedia
+      article, a recorded death date, and a documented place of burial. We never build pages around private individuals or
+      recent private burials.
+    </li>
+    <li>We never ingest, scrape, or republish content from genealogy services such as Find a Grave or BillionGraves. Where we link to them, it is a plain reference link.</li>
+    <li>No photograph appears without a verified free license and inline credit. When rights are unclear, the page stays text-forward.</li>
+    <li>Opening hours appear only when fetched live from an authoritative source, with a visible last-checked date. No live source, no hours.</li>
+  </ul>
+
+  <h2>What the classifications mean</h2>
+  <p>
+    Type and era tags are generated from each cemetery's recorded Wikidata classification, heritage status, and founding date.
+    They are marked as machine-generated in the underlying data and have not yet been editorially reviewed one by one. When a
+    record supports no tag, the entry stays untagged rather than being guessed at.
+  </p>
+
+  <h2>Corrections</h2>
+  <p>
+    The fastest way to fix an error is to correct the source record on Wikidata; this site rebuilds from those records.
+    Each cemetery page links its Wikidata item under Records and sources.
+  </p>
+</Base>

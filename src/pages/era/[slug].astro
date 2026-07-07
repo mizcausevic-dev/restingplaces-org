@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import HubPage from '../../components/HubPage-Claude.astro';
+import { hubIntro } from '../../lib/hub-intro-Claude';
+
+export const ERA_META: Record<string, { label: string; scope: string }> = {
+  'pre-1800': { label: 'Cemeteries established before 1800', scope: 'with a recorded founding date before 1800' },
+  '1800s': { label: 'Cemeteries established in the 1800s', scope: 'with a recorded founding date between 1800 and 1899' },
+  'early-1900s': { label: 'Cemeteries established 1900 to 1944', scope: 'with a recorded founding date between 1900 and 1944' },
+  'mid-1900s': { label: 'Cemeteries established 1945 to 1979', scope: 'with a recorded founding date between 1945 and 1979' },
+  contemporary: { label: 'Cemeteries established since 1980', scope: 'with a recorded founding date of 1980 or later' },
+};
+
+export async function getStaticPaths() {
+  const all = await getCollection('cemeteries');
+  return Object.keys(ERA_META)
+    .map((slug) => ({
+      params: { slug },
+      props: { cems: all.filter((c) => c.data.era === slug).map((c) => c.data).sort((a, b) => (a.established_year ?? 9999) - (b.established_year ?? 9999)) },
+    }))
+    .filter((p) => p.props.cems.length > 0);
+}
+const { cems } = Astro.props;
+const meta = ERA_META[Astro.params.slug!];
+---
+
+<HubPage
+  title={`${meta.label} | Resting Places`}
+  h1={meta.label}
+  intro={hubIntro(meta.scope, cems)}
+  path={`/era/${Astro.params.slug}/`}
+  cems={cems}
+  groupBy="country"
+  crumb={{ name: 'Eras', href: '/era/' }}
+/>

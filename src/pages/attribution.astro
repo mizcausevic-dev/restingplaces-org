@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base-Claude.astro';
+---
+
+<Base
+  title="Attribution | Resting Places"
+  description="Source attribution for the open data behind Resting Places: Wikidata, Wikimedia Commons, OpenStreetMap, and Wikipedia."
+>
+  <h1>Attribution</h1>
+  <p class="lede">Resting Places is built from open data. This page credits every source and states how each is used.</p>
+
+  <h2>Wikidata</h2>
+  <p>
+    Structured facts (names, locations, coordinates, founding dates, area, heritage status, official websites, notable
+    interments, and external identifiers) come from <a href="https://www.wikidata.org/">Wikidata</a>, published under the
+    <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 public domain dedication</a>. Every cemetery page
+    links its source item.
+  </p>
+
+  <h2>Wikimedia Commons</h2>
+  <p>
+    Photographs come from <a href="https://commons.wikimedia.org/">Wikimedia Commons</a>. Each image's license is verified
+    through the Commons API before display, each image carries an inline credit and license link where it appears, and the
+    complete inventory is on the <a href="/image-credits/">image credits</a> page.
+  </p>
+
+  <h2>OpenStreetMap</h2>
+  <p>
+    Fallback coordinates for a small number of entries come from OpenStreetMap's Nominatim geocoder.
+    Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, available under the
+    Open Database License. Pages using these coordinates say so in their facts table.
+  </p>
+
+  <h2>Wikipedia</h2>
+  <p>
+    We link to Wikipedia articles for narrative history. We do not reproduce Wikipedia's text, which is licensed
+    CC BY-SA; descriptions on this site are original and derived from the structured facts above.
+  </p>
+
+  <h2>Google Places</h2>
+  <p>
+    No Google Places content is currently displayed. If live opening hours are added in the future, they will be fetched
+    through the Places API, displayed with the attribution Google's terms require, and stamped with the date they were checked.
+  </p>
+
+  <h2>Find a Grave and BillionGraves</h2>
+  <p>
+    Some pages link to Find a Grave as an external reference. We do not ingest, scrape, or republish content or photographs
+    from Find a Grave, BillionGraves, or any genealogy service; the link identifier itself comes from Wikidata's CC0 records.
+  </p>
+</Base>

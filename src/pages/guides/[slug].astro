@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base-Claude.astro';
+import EmailCapture from '../../components/EmailCapture-Claude.astro';
+import AffiliateNote from '../../components/AffiliateNote-Claude.astro';
+import { GUIDES } from '../../lib/guides-Claude';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('cemeteries')).map((c) => c.data);
+  return Object.entries(GUIDES)
+    .map(([slug, g]) => ({ params: { slug }, props: { guide: g, cems: g.select(all) } }))
+    .filter((p) => p.props.cems.length > 0);
+}
+const { guide, cems } = Astro.props;
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: guide.h1,
+    numberOfItems: cems.length,
+    itemListElement: cems.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      url: new URL(`/cemeteries/${c.slug}/`, Astro.site).href,
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Resting Places', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'Guides', item: new URL('/guides/', Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: guide.h1, item: new URL(`/guides/${Astro.params.slug}/`, Astro.site).href },
+    ],
+  },
+];
+---
+
+<Base
+  title={`${guide.title} | Resting Places`}
+  description={guide.intro.length > 155 ? guide.intro.slice(0, 152) + '...' : guide.intro}
+  jsonld={jsonld}
+>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/guides/">Guides</a></nav>
+  <article data-pagefind-body>
+    <h1>{guide.h1}</h1>
+    <p class="lede">{guide.intro}</p>
+
+    <ol>
+      {cems.map((c) => {
+        const place = [c.city ?? c.region, c.country].filter(Boolean).join(', ');
+        const bits = [
+          place,
+          c.established_year ? `established ${c.established_year}` : null,
+          c.notable_interments_total ? `${c.notable_interments_total} documented notable interments` : null,
+        ].filter(Boolean);
+        return (
+          <li>
+            <a href={`/cemeteries/${c.slug}/`}>{c.name}</a>
+            {bits.length > 0 && <span class="note"> · {bits.join(' · ')}</span>}
+          </li>
+        );
+      })}
+    </ol>
+    <AffiliateNote context="history" />
+  </article>
+  <EmailCapture />
+</Base>

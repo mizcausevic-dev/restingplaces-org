@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base-Claude.astro';
+
+export async function getStaticPaths() {
+  const persons = await getCollection('persons');
+  const cems = await getCollection('cemeteries');
+  const cemBySlug = new Map(cems.map((c) => [c.data.slug, c.data]));
+  return persons.map((p) => {
+    const cem = cemBySlug.get(p.data.cemetery_slug);
+    const others = (cem?.notable_interments ?? [])
+      .filter((o) => o.person_qid !== p.data.qid && o.person_slug)
+      .slice(0, 8);
+    return { params: { slug: p.data.slug }, props: { person: p.data, cem, others } };
+  });
+}
+
+const { person, cem, others } = Astro.props;
+const years = person.birth_year || person.death_year ? ` (${person.birth_year ?? '?'}–${person.death_year ?? '?'})` : '';
+const place = [person.cemetery_city ?? person.cemetery_region, person.cemetery_country].filter(Boolean).join(', ');
+const answer = `${person.name} is buried at ${person.cemetery_name}${place ? ` in ${place}` : ''}, according to Wikidata burial records.`;
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `Where is ${person.name} buried?`,
+    description: answer,
+    url: new URL(`/buried/${person.slug}/`, Astro.site).href,
+    mainEntity: {
+      '@type': 'Person',
+      name: person.name,
+      ...(person.death_year ? { deathDate: String(person.death_year) } : {}),
+      ...(person.birth_year ? { birthDate: String(person.birth_year) } : {}),
+      ...(person.known_for ? { description: person.known_for } : {}),
+      sameAs: [
+        `https://www.wikidata.org/wiki/${person.qid}`,
+        ...(person.wikipedia_url ? [person.wikipedia_url] : []),
+      ],
+    },
+    mentions: {
+      '@type': 'Cemetery',
+      name: person.cemetery_name,
+      url: new URL(`/cemeteries/${person.cemetery_slug}/`, Astro.site).href,
+      ...(person.cemetery_coordinates
+        ? { geo: { '@type': 'GeoCoordinates', latitude: person.cemetery_coordinates.lat, longitude: person.cemetery_coordinates.lng } }
+        : {}),
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Resting Places', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: person.cemetery_name, item: new URL(`/cemeteries/${person.cemetery_slug}/`, Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: person.name, item: new URL(`/buried/${person.slug}/`, Astro.site).href },
+    ],
+  },
+];
+---
+
+<Base title={`Where is ${person.name} buried? | Resting Places`} description={answer} jsonld={jsonld}>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a> › <a href={`/cemeteries/${person.cemetery_slug}/`}>{person.cemetery_name}</a>
+  </nav>
+
+  <article data-pagefind-body>
+    <h1>Where is {person.name} buried?</h1>
+    <p class="lede">
+      <strong>{person.name}</strong>{years}{person.known_for ? `, ${person.known_for},` : ''} is buried at{' '}
+      <a href={`/cemeteries/${person.cemetery_slug}/`}>{person.cemetery_name}</a>{place ? ` in ${place}` : ''}.
+    </p>
+
+    <table class="facts">
+      {(person.birth_year || person.death_year) && (
+        <tr><th>Lived</th><td>{person.birth_year ?? 'unknown'} to {person.death_year ?? 'unknown'}</td></tr>
+      )}
+      {person.known_for && <tr><th>Known for</th><td>{person.known_for}</td></tr>}
+      <tr><th>Burial place</th><td><a href={`/cemeteries/${person.cemetery_slug}/`}>{person.cemetery_name}</a>{place ? `, ${place}` : ''}</td></tr>
+      {person.cemetery_coordinates && (
+        <tr>
+          <th>Location</th>
+          <td>
+            <a href={`https://www.openstreetmap.org/?mlat=${person.cemetery_coordinates.lat}&mlon=${person.cemetery_coordinates.lng}#map=16/${person.cemetery_coordinates.lat}/${person.cemetery_coordinates.lng}`} rel="nofollow">
+              {person.cemetery_coordinates.lat.toFixed(4)}, {person.cemetery_coordinates.lng.toFixed(4)}
+            </a>
+          </td>
+        </tr>
+      )}
+    </table>
+
+    <p class="note">
+      Source: <a href={`https://www.wikidata.org/wiki/${person.qid}`} rel="nofollow">Wikidata {person.qid}</a> (CC0), place of burial property.
+      {person.wikipedia_url && <> Biography: <a href={person.wikipedia_url} rel="nofollow">Wikipedia</a>.</>}
+    </p>
+
+    {others.length > 0 && (
+      <>
+        <h2>Also buried at {person.cemetery_name}</h2>
+        <ul class="plain">
+          {others.map((o) => (
+            <li>
+              <a href={`/buried/${o.person_slug}/`}>{o.person_name}</a>
+              {o.known_for && <span class="note">, {o.known_for}</span>}
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+  </article>
+</Base>

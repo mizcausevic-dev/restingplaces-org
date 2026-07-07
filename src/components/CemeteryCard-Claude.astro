@@ -1,0 +1,23 @@
+---
+interface Props {
+  slug: string;
+  name: string;
+  city?: string | null;
+  region?: string | null;
+  country?: string | null;
+  established_year?: number | null;
+  notable_interments_total?: number;
+}
+const { slug, name, city, region, country, established_year, notable_interments_total } = Astro.props;
+const place = [city ?? region, country].filter(Boolean).join(', ');
+const bits = [
+  place,
+  established_year ? `est. ${established_year}` : null,
+  notable_interments_total ? `${notable_interments_total} notable interment${notable_interments_total === 1 ? '' : 's'}` : null,
+].filter(Boolean);
+---
+
+<li>
+  <a class="title" href={`/cemeteries/${slug}/`}>{name}</a>
+  {bits.length > 0 && <div class="meta">{bits.join(' · ')}</div>}
+</li>

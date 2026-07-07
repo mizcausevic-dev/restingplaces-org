@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base-Claude.astro';
+import { ERA_META } from './[slug].astro';
+
+const all = await getCollection('cemeteries');
+const counts = Object.entries(ERA_META)
+  .map(([slug, meta]) => ({ slug, label: meta.label, count: all.filter((c) => c.data.era === slug).length }))
+  .filter((t) => t.count > 0);
+const undated = all.filter((c) => c.data.era === null).length;
+---
+
+<Base
+  title="Cemeteries by era | Resting Places"
+  description="Browse documented cemeteries by founding era, from grounds established before 1800 to contemporary burial sites."
+>
+  <h1>Browse by era</h1>
+  <p class="lede">
+    Eras follow each cemetery's recorded founding date in Wikidata.
+    {undated} of {all.length} entries have no recorded date and are listed only in the geographic hubs; we never estimate a founding year.
+  </p>
+  <ul class="cards">
+    {counts.map((t) => (
+      <li>
+        <a class="title" href={`/era/${t.slug}/`}>{t.label}</a>
+        <div class="meta">{t.count} cemeteries</div>
+      </li>
+    ))}
+  </ul>
+</Base>

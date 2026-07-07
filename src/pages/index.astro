@@ -1,19 +1,113 @@
 ---
-// Placeholder home for the empty-scaffold build gate. Replaced in Phase 5.
 import { getCollection } from 'astro:content';
-const cemeteries = await getCollection('cemeteries');
+import Base from '../layouts/Base-Claude.astro';
+import CemeteryCard from '../components/CemeteryCard-Claude.astro';
+import EmailCapture from '../components/EmailCapture-Claude.astro';
+import { GUIDES } from '../lib/guides-Claude';
+
+const all = (await getCollection('cemeteries')).map((c) => c.data);
+const persons = await getCollection('persons');
+
+const featured = [...all].sort((a, b) => b.notable_interments_total - a.notable_interments_total).slice(0, 8);
+
+const countryCounts = new Map<string, { name: string; slug: string; count: number }>();
+for (const c of all) {
+  if (!c.country_slug) continue;
+  if (!countryCounts.has(c.country_slug)) countryCounts.set(c.country_slug, { name: c.country!, slug: c.country_slug, count: 0 });
+  countryCounts.get(c.country_slug)!.count++;
+}
+const countries = [...countryCounts.values()].sort((a, b) => b.count - a.count);
+const totalEdges = all.reduce((a, c) => a + c.notable_interments_total, 0);
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Resting Places',
+    url: new URL('/', Astro.site).href,
+    description: 'A reference directory of the world\'s cemeteries, built from licensed open data.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: { '@type': 'EntryPoint', urlTemplate: new URL('/?q={search_term_string}', Astro.site).href },
+      'query-input': 'required name=search_term_string',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Resting Places',
+    url: new URL('/', Astro.site).href,
+  },
+];
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Resting Places</title>
-    <meta name="description" content="A reference directory of the world's cemeteries, built from licensed open data." />
-  </head>
-  <body>
-    <h1>Resting Places</h1>
-    <p>{cemeteries.length} cemeteries in the collection.</p>
-  </body>
-</html>
+<Base
+  title="Resting Places: a reference directory of the world's cemeteries"
+  description={`${all.length} documented cemeteries across ${countries.length} countries, with ${totalEdges.toLocaleString('en-US')} notable interments recorded from open data.`}
+  jsonld={jsonld}
+>
+  <h1>The world's burial grounds, documented</h1>
+  <p class="lede">
+    Resting Places is a reference directory of {all.length.toLocaleString('en-US')} cemeteries across {countries.length} countries,
+    treated as places and history. Locations, founding dates, heritage status, and {totalEdges.toLocaleString('en-US')} notable
+    interments are drawn from Wikidata's open records and linked to their sources. {persons.length.toLocaleString('en-US')} resting
+    places of public figures are individually documented.
+  </p>
+
+  <section id="search">
+    <h2>Search</h2>
+    <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+    <div id="pagefind-search"></div>
+    <script is:inline src="/pagefind/pagefind-ui.js"></script>
+    <script is:inline>
+      window.addEventListener('DOMContentLoaded', () => {
+        if (typeof PagefindUI === 'undefined') return;
+        const ui = new PagefindUI({ element: '#pagefind-search', showSubResults: false });
+        const q = new URLSearchParams(location.search).get('q');
+        if (q) ui.triggerSearch(q);
+      });
+    </script>
+    <noscript><p class="note">Search needs JavaScript. Browse by country, type, or era below instead.</p></noscript>
+  </section>
+
+  <h2>The most documented resting places</h2>
+  <ul class="cards">
+    {featured.map((c) => <CemeteryCard {...c} />)}
+  </ul>
+  <p class="note"><a href="/guides/most-documented-notable-interments/">See the full ranking</a></p>
+
+  <h2 id="browse">Browse by country</h2>
+  <ul class="chips">
+    {countries.map((c) => (
+      <a href={`/country/${c.slug}/`}>{c.name} ({c.count})</a>
+    ))}
+  </ul>
+
+  <h2>Browse by type and era</h2>
+  <ul class="chips">
+    <a href="/type/">All types</a>
+    <a href="/type/national-military/">National and military</a>
+    <a href="/type/religious-churchyard/">Religious and churchyards</a>
+    <a href="/type/historic-heritage/">Historic and heritage</a>
+    <a href="/type/garden-rural/">Garden cemeteries</a>
+    <a href="/era/">All eras</a>
+    <a href="/era/pre-1800/">Pre-1800</a>
+    <a href="/era/1800s/">1800s</a>
+  </ul>
+
+  <h2>Guides</h2>
+  <ul class="plain">
+    {Object.entries(GUIDES).map(([slug, g]) => (
+      <li><a href={`/guides/${slug}/`}>{g.title}</a></li>
+    ))}
+  </ul>
+
+  <h2>For researchers and machines</h2>
+  <p>
+    The full dataset behind this site is available as JSON: <a href="/api/cemeteries.json">the cemetery index</a> and
+    <a href="/api/interments.json">the complete interment graph</a>, both derived from Wikidata under CC0.
+    Crawl guidance lives in <a href="/llms.txt">llms.txt</a>.
+  </p>
+
+  <EmailCapture />
+</Base>

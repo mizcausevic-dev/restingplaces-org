@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base-Claude.astro';
+import { TYPE_META } from './[slug].astro';
+
+const all = await getCollection('cemeteries');
+const counts = Object.entries(TYPE_META)
+  .map(([slug, meta]) => ({ slug, label: meta.label, count: all.filter((c) => c.data.type.includes(slug as any)).length }))
+  .filter((t) => t.count > 0)
+  .sort((a, b) => b.count - a.count);
+const untyped = all.filter((c) => c.data.type.length === 0).length;
+---
+
+<Base
+  title="Cemetery types | Resting Places"
+  description="Browse documented cemeteries by type: national and military grounds, churchyards, historic sites, garden cemeteries, and more."
+>
+  <h1>Browse by type</h1>
+  <p class="lede">
+    Types are assigned from each cemetery's recorded Wikidata classification and heritage status.
+    {untyped} of {all.length} entries carry no type tag because their source records state only that they are cemeteries; those appear in the geographic hubs.
+  </p>
+  <ul class="cards">
+    {counts.map((t) => (
+      <li>
+        <a class="title" href={`/type/${t.slug}/`}>{t.label}</a>
+        <div class="meta">{t.count} cemeteries</div>
+      </li>
+    ))}
+  </ul>
+</Base>

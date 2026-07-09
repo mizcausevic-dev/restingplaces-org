@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://restingplaces.org',
+  site: 'https://restingplaces.site',
   trailingSlash: 'ignore',
   integrations: [sitemap()],
   build: {

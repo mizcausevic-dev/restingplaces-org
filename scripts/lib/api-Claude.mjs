@@ -10,7 +10,7 @@ const ROOT = new URL('../..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/
 const CACHE_DIR = path.join(ROOT, 'data', 'cache');
 
 export const USER_AGENT =
-  'RestingPlacesBuild/0.1 (https://restingplaces.org; causevic.miz@gmail.com) node-fetch';
+  'RestingPlacesBuild/0.1 (https://restingplaces.site; causevic.miz@gmail.com) node-fetch';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 

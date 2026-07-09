@@ -97,14 +97,14 @@
     "sitemap-index.xml": "ok (0.2 KB)",
     "robots.txt": "ok (0.3 KB)",
     "llms.txt": "ok (1.4 KB)",
-    "llms-full.txt": "ok (681.2 KB)",
+    "llms-full.txt": "ok (683.6 KB)",
     "rss.xml": "ok (3.6 KB)",
-    "api/cemeteries.json": "ok (1166.7 KB)",
-    "api/interments.json": "ok (9052.3 KB)"
+    "api/cemeteries.json": "ok (1171.4 KB)",
+    "api/interments.json": "ok (9054.0 KB)"
   },
   "external_hosts": {
     "en.wikipedia.org": 69444,
-    "restingplaces.org": 16373,
+    "restingplaces.site": 16373,
     "www.openstreetmap.org": 14128,
     "www.wikidata.org": 13970,
     "commons.wikimedia.org": 5662,

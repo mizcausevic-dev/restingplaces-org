@@ -1,4 +1,4 @@
-# Resting Places, restingplaces.org
+# Resting Places, restingplaces.site
 # The whole site is public reference data. Machine-readable dataset:
 #   /api/cemeteries.json      cemetery index
 #   /api/interments.json      full CC0 interment graph
@@ -7,4 +7,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://restingplaces.org/sitemap-index.xml
+Sitemap: https://restingplaces.site/sitemap-index.xml

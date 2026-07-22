@@ -4,20 +4,40 @@ import Base from '../../layouts/Base-Claude.astro';
 import PhotoFigure from '../../components/PhotoFigure-Claude.astro';
 import AffiliateNote from '../../components/AffiliateNote-Claude.astro';
 import CemeteryCard from '../../components/CemeteryCard-Claude.astro';
+import CiteBlock from '../../components/CiteBlock-Claude.astro';
+import CemeteryMap from '../../components/CemeteryMap-Claude.astro';
 import { flagEmoji } from '../../lib/flag-Claude';
+import { relatedGlossaryTerms } from '../../lib/glossary-links-Claude';
 
 export async function getStaticPaths() {
   const all = await getCollection('cemeteries');
   const bySlug = new Map(all.map((c) => [c.data.slug, c.data]));
   return all.map((c) => ({
     params: { slug: c.data.slug },
-    props: { cem: c.data, related: c.data.related_slugs.map((s) => bySlug.get(s)).filter(Boolean) },
+    props: {
+      cem: c.data,
+      related: c.data.related_slugs.map((s) => bySlug.get(s)).filter(Boolean),
+      // Genuinely distance-based, computed from real coordinates in
+      // build-data-Claude.mjs (haversine). Distinct from `related`, which
+      // scores by shared country/region/type/era, not real geography.
+      // nearby_slugs is null (or empty) whenever cem itself has no
+      // coordinates, and every entry in it points at a cemetery that has
+      // coordinates too, so nothing here ever claims a distance it can't back.
+      nearby: (c.data.nearby_slugs ?? [])
+        .map((n) => {
+          const target = bySlug.get(n.slug);
+          return target ? { ...target, distance_km: n.distance_km } : null;
+        })
+        .filter(Boolean),
+    },
   }));
 }
 
-const { cem, related } = Astro.props;
+const { cem, related, nearby } = Astro.props;
+const glossaryTerms = relatedGlossaryTerms(cem);
 const place = [cem.city ?? cem.region, cem.country].filter(Boolean).join(', ');
 const title = `${cem.name}${place ? `, ${place}` : ''}`;
+const pageUrl = new URL(`/cemeteries/${cem.slug}/`, Astro.site).href;
 
 const TYPE_LABEL: Record<string, string> = {
   'national-military': 'National and military',
@@ -134,6 +154,18 @@ if (faq.length >= 2) {
 
     {cem.photo && <PhotoFigure photo={cem.photo} alt={`${cem.name}${place ? `, ${place}` : ''}`} />}
 
+    {cem.gallery.length > 0 && (
+      <div class="gallery">
+        {cem.gallery.map((g, i) => (
+          <PhotoFigure photo={g} alt={`${cem.name}${place ? `, ${place}` : ''}, photo ${i + 2}`} />
+        ))}
+      </div>
+    )}
+
+    <div class="invite-slot">
+      <p>Personal visit photos and video are not yet part of this record. This space is reserved for that in a future update.</p>
+    </div>
+
     <h2>At a glance</h2>
     <table class="facts">
       {place && (
@@ -165,11 +197,14 @@ if (faq.length >= 2) {
     </table>
 
     {cem.coordinates && (
-      <p class="note">
-        <a href={`https://www.openstreetmap.org/?mlat=${cem.coordinates.lat}&mlon=${cem.coordinates.lng}#map=16/${cem.coordinates.lat}/${cem.coordinates.lng}`} rel="nofollow">View on OpenStreetMap</a>
-        {' · '}
-        <a href={`https://www.google.com/maps/dir/?api=1&destination=${cem.coordinates.lat},${cem.coordinates.lng}`} rel="nofollow">Get directions</a>
-      </p>
+      <>
+        <CemeteryMap lat={cem.coordinates.lat} lng={cem.coordinates.lng} name={cem.name} />
+        <p class="note">
+          <a href={`https://www.openstreetmap.org/?mlat=${cem.coordinates.lat}&mlon=${cem.coordinates.lng}#map=16/${cem.coordinates.lat}/${cem.coordinates.lng}`} rel="nofollow">View on OpenStreetMap</a>
+          {' · '}
+          <a href={`https://www.google.com/maps/dir/?api=1&destination=${cem.coordinates.lat},${cem.coordinates.lng}`} rel="nofollow">Get directions</a>
+        </p>
+      </>
     )}
 
     {cem.hours && (
@@ -194,6 +229,18 @@ if (faq.length >= 2) {
             </>
           )}
         </p>
+        {cem.occupation_breakdown.length > 0 && (
+          <p class="note">
+            Of {cem.name}'s {cem.notable_interments_total.toLocaleString('en-US')} documented notable interments, recorded
+            occupations include{' '}
+            {cem.occupation_breakdown.map((o, i) => (
+              <>
+                {i > 0 && ', '}
+                {o.label} ({o.pct}%)
+              </>
+            ))}.
+          </p>
+        )}
         <ul class="plain">
           {cem.notable_interments.map((p) => (
             <li>
@@ -226,6 +273,25 @@ if (faq.length >= 2) {
       {cem.findagrave_url && <li><a href={cem.findagrave_url} rel="nofollow">Burial records on Find a Grave</a> (external, not affiliated)</li>}
       {cem.osm_id && <li><a href={`https://www.openstreetmap.org/${cem.osm_id}`} rel="nofollow">OpenStreetMap {cem.osm_id}</a></li>}
     </ul>
+
+    {glossaryTerms.length > 0 && (
+      <>
+        <h2>Related terms</h2>
+        <ul class="chips">
+          {glossaryTerms.map((t) => <a href={`/glossary/#${t.slug}`}>{t.term}</a>)}
+        </ul>
+      </>
+    )}
+
+    <div class="invite-slot">
+      <p>
+        Notice an error in this record? Resting Places rebuilds from Wikidata rather than editing pages directly, so the
+        fastest fix is at the source: <a href={`https://www.wikidata.org/wiki/${cem.wikidata_qid}`} rel="nofollow">edit {cem.wikidata_qid} on Wikidata</a>.
+        Wikidata's own interface handles the correction; this site has no separate edit form.
+      </p>
+    </div>
+
+    <CiteBlock title={title} url={pageUrl} qid={cem.wikidata_qid} citeKey={`restingplaces-${cem.slug}`} />
   </article>
 
   {related.length > 0 && (
@@ -233,6 +299,21 @@ if (faq.length >= 2) {
       <h2>Related cemeteries</h2>
       <ul class="cards">
         {related.map((r) => (
+          <CemeteryCard {...r} />
+        ))}
+      </ul>
+    </>
+  )}
+
+  {nearby.length > 0 && (
+    <>
+      <h2>Nearby cemeteries</h2>
+      <p class="note">
+        The {nearby.length} closest recorded cemetery locations to {cem.name}, by straight-line distance
+        {cem.coordinates && <> from {cem.coordinates.lat.toFixed(4)}, {cem.coordinates.lng.toFixed(4)}</>}.
+      </p>
+      <ul class="cards">
+        {nearby.map((r) => (
           <CemeteryCard {...r} />
         ))}
       </ul>

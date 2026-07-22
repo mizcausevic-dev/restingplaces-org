@@ -1,18 +1,17 @@
 {
-  "checked": 1906,
-  "pass": 1887,
-  "fail": 19,
-  "no_image_entities": 537,
+  "checked": 1909,
+  "pass": 1891,
+  "fail": 18,
+  "no_image_entities": 534,
   "by_license": {
     "CC0": 111,
     "CC BY": 249,
-    "CC BY-SA": 1254,
-    "PD": 273,
+    "CC BY-SA": 1257,
+    "PD": 274,
     "Licence Ouverte": 1,
     "Attribution": 9,
     "GFDL 1.2": 2,
     "GFDL": 2,
-    "no imageinfo (missing file)": 1,
     "FAL": 1,
     "No restrictions": 3
   },
@@ -2148,6 +2147,16 @@
       "credit": "Jim.henderson",
       "source": "https://commons.wikimedia.org/wiki/File:Woodlawn_north_gate_jeh.JPG",
       "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Woodlawn_north_gate_jeh.JPG?width=960"
+    },
+    "Q167251": {
+      "file": "StorvilleBallloonview1914.jpg",
+      "verdict": "PASS",
+      "license": "PD",
+      "share_alike": false,
+      "license_url": null,
+      "credit": "New Orleans newspaper photographer. (I don't recall ever seeing his name credited, if the identity is known.)",
+      "source": "https://commons.wikimedia.org/wiki/File:StorvilleBallloonview1914.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/StorvilleBallloonview1914.jpg?width=960"
     },
     "Q7842673": {
       "file": "Trinity Church Cemetery NYC 9109.JPG",
@@ -5329,16 +5338,6 @@
       "source": "https://commons.wikimedia.org/wiki/File:Proserpine_Lawn_Cemetery.jpg",
       "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Proserpine_Lawn_Cemetery.jpg?width=960"
     },
-    "Q55633569": {
-      "file": "Davidson.JPG",
-      "verdict": "PASS",
-      "license": "CC BY",
-      "share_alike": false,
-      "license_url": "https://creativecommons.org/licenses/by/3.0",
-      "credit": "Sardaka (talk) 09:04, 31 October 2008 (UTC)",
-      "source": "https://commons.wikimedia.org/wiki/File:Davidson.JPG",
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Davidson.JPG?width=960"
-    },
     "Q56049410": {
       "file": "Headstones at Maitland Jewish Cemetery.JPG",
       "verdict": "PASS",
@@ -5978,12 +5977,6 @@
       "credit": "Iifar",
       "source": "https://commons.wikimedia.org/wiki/File:Kopli_park2.jpg",
       "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kopli_park2.jpg?width=960"
-    },
-    "Q5251189": {
-      "file": "Tallinna Kaitseväe Kalmistu 1.jpg",
-      "verdict": "FAIL",
-      "license": "no imageinfo (missing file)",
-      "share_alike": false
     },
     "Q6950303": {
       "file": "Mõigu kalmistu5.JPG",
@@ -9974,6 +9967,16 @@
       "credit": "Orange County Archives",
       "source": "https://commons.wikimedia.org/wiki/File:Anaheim_Cemetery%2C_Orange_County%2C_Grand_Army_of_the_Republic_monument.jpg",
       "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Anaheim_Cemetery%2C_Orange_County%2C_Grand_Army_of_the_Republic_monument.jpg?width=960"
+    },
+    "Q117697107": {
+      "file": "Grass Valley Pioneer Jewish Cemetery monument in Hebrew.jpg",
+      "verdict": "PASS",
+      "license": "CC BY-SA",
+      "share_alike": true,
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "credit": "Cullen328",
+      "source": "https://commons.wikimedia.org/wiki/File:Grass_Valley_Pioneer_Jewish_Cemetery_monument_in_Hebrew.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Grass_Valley_Pioneer_Jewish_Cemetery_monument_in_Hebrew.jpg?width=960"
     },
     "Q104136320": {
       "file": "Salem Memorial Park, Colma California.jpg",
@@ -15825,6 +15828,16 @@
       "source": "https://commons.wikimedia.org/wiki/File:Crossroads_Presbyterian_Church.jpg",
       "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Crossroads_Presbyterian_Church.jpg?width=960"
     },
+    "Q4857605": {
+      "file": "Baptist Chapel Church.jpg",
+      "verdict": "PASS",
+      "license": "CC BY-SA",
+      "share_alike": true,
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "credit": "rossograph",
+      "source": "https://commons.wikimedia.org/wiki/File:Baptist_Chapel_Church.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Baptist_Chapel_Church.jpg?width=960"
+    },
     "Q5591395": {
       "file": "Grace Union Church and Cemetery.jpg",
       "verdict": "PASS",
@@ -17455,6 +17468,16 @@
       "source": "https://commons.wikimedia.org/wiki/File:NewBedfordMA_JewishCemetery_2.jpg",
       "url": "https://commons.wikimedia.org/wiki/Special:FilePath/NewBedfordMA_JewishCemetery_2.jpg?width=960"
     },
+    "Q38250543": {
+      "file": "Sons Of Jacob Cemetery NRHP 100001035 Ramsey County, ND.jpg",
+      "verdict": "PASS",
+      "license": "CC BY-SA",
+      "share_alike": true,
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "credit": "Jon Roanhaus",
+      "source": "https://commons.wikimedia.org/wiki/File:Sons_Of_Jacob_Cemetery_NRHP_100001035_Ramsey_County%2C_ND.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Sons_Of_Jacob_Cemetery_NRHP_100001035_Ramsey_County%2C_ND.jpg?width=960"
+    },
     "Q111181660": {
       "file": "20251019MICBEE.jpg",
       "verdict": "PASS",
@@ -17516,14 +17539,14 @@
       "url": "https://commons.wikimedia.org/wiki/Special:FilePath/POL_JCP_ohel4.jpg?width=960"
     },
     "Q1457419": {
-      "file": "20225, Kraków, Cmentarz Rakowicki w Krakowie, 11.jpg",
+      "file": "20225, Kraków, Cmentarz Rakowicki w Krakowie, 14.jpg",
       "verdict": "PASS",
       "license": "CC BY",
       "share_alike": false,
       "license_url": "https://creativecommons.org/licenses/by/4.0",
       "credit": "Igor123121",
-      "source": "https://commons.wikimedia.org/wiki/File:20225%2C_Krak%C3%B3w%2C_Cmentarz_Rakowicki_w_Krakowie%2C_11.jpg",
-      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/20225%2C_Krak%C3%B3w%2C_Cmentarz_Rakowicki_w_Krakowie%2C_11.jpg?width=960"
+      "source": "https://commons.wikimedia.org/wiki/File:20225%2C_Krak%C3%B3w%2C_Cmentarz_Rakowicki_w_Krakowie%2C_14.jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/20225%2C_Krak%C3%B3w%2C_Cmentarz_Rakowicki_w_Krakowie%2C_14.jpg?width=960"
     },
     "Q7970904": {
       "file": "Cmentarz Powstańców Warszawy 2023a.jpg",
@@ -18674,6 +18697,16 @@
       "credit": "Roland Unger",
       "source": "https://commons.wikimedia.org/wiki/File:QurnatMuraiVillage.jpg",
       "url": "https://commons.wikimedia.org/wiki/Special:FilePath/QurnatMuraiVillage.jpg?width=960"
+    },
+    "Q111630541": {
+      "file": "Qesm Al Wahat Al Khargah, New Valley Governorate, Egypt - panoramio - demonzak (16).jpg",
+      "verdict": "PASS",
+      "license": "CC BY",
+      "share_alike": false,
+      "license_url": "https://creativecommons.org/licenses/by/3.0",
+      "credit": "demonzak",
+      "source": "https://commons.wikimedia.org/wiki/File:Qesm_Al_Wahat_Al_Khargah%2C_New_Valley_Governorate%2C_Egypt_-_panoramio_-_demonzak_(16).jpg",
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Qesm_Al_Wahat_Al_Khargah%2C_New_Valley_Governorate%2C_Egypt_-_panoramio_-_demonzak_(16).jpg?width=960"
     },
     "Q6059871": {
       "file": "EntranceDoloresCemetaryDF.JPG",

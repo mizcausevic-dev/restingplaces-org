@@ -1,25 +1,34 @@
-[qa] 16373 HTML files, 33464 total files in dist/
+[qa] 16524 HTML files, 33855 total files in dist/
 {
-  "html_files": 16373,
-  "internal_links_checked": 504471,
+  "html_files": 16524,
+  "internal_links_checked": 649791,
   "broken_internal_links": 0,
   "broken_sample": [],
   "orphan_pages": 0,
   "orphan_sample": [],
   "compliance": {
-    "findagrave_linkouts": 2167,
+    "findagrave_linkouts": 2166,
     "findagrave_img_or_data": 0,
     "billiongraves_src_or_href": 0,
     "billiongraves_text_mentions": 2,
     "cache_buckets": [
       "commons",
+      "commons_categorymembers",
+      "geo-wdqs-continents",
+      "geo-wdqs-resolve",
+      "geo-wdqs-v2",
+      "google-places-details",
+      "google-places-search",
       "mediawiki",
       "nominatim",
+      "overpass",
       "wdqs"
     ]
   },
   "images": {
-    "total_rendered": 1887,
+    "total_rendered": 8554,
+    "commons_or_gallery": 6124,
+    "live_map_embeds": 2430,
     "violations": 0,
     "violation_sample": []
   },
@@ -100,23 +109,23 @@
     "llms-full.txt": "ok (683.6 KB)",
     "rss.xml": "ok (3.6 KB)",
     "api/cemeteries.json": "ok (1171.4 KB)",
-    "api/interments.json": "ok (9054.0 KB)"
+    "api/interments.json": "ok (9176.5 KB)"
   },
   "external_hosts": {
-    "en.wikipedia.org": 69444,
-    "restingplaces.site": 16373,
-    "www.openstreetmap.org": 14128,
-    "www.wikidata.org": 13970,
-    "commons.wikimedia.org": 5662,
-    "creativecommons.org": 3229,
+    "en.wikipedia.org": 69493,
+    "restingplaces.site": 16524,
+    "www.wikidata.org": 16446,
+    "www.openstreetmap.org": 14161,
+    "commons.wikimedia.org": 14140,
+    "creativecommons.org": 6806,
+    "maps.googleapis.com": 2430,
     "www.google.com": 2430,
-    "www.findagrave.com": 2167,
+    "www.findagrave.com": 2166,
     "www.cem.va.gov": 48,
     "www.dignitymemorial.com": 11,
     "www.abmc.gov": 10,
     "www.gmct.com.au": 6,
     "www.catholiccemeterieschicago.org": 6,
-    "www.nps.gov": 5,
-    "www.paris.fr": 5
+    "www.nps.gov": 5
   }
 }

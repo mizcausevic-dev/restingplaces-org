@@ -78,6 +78,28 @@ const jsonld = [
       });
     </script>
     <noscript><p class="note">Search needs JavaScript. Browse by country, type, or era below instead.</p></noscript>
+
+    <p>
+      <a id="random-cemetery" class="button" href="/cemeteries/">Take me to a random cemetery</a>
+    </p>
+    <script is:inline>
+      window.addEventListener('DOMContentLoaded', () => {
+        const link = document.getElementById('random-cemetery');
+        if (!link) return;
+        link.addEventListener('click', async (e) => {
+          e.preventDefault();
+          try {
+            const res = await fetch('/api/cemeteries.json');
+            const data = await res.json();
+            const list = data.cemeteries;
+            const pick = list && list.length ? list[Math.floor(Math.random() * list.length)] : null;
+            location.href = pick && pick.url ? pick.url : '/cemeteries/';
+          } catch {
+            location.href = '/cemeteries/';
+          }
+        });
+      });
+    </script>
   </section>
 
   <h2>The most documented resting places</h2>
@@ -118,6 +140,11 @@ const jsonld = [
       <li><a href={`/guides/${slug}/`}>{g.title}</a></li>
     ))}
   </ul>
+
+  <h2>Learn and explore</h2>
+  <p>
+    Two ways to spend a few more minutes with what this directory has documented: a <a href="/glossary/">glossary</a> of the cemetery and burial terms used throughout the site, from mausoleum to catacombs to heritage status, and a <a href="/quiz/">quiz</a> built entirely from real, sourced cemetery and interment records, not invented trivia.
+  </p>
 
   <h2>For researchers and machines</h2>
   <p>

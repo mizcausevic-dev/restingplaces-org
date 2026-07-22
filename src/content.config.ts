@@ -15,6 +15,7 @@ const interment = z.object({
   person_qid: z.string().regex(/^Q\d+$/),
   person_slug: z.string().nullable(), // null when below the /buried/ page tier
   known_for: z.string().nullable(),
+  nationality: z.string().nullable(),
   birth_year: z.number().int().nullable(),
   death_year: z.number().int().nullable(),
 });
@@ -75,12 +76,32 @@ const cemeteries = defineCollection({
     notable_interments: z.array(interment),
     notable_interments_total: z.number().int(),
     has_notable_interments: z.boolean(),
+    occupation_breakdown: z.array(
+      z.object({
+        label: z.string().min(1),
+        count: z.number().int().min(2),
+        pct: z.number().int().min(0).max(100),
+      })
+    ),
     photo: photo.nullable(),
+    gallery: z.array(photo).max(3), // capped multi-image gallery, see gallery-Claude.mjs; [] when no P373 category or nothing passed the gate
     google_place_id: z.string().nullable(),
     hours: hours.nullable(), // freshness-gated: null unless live-fetched
     short_desc: z.string().min(1),
     history: z.string().nullable(),
     related_slugs: z.array(z.string()),
+    // Genuinely distance-based supplement to related_slugs (which scores by
+    // shared country/region/type/era, not real geography). Null when this
+    // cemetery itself has no coordinates; a distance can't be claimed to or
+    // from an unlocated place.
+    nearby_slugs: z
+      .array(
+        z.object({
+          slug: z.string().min(1),
+          distance_km: z.number().min(0),
+        })
+      )
+      .nullable(),
     seed_sublists: z.array(z.string()),
     classification_source: z.literal('generated'),
     classification_reviewed: z.boolean(),

@@ -11,6 +11,14 @@ import { writeJson, ROOT } from './lib/api-Claude.mjs';
 const records = JSON.parse(await readFile(path.join(ROOT, 'data', 'enriched-Claude.json'), 'utf8'));
 const rights = JSON.parse(await readFile(path.join(ROOT, 'data', 'image-rights-report-Claude.json'), 'utf8'));
 const geoMetadata = JSON.parse(await readFile(path.join(ROOT, 'data', 'country-metadata-Claude.json'), 'utf8'));
+// Capped multi-image gallery (up to 3 per cemetery), see gallery-Claude.mjs.
+// Optional file: an empty {} is a valid "gallery pipeline not yet run" state.
+let galleryByQid = {};
+try {
+  galleryByQid = JSON.parse(await readFile(path.join(ROOT, 'data', 'gallery-Claude.json'), 'utf8'));
+} catch {
+  // not run yet; every record gets gallery: []
+}
 const PERSON_PAGE_SITELINKS = 15; // /buried/ page threshold, see phase 2 gate note
 
 // ---------- helpers ----------
@@ -203,6 +211,98 @@ function related(r) {
     .map((x) => x.o.slug);
 }
 
+// ---------- nearby cemeteries (real haversine distance) ----------
+// Supplements related_slugs (category-similarity scoring) with genuinely
+// geographic nearest-neighbors. Only records with coordinates participate;
+// a cemetery with no coordinates gets nearby_slugs: null (can't claim a
+// real distance to or from an unlocated place). O(n^2) over ~2,430 coord
+// records (~2.95M pairs) computed once here at build time, each record
+// keeping a running top-5-nearest list rather than sorting all pairs.
+const RAD = Math.PI / 180;
+const coordRecords = records
+  .filter((r) => r.coordinates)
+  .map((r) => ({
+    slug: r.slug,
+    lat: r.coordinates.lat,
+    lng: r.coordinates.lng,
+    latRad: r.coordinates.lat * RAD,
+    lngRad: r.coordinates.lng * RAD,
+  }));
+coordRecords.forEach((r) => {
+  r.cosLat = Math.cos(r.latRad);
+  r.sinLat = Math.sin(r.latRad);
+});
+
+const EARTH_RADIUS_KM = 6371;
+function haversineKm(a, b) {
+  const dLat = b.latRad - a.latRad;
+  const dLng = b.lngRad - a.lngRad;
+  const sinDLat = Math.sin(dLat / 2);
+  const sinDLng = Math.sin(dLng / 2);
+  const h = sinDLat * sinDLat + a.cosLat * b.cosLat * sinDLng * sinDLng;
+  return EARTH_RADIUS_KM * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+}
+
+const NEARBY_COUNT = 5;
+const nearestBySlug = new Map(coordRecords.map((r) => [r.slug, []])); // bounded top-5, ascending distance
+
+function considerNeighbor(list, slug, distance) {
+  if (list.length < NEARBY_COUNT) {
+    list.push({ slug, distance });
+    list.sort((a, b) => a.distance - b.distance);
+  } else if (distance < list[NEARBY_COUNT - 1].distance) {
+    list[NEARBY_COUNT - 1] = { slug, distance };
+    list.sort((a, b) => a.distance - b.distance);
+  }
+}
+
+for (let i = 0; i < coordRecords.length; i++) {
+  const a = coordRecords[i];
+  const aList = nearestBySlug.get(a.slug);
+  for (let j = i + 1; j < coordRecords.length; j++) {
+    const b = coordRecords[j];
+    const d = haversineKm(a, b);
+    considerNeighbor(aList, b.slug, d);
+    considerNeighbor(nearestBySlug.get(b.slug), a.slug, d);
+  }
+}
+
+function nearbySlugsFor(r) {
+  if (!r.coordinates) return null;
+  return nearestBySlug.get(r.slug).map((x) => ({ slug: x.slug, distance_km: Math.round(x.distance * 10) / 10 }));
+}
+
+// ---------- occupation breakdown ----------
+// known_for is free text straight from Wikidata P106, usually 1-3
+// comma-separated occupation labels (e.g. "writer, poet, playwright").
+// Aggregated over the FULL notable_interments list for the cemetery, not
+// just the top INTERMENTS_SHOWN slice below, so the percentages reflect the
+// whole documented population, not just the most-covered subset of it.
+function occupationBreakdown(interments) {
+  const total = interments.length;
+  if (total === 0) return [];
+  const counts = new Map();
+  for (const p of interments) {
+    if (!p.known_for) continue;
+    // A person's own known_for can repeat a label (rare Wikidata duplication);
+    // de-dupe per-person first so one person can't inflate a single label's count.
+    const labels = new Set(
+      p.known_for
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean)
+    );
+    for (const label of labels) {
+      counts.set(label, (counts.get(label) ?? 0) + 1);
+    }
+  }
+  return Array.from(counts.entries())
+    .filter(([, count]) => count >= 2) // exclude one-off unique labels; not a real breakdown
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([label, count]) => ({ label, count, pct: Math.round((count / total) * 100) }));
+}
+
 // ---------- final collection ----------
 const INTERMENTS_SHOWN = 25;
 const collection = records.map((r) => {
@@ -251,17 +351,21 @@ const collection = records.map((r) => {
       person_qid: p.person_qid,
       person_slug: personSlugByQid.get(p.person_qid) ?? null,
       known_for: p.known_for,
+      nationality: p.nationality ?? null,
       birth_year: p.birth_year,
       death_year: p.death_year,
     })),
     notable_interments_total: interments.length,
     has_notable_interments: interments.length > 0,
+    occupation_breakdown: occupationBreakdown(interments),
     photo,
+    gallery: galleryByQid[r.qid] ?? [],
     google_place_id: null,
     hours: null,
     short_desc: shortDesc(r, interments),
     history: null,
     related_slugs: related(r),
+    nearby_slugs: nearbySlugsFor(r),
     seed_sublists: r.sublists,
     classification_source: 'generated',
     classification_reviewed: false,
@@ -286,9 +390,16 @@ const report = {
     without: collection.filter((r) => !r.has_notable_interments).length,
   },
   photos_cleared: collection.filter((r) => r.photo).length,
+  gallery_images_cleared: collection.reduce((a, r) => a + r.gallery.length, 0),
+  cemeteries_with_gallery: collection.filter((r) => r.gallery.length > 0).length,
   buried_pages: buried.length,
   buried_page_threshold: `sitelinks >= ${PERSON_PAGE_SITELINKS} (of 70270 qualifying persons, page tier only; full graph ships in /api/interments.json)`,
   classification: 'generated, unreviewed (classification_reviewed=false on every record)',
+  nearby_slugs: {
+    cemeteries_with_coordinates: coordRecords.length,
+    cemeteries_without_coordinates: collection.length - coordRecords.length,
+    method: 'haversine distance in km over real coordinates, top 5 nearest per record',
+  },
 };
 await writeJson('data/classification-report-Claude.json', report);
 console.log(JSON.stringify(report, null, 2));

@@ -10,13 +10,15 @@ interface Props {
   country_iso2?: string | null;
   established_year?: number | null;
   notable_interments_total?: number;
+  distance_km?: number | null;
 }
-const { slug, name, city, region, country, country_iso2, established_year, notable_interments_total } = Astro.props;
+const { slug, name, city, region, country, country_iso2, established_year, notable_interments_total, distance_km } = Astro.props;
 const flag = flagEmoji(country_iso2 ?? null);
 const placeText = [city ?? region, country].filter(Boolean).join(', ');
 const place = flag && placeText ? `${flag} ${placeText}` : placeText;
 const bits = [
   place,
+  distance_km != null ? `${distance_km} km away` : null,
   established_year ? `est. ${established_year}` : null,
   notable_interments_total ? `${notable_interments_total} notable interment${notable_interments_total === 1 ? '' : 's'}` : null,
 ].filter(Boolean);

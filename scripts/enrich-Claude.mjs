@@ -46,6 +46,7 @@ SELECT ?item ?itemLabel ?coord ?inception ?areaM2 ?countryLabel
        (SAMPLE(?adminL) AS ?adminLabel) (SAMPLE(?adminIsCity) AS ?adminCity)
        (SAMPLE(?adminUpL) AS ?adminUpLabel)
        (SAMPLE(?image) AS ?img) (SAMPLE(?website) AS ?site)
+       (SAMPLE(?commonsCat) AS ?ccat)
        (SAMPLE(?nrhp) AS ?nrhpId) (SAMPLE(?heritageL) AS ?heritageLabel)
        (SAMPLE(?osm) AS ?osmRel) (SAMPLE(?fag) AS ?fagId)
        (GROUP_CONCAT(DISTINCT ?typeL; separator="|") AS ?types)
@@ -63,6 +64,7 @@ WHERE {
     OPTIONAL { ?admin wdt:P131 ?adminUp . ?adminUp rdfs:label ?adminUpL FILTER(LANG(?adminUpL) = "en") }
   }
   OPTIONAL { ?item wdt:P18 ?image }
+  OPTIONAL { ?item wdt:P373 ?commonsCat }
   OPTIONAL { ?item wdt:P856 ?website }
   OPTIONAL { ?item wdt:P649 ?nrhp }
   OPTIONAL { ?item wdt:P1435 ?heritage . ?heritage rdfs:label ?heritageL FILTER(LANG(?heritageL) = "en") }
@@ -108,6 +110,7 @@ const enriched = new Map();
         admin_is_city: b.adminCity?.value === 'true',
         admin_up: b.adminUpLabel?.value ?? null,
         commons_image: b.img ? decodeURIComponent(b.img.value.split('/Special:FilePath/')[1] ?? '').replace(/_/g, ' ') || null : null,
+        commons_category: b.ccat?.value ?? null, // P373: Commons category name, raw (no "Category:" prefix)
         official_website: b.site?.value ?? null,
         heritage_id: b.nrhpId?.value ? `NRHP ${b.nrhpId.value}` : b.heritageLabel?.value ?? null,
         osm_id: b.osmRel ? `relation/${b.osmRel.value}` : null,
@@ -127,6 +130,7 @@ async function intermentBatch(qids) {
   const query = `
 SELECT ?cem ?person ?personLabel ?birth ?death ?sitelinks ?article
        (GROUP_CONCAT(DISTINCT ?occL; separator=", ") AS ?occs)
+       (GROUP_CONCAT(DISTINCT ?natL; separator=", ") AS ?nationalities)
 WHERE {
   VALUES ?cem { ${values} }
   ?person wdt:P119 ?cem ; wdt:P570 ?death .
@@ -134,6 +138,7 @@ WHERE {
   ?person wikibase:sitelinks ?sitelinks .
   OPTIONAL { ?person wdt:P569 ?birth }
   OPTIONAL { ?person wdt:P106 ?occ . ?occ rdfs:label ?occL FILTER(LANG(?occL) = "en") }
+  OPTIONAL { ?person wdt:P27 ?nat . ?nat rdfs:label ?natL FILTER(LANG(?natL) = "en") }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
 GROUP BY ?cem ?person ?personLabel ?birth ?death ?sitelinks ?article`;
@@ -177,6 +182,7 @@ const persons = new Map(); // person qid -> record
         birth_year: yearOf(b.birth),
         death_year: yearOf(b.death),
         known_for: b.occs?.value ? b.occs.value.split(', ').slice(0, 3).join(', ') : null,
+        nationality: b.nationalities?.value ? b.nationalities.value.split(', ').slice(0, 2).join(', ') : null,
         sitelinks: Number(b.sitelinks?.value ?? 0),
         wikipedia_url: b.article?.value ?? null,
       };
@@ -250,6 +256,7 @@ const coverage = {
   admin_region: cov((r) => r.admin),
   area: cov((r) => r.area_hectares !== null),
   commons_image_candidate: cov((r) => r.commons_image),
+  commons_category: cov((r) => r.commons_category),
   official_website: cov((r) => r.official_website),
   heritage_id: cov((r) => r.heritage_id),
   osm_id: cov((r) => r.osm_id),

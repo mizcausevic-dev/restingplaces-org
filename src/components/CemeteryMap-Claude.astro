@@ -1,0 +1,60 @@
+---
+// Static map preview via Google Maps Platform's Maps Static API. The URL is
+// assembled as a plain string at build/render time; the image itself is
+// fetched live by each visitor's browser directly from Google, never
+// fetched or cached server-side by this build. That is a deliberate
+// distinction: Google Maps Platform's ToS allow a live per-request <img>
+// pointed at Static Maps, but forbid baking the returned PNG into dist/
+// for indefinite public redistribution. Google's own attribution is baked
+// into the returned image, so no separate on-page attribution text is
+// required.
+//
+// Renders nothing if PUBLIC_GOOGLE_MAPS_KEY is unset, same gated pattern as
+// AffiliateNote-Claude.astro and EmailCapture-Claude.astro, so the site
+// never ships a broken image tag.
+//
+// SECURITY NOTE for the site owner: production needs TWO separately-
+// restricted Google Maps Platform API keys, not one.
+//   1. An HTTP-referrer-restricted key (restricted to restingplaces.site),
+//      used here for the public, client-embedded Static Maps <img>.
+//   2. A SEPARATE, non-referrer-restricted key for any future server-side
+//      Places API calls in the build pipeline (scripts/enrich-Claude.mjs).
+//      Server-side requests carry no browser Referer header, so a
+//      referrer-restricted key would simply fail there.
+// Reusing one key for both breaks one of the two use cases. This has to be
+// set up in Google Cloud Console; it cannot be fixed in code. See .env for
+// the same note against the key currently in local use.
+interface Props {
+  lat: number;
+  lng: number;
+  name: string;
+}
+const { lat, lng, name } = Astro.props;
+const mapsKey = import.meta.env.PUBLIC_GOOGLE_MAPS_KEY ?? '';
+const mapUrl = mapsKey
+  ? `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=15&size=600x300&scale=2&markers=color:red%7C${lat},${lng}&key=${mapsKey}`
+  : '';
+---
+
+{mapUrl && (
+  <p class="map-preview">
+    <img
+      src={mapUrl}
+      alt={`Map showing the location of ${name}`}
+      width="600"
+      height="300"
+      loading="lazy"
+      decoding="async"
+    />
+  </p>
+)}
+
+<style>
+  .map-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+    display: block;
+  }
+</style>

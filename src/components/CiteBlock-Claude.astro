@@ -1,0 +1,38 @@
+---
+// Static, server-rendered citation text. No client JS, no fabricated date:
+// this site rebuilds continuously from Wikidata rather than shipping a
+// discrete publication or access date, so the date field is omitted rather
+// than invented (per the no-fabrication rule in CLAUDE.md).
+interface Props {
+  title: string;
+  url: string;
+  qid: string;
+  citeKey: string;
+}
+const { title, url, qid, citeKey } = Astro.props;
+
+// Avoid double punctuation when the title itself already ends in ? or !
+// (e.g. buried-page titles like "Where is X buried?").
+const endsWithPunctuation = /[.?!]$/.test(title);
+const quotedTitle = `"${title}${endsWithPunctuation ? '' : '.'}"`;
+const apa = `Resting Places. ${quotedTitle} restingplaces.site. Wikidata source record: ${qid}. ${url}`;
+
+const bibtex = `@misc{${citeKey},
+  title        = {${title}},
+  author       = {{Resting Places}},
+  howpublished = {\\url{${url}}},
+  note         = {Source record: Wikidata ${qid}}
+}`;
+---
+
+<section class="cite-block">
+  <h2>Cite this page</h2>
+  <p class="note">
+    This record has no publication or access date to cite honestly. It rebuilds continuously from Wikidata
+    rather than being dated, so the citations below leave the date field out rather than invent one.
+  </p>
+  <p class="note">APA-style</p>
+  <pre class="cite-text">{apa}</pre>
+  <p class="note">BibTeX</p>
+  <pre class="cite-text">{bibtex}</pre>
+</section>

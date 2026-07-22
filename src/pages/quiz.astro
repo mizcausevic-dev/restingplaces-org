@@ -1,0 +1,316 @@
+---
+import Base from '../layouts/Base-Claude.astro';
+import quizBank from '../../data/quiz-questions-Claude.json';
+
+const counts = {
+  buried_where: quizBank.modes.buried_where.questions.length,
+  cemetery_trivia: quizBank.modes.cemetery_trivia.questions.length,
+  mystery_grid: quizBank.modes.mystery_grid.questions.length,
+};
+const totalQuestions = counts.buried_where + counts.cemetery_trivia + counts.mystery_grid;
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Quiz | Resting Places',
+    url: new URL('/quiz/', Astro.site).href,
+    description: 'Explore documented cemeteries and notable interments through three short, field-derived quizzes.',
+    isPartOf: { '@type': 'WebSite', name: 'Resting Places', url: new URL('/', Astro.site).href },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Resting Places', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'Quiz', item: new URL('/quiz/', Astro.site).href },
+    ],
+  },
+];
+---
+
+<Base
+  title="Quiz | Resting Places"
+  description={`Three short quizzes built entirely from documented facts: ${totalQuestions.toLocaleString('en-US')} questions drawn from real cemetery and interment records.`}
+  jsonld={jsonld}
+>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a> › Quiz
+  </nav>
+
+  <h1>Quiz</h1>
+  <p class="lede">
+    A way to spend a few minutes with what this site has documented, not a trivia show. Every question and every
+    answer choice below, right or wrong, is a real value pulled from the same Wikidata-sourced records that back
+    the cemetery and interment pages. There is no invented distractor and no invented fact anywhere in these
+    {totalQuestions.toLocaleString('en-US')} questions. Pick a mode to begin; each round is 10 questions drawn at
+    random from that mode's full question set, so replaying turns up different ones.
+  </p>
+
+  <div id="quiz-app" data-endpoint="/api/quiz-questions.json">
+    <section id="mode-select" aria-label="Choose a quiz">
+      <div class="mode-grid">
+        <article class="mode-card">
+          <h2>Where Are They Buried?</h2>
+          <p>Match a documented public figure, by birth and death year and what they're known for, to their real, recorded resting place.</p>
+          <p class="note">{counts.buried_where.toLocaleString('en-US')} questions in the pool.</p>
+          <button type="button" class="start" data-mode="buried_where">Begin</button>
+        </article>
+        <article class="mode-card">
+          <h2>Cemetery Trivia</h2>
+          <p>Six question types about real cemeteries: founding decade, country, type, a documented interment, heritage status, and continent.</p>
+          <p class="note">{counts.cemetery_trivia.toLocaleString('en-US')} questions in the pool.</p>
+          <button type="button" class="start" data-mode="cemetery_trivia">Begin</button>
+        </article>
+        <article class="mode-card">
+          <h2>Historical Figure Mystery Grid</h2>
+          <p>Three real clues (era of death, what they're known for, recorded nationality) about one documented person. Guess who.</p>
+          <p class="note">{counts.mystery_grid.toLocaleString('en-US')} questions in the pool.</p>
+          <button type="button" class="start" data-mode="mystery_grid">Begin</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="quiz-stage" hidden aria-live="polite">
+      <p class="quiz-status" id="quiz-status"></p>
+      <div id="quiz-question"></div>
+      <p class="note quiz-source" id="quiz-source"></p>
+      <div class="quiz-controls">
+        <button type="button" id="quiz-next" hidden>Next question</button>
+        <button type="button" id="quiz-switch">Choose a different quiz</button>
+      </div>
+    </section>
+
+    <section id="quiz-summary" hidden aria-live="polite">
+      <h2>Round complete</h2>
+      <p id="quiz-summary-text"></p>
+      <div class="quiz-controls">
+        <button type="button" id="quiz-again">Play another round</button>
+        <button type="button" id="quiz-switch-2">Choose a different quiz</button>
+      </div>
+    </section>
+
+    <noscript><p class="note">The quiz needs JavaScript. Browse the <a href="/cemeteries/">full cemetery directory</a> instead.</p></noscript>
+  </div>
+
+  <h2>How these questions are made</h2>
+  <p>
+    Each question is generated at build time by a script that reads the same licensed, CC0 Wikidata records that
+    power the rest of the site (<a href="/api/cemeteries.json">cemetery index</a> and
+    <a href="/api/interments.json">interment graph</a>). Correct answers are the real field value on a real record;
+    wrong answers are real field values borrowed from other real records, never text written for the occasion. A
+    small number of fields (like the two established years older than 1 CE, and the sparsely-populated area figure)
+    are excluded rather than forced into a question type they don't fit. After you answer, each question links to
+    the actual cemetery or person page behind it, so you can keep reading.
+  </p>
+
+</Base>
+
+<style>
+  #quiz-app { margin: 1.4rem 0; }
+  .mode-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
+    gap: 0.9rem;
+  }
+  .mode-card {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1rem 1.1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .mode-card h2 { margin: 0 0 0.4rem; font-size: 1.08rem; }
+  .mode-card p { margin: 0.3rem 0; font-size: 0.94rem; }
+  .mode-card .note { flex-grow: 1; }
+  button {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+  }
+  button:hover { opacity: 0.92; }
+  button.secondary, #quiz-switch, #quiz-switch-2 {
+    background: transparent;
+    color: var(--accent-ink);
+    border-color: var(--rule);
+  }
+  .quiz-controls { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1rem; }
+  .quiz-status { font-size: 0.85rem; color: var(--muted); margin: 0 0 0.6rem; }
+  #quiz-question { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 1.1rem 1.2rem; }
+  #quiz-question .prompt { font-size: 1.05rem; margin: 0 0 0.9rem; }
+  #quiz-question ul.clues { list-style: none; padding: 0; margin: 0 0 1rem; }
+  #quiz-question ul.clues li {
+    padding: 0.5rem 0.7rem;
+    margin-bottom: 0.4rem;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 5px;
+    font-size: 0.95rem;
+  }
+  #quiz-question ul.clues li .clue-label { color: var(--muted); font-size: 0.78rem; display: block; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.15rem; }
+  ul.choices { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
+  ul.choices button {
+    width: 100%;
+    text-align: left;
+    background: var(--bg);
+    color: var(--ink);
+    border: 1px solid var(--rule);
+  }
+  ul.choices button:hover:not(:disabled) { border-color: var(--accent); }
+  ul.choices button:disabled { cursor: default; }
+  ul.choices button.correct { background: var(--quiz-correct-bg); border-color: var(--quiz-correct-border); color: var(--quiz-correct-ink); }
+  ul.choices button.incorrect { background: var(--quiz-wrong-bg); border-color: var(--quiz-wrong-border); color: var(--quiz-wrong-ink); }
+  .quiz-feedback { margin: 0.8rem 0 0; font-size: 0.95rem; }
+  .quiz-note { margin: 0.5rem 0 0; font-size: 0.85rem; color: var(--muted); font-style: italic; }
+  :root {
+    --quiz-correct-bg: #e6efe3; --quiz-correct-border: #47604c; --quiz-correct-ink: #27221a;
+    --quiz-wrong-bg: #f3e6df; --quiz-wrong-border: #a4593a; --quiz-wrong-ink: #27221a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --quiz-correct-bg: #223022; --quiz-correct-border: #93ac95; --quiz-correct-ink: #e9e2d4;
+      --quiz-wrong-bg: #332420; --quiz-wrong-border: #c9836a; --quiz-wrong-ink: #e9e2d4;
+    }
+  }
+</style>
+
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', () => {
+    const app = document.getElementById('quiz-app');
+    const endpoint = app.dataset.endpoint;
+
+    const modeSelect = document.getElementById('mode-select');
+    const stage = document.getElementById('quiz-stage');
+    const summary = document.getElementById('quiz-summary');
+    const statusEl = document.getElementById('quiz-status');
+    const questionEl = document.getElementById('quiz-question');
+    const sourceEl = document.getElementById('quiz-source');
+    const nextBtn = document.getElementById('quiz-next');
+    const summaryText = document.getElementById('quiz-summary-text');
+
+    const ROUND_SIZE = 10;
+    let bankPromise = null;
+    const state = { mode: null, modeTitle: '', round: [], index: 0, score: 0, answered: false };
+
+    function shuffle(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function loadBank() {
+      if (bankPromise) return bankPromise;
+      bankPromise = fetch(endpoint).then((r) => r.json());
+      return bankPromise;
+    }
+
+    function showView(view) {
+      modeSelect.hidden = view !== 'select';
+      stage.hidden = view !== 'stage';
+      summary.hidden = view !== 'summary';
+    }
+
+    function startMode(modeKey) {
+      statusEl.textContent = 'Loading questions…';
+      showView('stage');
+      questionEl.innerHTML = '';
+      sourceEl.textContent = '';
+      nextBtn.hidden = true;
+      loadBank().then((data) => {
+        const modeData = data.modes[modeKey];
+        state.mode = modeKey;
+        state.modeTitle = modeData.title;
+        state.round = shuffle(modeData.questions).slice(0, ROUND_SIZE);
+        state.index = 0;
+        state.score = 0;
+        renderQuestion();
+      });
+    }
+
+    function renderQuestion() {
+      state.answered = false;
+      nextBtn.hidden = true;
+      sourceEl.textContent = '';
+      const q = state.round[state.index];
+      statusEl.textContent = `${state.modeTitle}, question ${state.index + 1} of ${state.round.length}, score ${state.score}`;
+
+      const parts = [];
+      if (q.clues) {
+        parts.push(
+          '<ul class="clues">' +
+            q.clues.map((c, i) => `<li><span class="clue-label">Clue ${i + 1}</span>${escapeHtml(c)}</li>`).join('') +
+            '</ul>' +
+            '<p class="prompt">Who is this?</p>'
+        );
+      } else {
+        parts.push(`<p class="prompt">${escapeHtml(q.prompt)}</p>`);
+      }
+      parts.push(
+        '<ul class="choices">' +
+          q.choices.map((c, i) => `<li><button type="button" data-choice="${i}">${escapeHtml(c)}</button></li>`).join('') +
+          '</ul>'
+      );
+      parts.push('<p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>');
+      if (q.note) parts.push(`<p class="quiz-note">${escapeHtml(q.note)}</p>`);
+      questionEl.innerHTML = parts.join('');
+
+      questionEl.querySelectorAll('button[data-choice]').forEach((btn) => {
+        btn.addEventListener('click', () => onChoose(q, Number(btn.dataset.choice)));
+      });
+    }
+
+    function onChoose(q, chosenIndex) {
+      if (state.answered) return;
+      state.answered = true;
+      const buttons = questionEl.querySelectorAll('button[data-choice]');
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === q.answerIndex) btn.classList.add('correct');
+        else if (i === chosenIndex) btn.classList.add('incorrect');
+      });
+      const feedback = document.getElementById('quiz-feedback');
+      const correct = chosenIndex === q.answerIndex;
+      if (correct) {
+        state.score++;
+        feedback.textContent = 'Correct, that is the documented record.';
+      } else {
+        feedback.textContent = `Not quite. The documented record is: ${q.choices[q.answerIndex]}.`;
+      }
+      if (q.link) {
+        sourceEl.innerHTML = `Source: <a href="${q.link}">see the full record this question is drawn from</a>.`;
+      }
+      nextBtn.hidden = false;
+      statusEl.textContent = `${state.modeTitle}, question ${state.index + 1} of ${state.round.length}, score ${state.score}`;
+    }
+
+    function nextQuestion() {
+      state.index++;
+      if (state.index >= state.round.length) {
+        showView('summary');
+        summaryText.textContent = `You answered ${state.score} of ${state.round.length} correctly in ${state.modeTitle}.`;
+        return;
+      }
+      renderQuestion();
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    document.querySelectorAll('button.start').forEach((btn) => {
+      btn.addEventListener('click', () => startMode(btn.dataset.mode));
+    });
+    nextBtn.addEventListener('click', nextQuestion);
+    document.getElementById('quiz-switch').addEventListener('click', () => showView('select'));
+    document.getElementById('quiz-switch-2').addEventListener('click', () => showView('select'));
+    document.getElementById('quiz-again').addEventListener('click', () => startMode(state.mode));
+  });
+</script>

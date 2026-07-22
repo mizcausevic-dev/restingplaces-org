@@ -3,10 +3,18 @@ import { getCollection } from 'astro:content';
 import HubPage from '../../components/HubPage-Claude.astro';
 import { hubIntro } from '../../lib/hub-intro-Claude';
 
-export const TYPE_META: Record<string, { label: string; scope: string }> = {
-  'national-military': { label: 'National and military cemeteries', scope: 'dedicated to service members and national figures' },
+export const TYPE_META: Record<string, { label: string; scope: string; glossaryTerms?: string[] }> = {
+  'national-military': {
+    label: 'National and military cemeteries',
+    scope: 'dedicated to service members and national figures',
+    glossaryTerms: ['war-grave'],
+  },
   'religious-churchyard': { label: 'Religious cemeteries and churchyards', scope: 'tied to a faith community or house of worship' },
-  'historic-heritage': { label: 'Historic and heritage cemeteries', scope: 'with recorded heritage status or ancient origins' },
+  'historic-heritage': {
+    label: 'Historic and heritage cemeteries',
+    scope: 'with recorded heritage status or ancient origins',
+    glossaryTerms: ['heritage-status'],
+  },
   'garden-rural': { label: 'Garden and rural cemeteries', scope: 'designed in the landscaped garden tradition' },
   'natural-green-burial': { label: 'Natural and green burial grounds', scope: 'managed for natural burial' },
   'municipal-public': { label: 'Municipal and public cemeteries', scope: 'operated as public burial grounds' },
@@ -34,4 +42,5 @@ const meta = TYPE_META[Astro.params.slug!];
   cems={cems}
   groupBy="country"
   crumb={{ name: 'Types', href: '/type/' }}
+  glossaryTerms={meta.glossaryTerms}
 />

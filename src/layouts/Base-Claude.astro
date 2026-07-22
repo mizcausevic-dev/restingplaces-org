@@ -103,6 +103,11 @@ const canonical = new URL(canonicalPath ?? Astro.url.pathname, Astro.site).href;
       figure.photo { margin: 1rem 0; }
       figure.photo img { max-width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--rule); }
       figure.photo figcaption { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+      .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr)); gap: 0.9rem; margin: 0.7rem 0 1.2rem; }
+      .gallery figure.photo { margin: 0; }
+      .gallery figure.photo img { width: 100%; }
+      .invite-slot { border: 1px dashed var(--rule); border-radius: 6px; padding: 1rem 1.2rem; margin: 0.9rem 0 1.4rem; color: var(--muted); }
+      .invite-slot p { margin: 0; font-size: 0.92rem; font-style: italic; }
       .note { font-size: 0.85rem; color: var(--muted); }
       .lede { font-size: 1.06rem; }
       section.capture { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.2rem; margin: 2rem 0 0; }
@@ -110,6 +115,19 @@ const canonical = new URL(canonicalPath ?? Astro.url.pathname, Astro.site).href;
       section.capture button { padding: 0.45rem 1rem; border: 1px solid var(--accent); border-radius: 4px; background: var(--accent); color: #fff; cursor: pointer; }
       .two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
       @media (max-width: 44rem) { .two-col { grid-template-columns: 1fr; } }
+      table.facts thead th { color: var(--ink); font-weight: 600; border-bottom: 2px solid var(--rule); }
+      .cite-block { margin: 1.6rem 0; }
+      .cite-text {
+        background: var(--panel); border: 1px solid var(--rule); border-radius: 6px;
+        padding: 0.8rem 1rem; font: 0.82rem/1.55 'JetBrains Mono', ui-monospace, Consolas, monospace;
+        white-space: pre-wrap; overflow-x: auto; color: var(--ink);
+      }
+      a.button {
+        display: inline-block; padding: 0.5rem 1.15rem; border: 1px solid var(--accent);
+        border-radius: 999px; background: var(--accent); color: #fff; text-decoration: none;
+        font-size: 0.92rem; cursor: pointer;
+      }
+      a.button:hover { opacity: 0.88; color: #fff; }
     </style>
   </head>
   <body>
@@ -122,7 +140,10 @@ const canonical = new URL(canonicalPath ?? Astro.url.pathname, Astro.site).href;
           <a href="/#browse">Countries</a>
           <a href="/type/">Types</a>
           <a href="/era/">Eras</a>
+          <a href="/decade/">Decades</a>
           <a href="/guides/">Guides</a>
+          <a href="/glossary/">Glossary</a>
+          <a href="/quiz/">Quiz</a>
           <a href="/#search">Search</a>
           <a href="/about/">About</a>
         </nav>
@@ -144,6 +165,7 @@ const canonical = new URL(canonicalPath ?? Astro.url.pathname, Astro.site).href;
         <div>
           <a href="/about/">About</a> · <a href="/disclosure/">Disclosure</a> · <a href="/privacy/">Privacy</a> ·
           <a href="/image-credits/">Image credits</a> · <a href="/attribution/">Attribution</a> ·
+          <a href="/data-quality/">Data quality</a> ·
           <a href="/api/cemeteries.json">Data API</a> · <a href="/llms.txt">llms.txt</a>
         </div>
       </div>

@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base-Claude.astro';
+import { decadeOf, decadeSlug, decadeLabel } from '../../lib/decade-Claude';
+
+// Decades apply to PEOPLE (death_year on each documented notable person),
+// not to cemeteries directly, so this hub lists persons rather than
+// reusing HubPage-Claude/CemeteryCard-Claude (the cemetery-axis renderer
+// used by /country/, /type/, /era/, etc). Rendering follows the flat
+// person-list pattern already used at cemeteries/[slug]/interments/.
+
+export async function getStaticPaths() {
+  const all = await getCollection('persons');
+  const byDecade = new Map<number, any[]>();
+  for (const p of all) {
+    const decade = decadeOf(p.data.death_year);
+    if (decade === null) continue;
+    if (!byDecade.has(decade)) byDecade.set(decade, []);
+    byDecade.get(decade)!.push(p.data);
+  }
+  return [...byDecade.entries()].map(([decade, people]) => ({
+    params: { slug: decadeSlug(decade) },
+    props: {
+      decade,
+      people: people.sort((a, b) => (a.death_year! - b.death_year!) || a.name.localeCompare(b.name)),
+    },
+  }));
+}
+
+const { decade, people } = Astro.props;
+const label = decadeLabel(decade);
+const path = `/decade/${decadeSlug(decade)}/`;
+const desc = `${people.length} notable ${people.length === 1 ? 'person' : 'people'} documented at Resting Places cemeteries died in the ${label}, each sourced from Wikidata burial records.`;
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `People who died in the ${label}`,
+    numberOfItems: people.length,
+    itemListElement: people.slice(0, 100).map((p: any, i: number) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.name,
+      url: new URL(`/buried/${p.slug}/`, Astro.site).href,
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Resting Places', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'Decades', item: new URL('/decade/', Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: label, item: new URL(path, Astro.site).href },
+    ],
+  },
+];
+---
+
+<Base title={`People who died in the ${label} | Resting Places`} description={desc} jsonld={jsonld} canonicalPath={path}>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a> › <a href="/decade/">Decades</a>
+  </nav>
+
+  <article data-pagefind-body>
+    <h1>People who died in the {label}</h1>
+    <p class="lede">
+      {people.length} notable {people.length === 1 ? 'person' : 'people'} documented at Resting Places cemeteries died
+      in the {label}, according to Wikidata's death-date records. Listed by death year.
+    </p>
+    <ul class="plain">
+      {people.map((p: any) => (
+        <li>
+          <a href={`/buried/${p.slug}/`}>{p.name}</a>
+          {(p.birth_year || p.death_year) && ` (${p.birth_year ?? '?'}–${p.death_year ?? '?'})`}
+          {p.known_for && <span class="note">, {p.known_for}</span>}
+          {p.cemetery_name && (
+            <span class="note">
+              {' '}· buried at <a href={`/cemeteries/${p.cemetery_slug}/`}>{p.cemetery_name}</a>
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </article>
+</Base>

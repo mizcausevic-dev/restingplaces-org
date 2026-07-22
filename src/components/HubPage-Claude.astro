@@ -5,6 +5,7 @@
 import Base from '../layouts/Base-Claude.astro';
 import CemeteryCard from './CemeteryCard-Claude.astro';
 import EmailCapture from './EmailCapture-Claude.astro';
+import { GLOSSARY } from '../data/glossary-Claude';
 
 interface Props {
   title: string;
@@ -14,8 +15,16 @@ interface Props {
   cems: any[];
   groupBy?: 'region' | 'country' | null;
   crumb?: { name: string; href: string } | null;
+  // Optional glossary slugs (src/data/glossary-Claude.ts) to surface as a
+  // short definitional note above the intro. Only pass slugs for a clean,
+  // honest mapping (see /type/[slug].astro); country/region/city hub usages
+  // omit this entirely and are unaffected.
+  glossaryTerms?: string[];
 }
-const { title, h1, intro, path, cems, groupBy = null, crumb = null } = Astro.props;
+const { title, h1, intro, path, cems, groupBy = null, crumb = null, glossaryTerms = [] } = Astro.props;
+const glossaryNotes = glossaryTerms
+  .map((slug) => GLOSSARY.find((t) => t.slug === slug))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
 
 const groups = new Map<string, any[]>();
 if (groupBy) {
@@ -58,6 +67,13 @@ const jsonld = [
     {crumb && <> › <a href={crumb.href}>{crumb.name}</a></>}
   </nav>
   <h1>{h1}</h1>
+  {glossaryNotes.length > 0 && (
+    <p class="note glossary-lead">
+      {glossaryNotes.map((t, i) => (
+        <>{i > 0 && ' '}<strong>{t.term}:</strong> {t.definition}</>
+      ))}
+    </p>
+  )}
   <p class="lede">{intro}</p>
 
   {groupBy

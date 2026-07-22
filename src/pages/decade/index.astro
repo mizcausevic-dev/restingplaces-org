@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base-Claude.astro';
+import { decadeOf, decadeSlug, decadeLabel } from '../../lib/decade-Claude';
+
+const all = await getCollection('persons');
+const counts = new Map<number, number>();
+let undated = 0;
+for (const p of all) {
+  const decade = decadeOf(p.data.death_year);
+  if (decade === null) {
+    undated++;
+    continue;
+  }
+  counts.set(decade, (counts.get(decade) ?? 0) + 1);
+}
+const decades = [...counts.entries()]
+  .sort((a, b) => a[0] - b[0])
+  .map(([decade, count]) => ({ decade, label: decadeLabel(decade), href: `/decade/${decadeSlug(decade)}/`, count }));
+---
+
+<Base
+  title="Browse by decade of death | Resting Places"
+  description="Browse notable people documented at Resting Places cemeteries by the decade in which they died, from antiquity to the present."
+>
+  <h1>Browse by decade of death</h1>
+  <p class="lede">
+    Decades follow each documented person's recorded death year in Wikidata.
+    {undated} of {all.length} documented notable persons have no recorded death year and are not listed here; we never estimate one.
+  </p>
+  <ul class="cards">
+    {decades.map((d) => (
+      <li>
+        <a class="title" href={d.href}>{d.label}</a>
+        <div class="meta">{d.count} {d.count === 1 ? 'person' : 'people'}</div>
+      </li>
+    ))}
+  </ul>
+</Base>

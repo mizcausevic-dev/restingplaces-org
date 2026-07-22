@@ -95,21 +95,42 @@ try {
 } catch { /* no cache dir */ }
 
 // ---------- image-license audit ----------
+// Three legitimate <img> sources ship in dist/, each admissible for a
+// different reason:
+//  1. The single-hero photo (image-rights-Claude.mjs) and
+//  2. the capped gallery (gallery-Claude.mjs), both Commons Special:FilePath
+//     URLs that passed the same license gate (PD/CC0/CC BY/CC BY-SA).
+//  3. Google Maps Static API previews (CemeteryMap-Claude.astro): not a
+//     license-checked photo at all, a live per-visitor Google Maps fetch.
+//     Admissible under Maps Platform ToS specifically because it's a real
+//     googleapis.com URL rendered fresh in the visitor's browser, never
+//     fetched/stored/redistributed by this build. A src on any other host,
+//     or a maps.googleapis URL missing a real key param, is NOT admissible
+//     under this branch and still flags as a violation.
 const rights = JSON.parse(await readFile(path.join(ROOT, 'data', 'image-rights-report-Claude.json'), 'utf8'));
 const passUrls = new Set(
   Object.values(rights.verdicts)
     .filter((v) => v.verdict === 'PASS')
     .map((v) => v.url)
 );
+try {
+  const gallery = JSON.parse(await readFile(path.join(ROOT, 'data', 'gallery-Claude.json'), 'utf8'));
+  for (const photos of Object.values(gallery)) for (const p of photos) passUrls.add(p.url);
+} catch {
+  // gallery pipeline not run yet; no gallery images will be in dist/ either
+}
 const imgViolations = [];
 let imgCount = 0;
+let mapImgCount = 0;
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
   for (const m of html.matchAll(/<img[^>]+src="([^"]+)"/g)) {
     imgCount++;
-    const src = m[1];
-    const ok = src.startsWith('https://commons.wikimedia.org/wiki/Special:FilePath/') && passUrls.has(src.replace(/&amp;/g, '&'));
-    if (!ok) imgViolations.push({ file: path.relative(DIST, file), src: src.slice(0, 120) });
+    const src = m[1].replace(/&amp;/g, '&');
+    const isCommonsPass = src.startsWith('https://commons.wikimedia.org/wiki/Special:FilePath/') && passUrls.has(src);
+    const isLiveMapEmbed = /^https:\/\/maps\.googleapis\.com\/maps\/api\/staticmap\?/.test(src) && /[?&]key=[^&]+/.test(src);
+    if (isLiveMapEmbed) mapImgCount++;
+    if (!isCommonsPass && !isLiveMapEmbed) imgViolations.push({ file: path.relative(DIST, file), src: src.slice(0, 120) });
   }
 }
 
@@ -191,7 +212,7 @@ const report = {
     billiongraves_text_mentions: compliance.billiongraves_text_mentions,
     cache_buckets: cacheBuckets,
   },
-  images: { total_rendered: imgCount, violations: imgViolations.length, violation_sample: imgViolations.slice(0, 10) },
+  images: { total_rendered: imgCount, commons_or_gallery: imgCount - mapImgCount, live_map_embeds: mapImgCount, violations: imgViolations.length, violation_sample: imgViolations.slice(0, 10) },
   freshness: { pages_showing_hours: hoursPages, note: 'expected 0: no live hours source configured' },
   schema_samples: schemaResults,
   endpoints: endpointStatus,

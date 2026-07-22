@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base-Claude.astro';
+import coverage from '../../data/coverage-report-Claude.json';
+import classification from '../../data/classification-report-Claude.json';
+import rights from '../../data/image-rights-report-Claude.json';
+
+// Real, already-computed numbers from the build pipeline (scripts/qa-Claude.mjs
+// and scripts/gen-dashboard-Claude.mjs write these same reports for the
+// operator-only dashboard at docs/coverage-dashboard-Claude.html). This page
+// surfaces a public-facing subset of the same figures, nothing recomputed
+// and nothing estimated.
+
+const all = await getCollection('cemeteries');
+const total = coverage.total_entities;
+const pct = (n: number) => ((n / total) * 100).toFixed(1);
+
+const fields: { label: string; n: number; note?: string }[] = [
+  { label: 'Coordinates', n: coverage.coordinates, note: `${coverage.coordinates_wikidata.toLocaleString('en-US')} from Wikidata, ${coverage.coordinates_nominatim.toLocaleString('en-US')} from OpenStreetMap Nominatim as fallback` },
+  { label: 'Country', n: coverage.country },
+  { label: 'Region', n: coverage.admin_region },
+  { label: 'Established year', n: coverage.established_year, note: 'only when Wikidata records a founding date' },
+  { label: 'Heritage status', n: coverage.heritage_id, note: 'only for sites with a recorded heritage designation' },
+  { label: 'Official website', n: coverage.official_website },
+  { label: 'Area', n: coverage.area },
+  { label: 'Find a Grave link-out', n: coverage.findagrave_linkout, note: 'reference link only, never scraped' },
+  { label: 'At least one notable interment', n: coverage.with_notable_interments },
+];
+
+const photosPassRate = ((rights.pass / rights.checked) * 100).toFixed(1);
+const typedCount = total - (classification.type_distribution['(untyped)'] ?? 0);
+const eraCount = total - (classification.era_distribution['(no established date)'] ?? 0);
+---
+
+<Base
+  title="Data quality and completeness | Resting Places"
+  description={`How complete the Resting Places record is: real field coverage across ${total.toLocaleString('en-US')} cemeteries, computed at build time, nothing estimated.`}
+>
+  <h1>Data quality and completeness</h1>
+  <p class="lede">
+    Resting Places documents {total.toLocaleString('en-US')} cemeteries. This page reports, plainly, which facts are
+    on record and which are honestly missing. As explained on <a href="/about/">About</a>, a field with no licensed
+    source is left blank rather than guessed or estimated, so the gaps below are a design choice, not an oversight.
+    These are the same figures our build pipeline computes on every rebuild, not a marketing summary.
+  </p>
+
+  <h2>Field coverage</h2>
+  <table class="facts">
+    <thead>
+      <tr><th>Field</th><th>Documented</th><th>Coverage</th></tr>
+    </thead>
+    <tbody>
+      {fields.map((f) => (
+        <tr>
+          <th>{f.label}</th>
+          <td>{f.n.toLocaleString('en-US')} of {total.toLocaleString('en-US')}{f.note && <div class="note">{f.note}</div>}</td>
+          <td>{pct(f.n)}%</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2>Photographs</h2>
+  <p>
+    {rights.checked.toLocaleString('en-US')} candidate photographs from Wikimedia Commons were reviewed individually
+    for license status. {rights.pass.toLocaleString('en-US')} passed ({photosPassRate}%) and appear on their cemetery's
+    page with full credit and a link back to the source file. {rights.fail.toLocaleString('en-US')} failed the check
+    (GFDL, FAL, "Licence Ouverte", and similar licenses this site does not display under) and were left out; those
+    pages ship text-forward rather than with an unlicensed image. A further{' '}
+    {rights.no_image_entities.toLocaleString('en-US')} cemeteries had no Commons candidate at all to check.
+  </p>
+
+  <h2>Classification</h2>
+  <p>
+    Type and era tags are generated from each cemetery's Wikidata classification, heritage status, and founding date,
+    not assigned by a human reviewer one by one, and <a href="/about/">About</a> says so plainly.{' '}
+    {typedCount.toLocaleString('en-US')} of {total.toLocaleString('en-US')} cemeteries ({pct(typedCount)}%) carry a type tag; the
+    rest have source records that do not support one, so they stay untagged rather than being guessed at.{' '}
+    {eraCount.toLocaleString('en-US')} ({pct(eraCount)}%) carry an era tag, which depends on the same established-year field above.
+  </p>
+
+  <h2>What's absent sitewide, and why</h2>
+  <ul class="plain">
+    <li>
+      <strong>Opening hours</strong> appear on no page. {coverage.google_places_note}. Hours are the kind of fact
+      that goes stale fast, so this site would rather show nothing than a number nobody has checked recently.
+    </li>
+    <li>
+      <strong>Narrative history text</strong> is not written for any cemetery. At this scale, templated ~150-word
+      histories read as thin, formulaic content rather than real editorial writing, so pages stay data-forward and
+      link out to Wikipedia for narrative history instead. Real per-cemetery history writing is possible later, done
+      editorially rather than generated in bulk.
+    </li>
+    <li>
+      <strong>Visit photos and video from the public</strong> are not yet part of the record; cemetery pages mark
+      the space reserved for that rather than leaving it unexplained.
+    </li>
+  </ul>
+
+  <h2>Help close a gap</h2>
+  <p>
+    Every fact traces back to a source record, and the fastest way to fix or add one is at that source: correct or
+    extend the item on <a href="https://www.wikidata.org/" rel="nofollow">Wikidata</a>, and it flows into this
+    site's next rebuild. Each cemetery page links its own Wikidata item under "Records and sources."
+  </p>
+</Base>

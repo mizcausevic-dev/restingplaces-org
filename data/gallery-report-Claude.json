@@ -1,0 +1,16 @@
+{
+  "cemeteries_total": 2443,
+  "cemeteries_with_commons_category": 1625,
+  "categories_with_zero_direct_files": 96,
+  "distinct_candidate_files_checked": 11350,
+  "cemeteries_with_at_least_one_passing_image": 1524,
+  "image_count_distribution": {
+    "0": 101,
+    "1": 115,
+    "2": 109,
+    "3": 1300
+  },
+  "max_per_cemetery": 3,
+  "candidates_per_category_requested": 10,
+  "note": "flat categorymembers query only sees files filed directly in the category, not subcategories; expect modest or zero yields for flagship cemeteries whose real photo pools live in subcats"
+}

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base-Claude.astro';
+import CiteBlock from '../../components/CiteBlock-Claude.astro';
 
 export async function getStaticPaths() {
   const persons = await getCollection('persons');
@@ -19,6 +20,8 @@ const { person, cem, others } = Astro.props;
 const years = person.birth_year || person.death_year ? ` (${person.birth_year ?? '?'}–${person.death_year ?? '?'})` : '';
 const place = [person.cemetery_city ?? person.cemetery_region, person.cemetery_country].filter(Boolean).join(', ');
 const answer = `${person.name} is buried at ${person.cemetery_name}${place ? ` in ${place}` : ''}, according to Wikidata burial records.`;
+const pageTitle = `Where is ${person.name} buried?`;
+const pageUrl = new URL(`/buried/${person.slug}/`, Astro.site).href;
 
 const jsonld = [
   {
@@ -107,5 +110,7 @@ const jsonld = [
         </ul>
       </>
     )}
+
+    <CiteBlock title={pageTitle} url={pageUrl} qid={person.qid} citeKey={`restingplaces-${person.slug}`} />
   </article>
 </Base>

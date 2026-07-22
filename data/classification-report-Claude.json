@@ -31,5 +31,12 @@
     "cemeteries_with_coordinates": 2430,
     "cemeteries_without_coordinates": 13,
     "method": "haversine distance in km over real coordinates, top 5 nearest per record"
+  },
+  "hours": {
+    "with_hours": 16,
+    "from_osm_overpass": 3,
+    "from_google_places": 13,
+    "without_hours": 2427,
+    "note": "freshness-gated: null unless live-fetched this run by scripts/hours-Claude.mjs, see data/hours-report-Claude.json for the real run cost/timing"
   }
 }

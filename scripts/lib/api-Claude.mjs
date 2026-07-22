@@ -19,7 +19,7 @@ function cachePath(bucket, key) {
   return path.join(CACHE_DIR, bucket, `${hash}.json`);
 }
 
-export async function cachedJson(bucket, url, { headers = {}, method = 'GET', body = null, retries = 5, delayMs = 0 } = {}) {
+export async function cachedJson(bucket, url, { headers = {}, method = 'GET', body = null, retries = 5, delayMs = 0, timeoutMs = 30000 } = {}) {
   const key = method + ' ' + url + (body ? ' ' + body : '');
   const file = cachePath(bucket, key);
   try {
@@ -27,16 +27,37 @@ export async function cachedJson(bucket, url, { headers = {}, method = 'GET', bo
   } catch {
     // not cached yet
   }
-  let lastErr;
+  // Real pre-existing bug, surfaced by the hours-Claude.mjs run: if every
+  // attempt exhausts via the 429/503 branch below (repeated on an
+  // overloaded shared instance like overpass-api.de), that branch
+  // `continue`s without ever populating lastErr, so `throw lastErr` at the
+  // end threw `undefined` instead of an Error — crashing any caller that
+  // reads `err.message`. Seed a real Error up front so that can't happen.
+  let lastErr = new Error(`cachedJson: exhausted ${retries} retries for ${url}`);
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
       if (delayMs) await sleep(delayMs);
-      const res = await fetch(url, {
-        method,
-        body,
-        headers: { 'user-agent': USER_AGENT, ...headers },
-      });
+      // Bounded per-attempt timeout: plain fetch() has no default timeout,
+      // so a stalled/half-open connection to a shared public instance (e.g.
+      // overpass-api.de under load) can otherwise hang the whole process
+      // indefinitely — real, hit during the 2,443-cemetery hours run, not
+      // theoretical. AbortController turns that into a normal timeout error
+      // that flows into this same retry/backoff path below.
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(new Error(`timeout after ${timeoutMs}ms`)), timeoutMs);
+      let res;
+      try {
+        res = await fetch(url, {
+          method,
+          body,
+          headers: { 'user-agent': USER_AGENT, ...headers },
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timer);
+      }
       if (res.status === 429 || res.status === 503) {
+        lastErr = new Error(`HTTP ${res.status} (rate-limited/unavailable) for ${url}`);
         const retryAfter = Number(res.headers.get('retry-after')) || 5 * (attempt + 1);
         await sleep(retryAfter * 1000);
         continue;

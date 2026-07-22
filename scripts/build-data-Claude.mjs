@@ -19,6 +19,16 @@ try {
 } catch {
   // not run yet; every record gets gallery: []
 }
+// Real, live-checked opening hours (OSM Overpass free tier, then Google
+// Places Details as a fallback), see scripts/hours-Claude.mjs. Keyed by
+// cemetery slug. Optional file: an empty {} is a valid "hours pipeline not
+// yet run" state, and every record correctly gets hours: null below.
+let hoursBySlug = {};
+try {
+  hoursBySlug = JSON.parse(await readFile(path.join(ROOT, 'data', 'hours-Claude.json'), 'utf8'));
+} catch {
+  // not run yet; every record gets hours: null, google_place_id: null
+}
 const PERSON_PAGE_SITELINKS = 15; // /buried/ page threshold, see phase 2 gate note
 
 // ---------- helpers ----------
@@ -360,8 +370,14 @@ const collection = records.map((r) => {
     occupation_breakdown: occupationBreakdown(interments),
     photo,
     gallery: galleryByQid[r.qid] ?? [],
-    google_place_id: null,
-    hours: null,
+    google_place_id: hoursBySlug[r.slug]?.google_place_id ?? null,
+    hours: hoursBySlug[r.slug]
+      ? {
+          weekday_text: hoursBySlug[r.slug].weekday_text,
+          last_checked: hoursBySlug[r.slug].last_checked,
+          source: hoursBySlug[r.slug].source,
+        }
+      : null,
     short_desc: shortDesc(r, interments),
     history: null,
     related_slugs: related(r),
@@ -399,6 +415,13 @@ const report = {
     cemeteries_with_coordinates: coordRecords.length,
     cemeteries_without_coordinates: collection.length - coordRecords.length,
     method: 'haversine distance in km over real coordinates, top 5 nearest per record',
+  },
+  hours: {
+    with_hours: collection.filter((r) => r.hours).length,
+    from_osm_overpass: collection.filter((r) => r.hours?.source === 'osm-overpass').length,
+    from_google_places: collection.filter((r) => r.hours?.source === 'google-places').length,
+    without_hours: collection.filter((r) => !r.hours).length,
+    note: 'freshness-gated: null unless live-fetched this run by scripts/hours-Claude.mjs, see data/hours-report-Claude.json for the real run cost/timing',
   },
 };
 await writeJson('data/classification-report-Claude.json', report);

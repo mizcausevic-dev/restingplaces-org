@@ -1,6 +1,6 @@
 {
   "html_files": 16524,
-  "internal_links_checked": 649791,
+  "internal_links_checked": 649792,
   "broken_internal_links": 0,
   "broken_sample": [],
   "orphan_pages": 0,
@@ -32,8 +32,8 @@
     "violation_sample": []
   },
   "freshness": {
-    "pages_showing_hours": 0,
-    "note": "expected 0: no live hours source configured"
+    "pages_showing_hours": 16,
+    "note": "real count of rendered <h2>Opening hours</h2> sections; should match classification-report-Claude.json hours.with_hours (0 if the hours pipeline has not been run yet)"
   },
   "schema_samples": [
     {

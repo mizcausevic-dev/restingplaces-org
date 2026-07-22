@@ -213,7 +213,7 @@ const report = {
     cache_buckets: cacheBuckets,
   },
   images: { total_rendered: imgCount, commons_or_gallery: imgCount - mapImgCount, live_map_embeds: mapImgCount, violations: imgViolations.length, violation_sample: imgViolations.slice(0, 10) },
-  freshness: { pages_showing_hours: hoursPages, note: 'expected 0: no live hours source configured' },
+  freshness: { pages_showing_hours: hoursPages, note: 'real count of rendered <h2>Opening hours</h2> sections; should match classification-report-Claude.json hours.with_hours (0 if the hours pipeline has not been run yet)' },
   schema_samples: schemaResults,
   endpoints: endpointStatus,
   external_hosts: Object.fromEntries([...externalHosts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 15)),

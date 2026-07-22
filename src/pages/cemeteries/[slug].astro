@@ -211,7 +211,9 @@ if (faq.length >= 2) {
       <>
         <h2>Opening hours</h2>
         <ul class="plain">{cem.hours.weekday_text.map((d) => <li>{d}</li>)}</ul>
-        <p class="note">Last checked {cem.hours.last_checked}. Hours can change, confirm with the cemetery before visiting.</p>
+        <p class="note">
+          Source: {cem.hours.source === 'google-places' ? 'Google Places' : 'OpenStreetMap contributors'}. Last checked {cem.hours.last_checked}. Hours can change, confirm with the cemetery before visiting.
+        </p>
       </>
     )}
 

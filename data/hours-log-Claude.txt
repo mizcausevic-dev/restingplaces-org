@@ -1,0 +1,366 @@
+
+======================================================================
+[2026-07-22T16:41:39.666Z] hours-Claude.mjs run started
+======================================================================
+[2026-07-22T16:41:39.717Z] [setup] 2443 cemeteries total in data/cemeteries-Claude.json; HOURS_LIMIT=20 set, processing only the first 20 this run
+[2026-07-22T16:41:39.724Z] [setup] PUBLIC_GOOGLE_MAPS_KEY resolved — Google Places tier will run for real
+[2026-07-22T16:41:39.725Z] [setup] 20 of 20 cemeteries carry coordinates and are eligible for lookup. Theoretical max spend if EVERY one required a billed Details call: $0.40 (approved ceiling: $50.00)
+[2026-07-22T16:41:55.338Z] [1/20] kerameikos — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests from referer \u003cempty\u003e are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_HTTP_REFERRER_BLOCKED",
+        "domain": "google
+[2026-07-22T16:43:02.780Z] [2/20] saqqara — neither source: OSM: 1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests from referer \u003cempty\u003e are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_HTTP_REFERRER_BLOCKED",
+        "domain": "google
+[2026-07-22T16:43:38.454Z] [3/20] ming-tombs — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests from referer \u003cempty\u003e are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_HTTP_REFERRER_BLOCKED",
+        "domain": "google
+
+======================================================================
+[2026-07-22T16:52:28.668Z] hours-Claude.mjs run started
+======================================================================
+[2026-07-22T16:52:28.718Z] [setup] 2443 cemeteries total in data/cemeteries-Claude.json; HOURS_LIMIT=20 set, processing only the first 20 this run
+[2026-07-22T16:52:28.723Z] [setup] PUBLIC_GOOGLE_MAPS_KEY resolved — Google Places tier will run for real
+[2026-07-22T16:52:28.730Z] [setup] 20 of 20 cemeteries carry coordinates and are eligible for lookup. Theoretical max spend if EVERY one required a billed Details call: $0.40 (approved ceiling: $50.00)
+[2026-07-22T16:52:29.110Z] [1/20] kerameikos — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests from referer \u003cempty\u003e are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_HTTP_REFERRER_BLOCKED",
+        "domain": "google
+[2026-07-22T16:52:43.058Z] [2/20] saqqara — neither source: OSM: 1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests from referer \u003cempty\u003e are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_HTTP_REFERRER_BLOCKED",
+        "domain": "google
+[2026-07-22T16:52:43.208Z] [3/20] ming-tombs — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests from referer \u003cempty\u003e are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_HTTP_REFERRER_BLOCKED",
+        "domain": "google
+[2026-07-22T16:52:43.209Z] 
+[CIRCUIT BREAKER] 3 consecutive HTTP 403 (permission-denied) responses from the Google Places API — this is a whole-run access problem (e.g. the key gained an HTTP-referrer restriction after validation; server-side requests carry no Referer header, so a referrer-restricted key fails 100% of the time here), not a per-record data miss. Disabling the Google Places tier for the REST of this run to avoid burning time on guaranteed failures. OSM Overpass continues for every remaining record. Real billed Details calls so far this run: 0 ($0.00). No further Google attempts will be made this run.
+
+[2026-07-22T16:52:55.632Z] [4/20] wadi-us-salaam — OSM HIT: "24/7" (nearby search, name-matched, 1500m radius)
+[2026-07-22T16:53:29.259Z] [5/20] dahshur — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T16:55:18.437Z] [6/20] kremlin-wall-necropolis — OSM miss (overpass direct-id error after retries: HTTP 504 for https://overpass-api.de/api/interpreter#70ebd83a566bbf94867f0d7c461d14564e0bbbc3; 1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+
+======================================================================
+[2026-07-22T16:56:28.693Z] hours-Claude.mjs run started
+======================================================================
+[2026-07-22T16:56:28.741Z] [setup] 2443 cemeteries total in data/cemeteries-Claude.json; HOURS_LIMIT=300 set, processing only the first 300 this run
+[2026-07-22T16:56:28.747Z] [setup] PUBLIC_GOOGLE_MAPS_KEY resolved — Google Places tier will run for real
+[2026-07-22T16:56:28.748Z] [setup] 300 of 300 cemeteries carry coordinates and are eligible for lookup. Theoretical max spend if EVERY one required a billed Details call: $6.00 (approved ceiling: $50.00)
+[2026-07-22T16:56:28.974Z] [1/300] kerameikos — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T16:56:29.045Z] [2/300] saqqara — neither source: OSM: 1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T16:56:29.117Z] [3/300] ming-tombs — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T16:56:29.117Z] 
+[CIRCUIT BREAKER] 3 consecutive HTTP 403 (permission-denied) responses from the Google Places API — this is a whole-run access problem (e.g. the key gained an HTTP-referrer restriction after validation; server-side requests carry no Referer header, so a referrer-restricted key fails 100% of the time here), not a per-record data miss. Disabling the Google Places tier for the REST of this run to avoid burning time on guaranteed failures. OSM Overpass continues for every remaining record. Real billed Details calls so far this run: 0 ($0.00). No further Google attempts will be made this run.
+
+[2026-07-22T16:56:29.118Z] [4/300] wadi-us-salaam — OSM HIT: "24/7" (nearby search, name-matched, 1500m radius)
+[2026-07-22T16:56:29.119Z] [5/300] dahshur — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T16:56:54.954Z] [6/300] kremlin-wall-necropolis — OSM miss (resolved osm_id relation/6459366 (Некрополь у Кремлёвской стены), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T16:57:10.426Z] [7/300] naqsh-e-rostam — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T16:58:07.888Z] [8/300] giza-pyramid-complex — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T16:59:23.410Z] [9/300] abusir — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#201507347a26b23b0ac04a034f44fe3475ed2e89), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T16:59:35.029Z] [10/300] umm-el-qaab — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+
+======================================================================
+[2026-07-22T17:02:08.530Z] hours-Claude.mjs run started
+======================================================================
+[2026-07-22T17:02:08.579Z] [setup] 2443 cemeteries total in data/cemeteries-Claude.json; HOURS_LIMIT=50 set, processing only the first 50 this run
+[2026-07-22T17:02:08.584Z] [setup] PUBLIC_GOOGLE_MAPS_KEY resolved — Google Places tier will run for real
+[2026-07-22T17:02:08.593Z] [setup] 50 of 50 cemeteries carry coordinates and are eligible for lookup. Theoretical max spend if EVERY one required a billed Details call: $1.00 (approved ceiling: $50.00)
+[2026-07-22T17:02:08.809Z] [1/50] kerameikos — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:02:08.968Z] [2/50] saqqara — neither source: OSM: 1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:02:09.051Z] [3/50] ming-tombs — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:02:09.051Z] 
+[CIRCUIT BREAKER] 3 consecutive HTTP 403 (permission-denied) responses from the Google Places API — this is a whole-run access problem (e.g. the key gained an HTTP-referrer restriction after validation; server-side requests carry no Referer header, so a referrer-restricted key fails 100% of the time here), not a per-record data miss. Disabling the Google Places tier for the REST of this run to avoid burning time on guaranteed failures. OSM Overpass continues for every remaining record. Real billed Details calls so far this run: 0 ($0.00). No further Google attempts will be made this run.
+
+[2026-07-22T17:02:09.052Z] [4/50] wadi-us-salaam — OSM HIT: "24/7" (nearby search, name-matched, 1500m radius)
+[2026-07-22T17:02:09.053Z] [5/50] dahshur — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:02:09.054Z] [6/50] kremlin-wall-necropolis — OSM miss (resolved osm_id relation/6459366 (Некрополь у Кремлёвской стены), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:02:09.055Z] [7/50] naqsh-e-rostam — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:02:45.561Z] [8/50] giza-pyramid-complex — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:02:49.621Z] [9/50] abusir — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:02:49.622Z] [10/50] umm-el-qaab — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:04:21.532Z] [11/50] tombs-of-the-kings-paphos — OSM miss (overpass direct-id error after retries: HTTP 429 (rate-limited/unavailable) for https://overpass-api.de/api/interpreter#2df0dcae93bef8f41cec80f30f4feca42f9beb12; 1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:04:57.999Z] [12/50] chellah — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:06:03.379Z] [13/50] theban-necropolis — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:07:16.600Z] [14/50] alyscamps — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#ac01c35166a899e5bf4d44ed0af267f246b706da), Google tier disabled (circuit breaker tripped this run)
+
+======================================================================
+[2026-07-22T17:08:30.311Z] hours-Claude.mjs run started
+======================================================================
+[2026-07-22T17:08:30.358Z] [setup] 2443 cemeteries total in data/cemeteries-Claude.json; HOURS_LIMIT=14 set, processing only the first 14 this run
+[2026-07-22T17:08:30.365Z] [setup] PUBLIC_GOOGLE_MAPS_KEY resolved — Google Places tier will run for real
+[2026-07-22T17:08:30.371Z] [setup] 14 of 14 cemeteries carry coordinates and are eligible for lookup. Theoretical max spend if EVERY one required a billed Details call: $0.28 (approved ceiling: $50.00)
+[2026-07-22T17:08:30.583Z] [1/14] kerameikos — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:08:30.732Z] [2/14] saqqara — neither source: OSM: 1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:08:30.809Z] [3/14] ming-tombs — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:08:30.810Z] 
+[CIRCUIT BREAKER] 3 consecutive HTTP 403 (permission-denied) responses from the Google Places API — this is a whole-run access problem (e.g. the key gained an HTTP-referrer restriction after validation; server-side requests carry no Referer header, so a referrer-restricted key fails 100% of the time here), not a per-record data miss. Disabling the Google Places tier for the REST of this run to avoid burning time on guaranteed failures. OSM Overpass continues for every remaining record. Real billed Details calls so far this run: 0 ($0.00). No further Google attempts will be made this run.
+
+[2026-07-22T17:08:30.811Z] [4/14] wadi-us-salaam — OSM HIT: "24/7" (nearby search, name-matched, 1500m radius)
+[2026-07-22T17:08:30.812Z] [5/14] dahshur — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:08:30.813Z] [6/14] kremlin-wall-necropolis — OSM miss (resolved osm_id relation/6459366 (Некрополь у Кремлёвской стены), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:08:30.815Z] [7/14] naqsh-e-rostam — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:08:38.004Z] [8/14] giza-pyramid-complex — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:08:38.006Z] [9/14] abusir — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:08:38.007Z] [10/14] umm-el-qaab — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:08:40.652Z] [11/14] tombs-of-the-kings-paphos — OSM HIT: "08:30-16:30; 16:30-17:00 open "tickets office closed; exit-only"" (direct osm_id (relation/13970957))
+[2026-07-22T17:08:40.654Z] [12/14] chellah — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:09:34.888Z] [13/14] theban-necropolis — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:09:57.474Z] [14/14] alyscamps — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:09:57.474Z] 
+===== PROGRESS 14/14 — elapsed 1.5 min — OSM hits 2 — Google hits 0 — neither 12 — no-coords so far 0 — billed Details calls 0 — real running cost $0.00 =====
+
+[2026-07-22T17:09:57.476Z] 
+======================================================================
+FINAL — real run, not predicted
+======================================================================
+[2026-07-22T17:09:57.477Z] {
+  "run_started_at": "2026-07-22T17:08:30.311Z",
+  "run_status": "complete",
+  "total_cemeteries": 14,
+  "cemeteries_with_coordinates": 14,
+  "processed_this_run": 14,
+  "no_coordinates_skipped": 0,
+  "osm_hits": 2,
+  "google_hits": 0,
+  "resolved_total": 2,
+  "neither_source_resolved": 12,
+  "google_key_present": true,
+  "google_tier_available_now": false,
+  "google_circuit_breaker_tripped": true,
+  "billable_place_details_calls_this_run": 0,
+  "real_cost_this_run_usd": 0,
+  "elapsed_minutes_this_run": 1.5
+}
+
+======================================================================
+[2026-07-22T17:16:13.684Z] hours-Claude.mjs run started
+======================================================================
+[2026-07-22T17:16:13.733Z] [setup] 2443 cemeteries total in data/cemeteries-Claude.json; HOURS_SLUGS set, processing exactly 15 of 15 requested slugs this run
+[2026-07-22T17:16:13.739Z] [setup] PUBLIC_GOOGLE_MAPS_KEY resolved — Google Places tier will run for real
+[2026-07-22T17:16:13.740Z] [setup] 15 of 15 cemeteries carry coordinates and are eligible for lookup. Theoretical max spend if EVERY one required a billed Details call: $0.30 (approved ceiling: $50.00)
+[2026-07-22T17:16:13.746Z] [1/15] pere-lachaise-cemetery — GOOGLE HIT: ["Monday: 8:00 AM – 6:00 PM","Tuesday: 8:00 AM – 6:00 PM","Wednesday: 8:00 AM – 6:00 PM","Thursday: 8:00 AM – 6:00 PM","Friday: 8:00 AM – 6:00 PM","Saturday: 8:30 AM – 6:00 PM","Sunday: 9:00 AM – 6:00 PM"] (place_id ChIJhadpXItt5kcRGWQLUydhz6E, served from cache)
+[2026-07-22T17:16:13.748Z] [2/15] national-heroes-acre-zimbabwe — GOOGLE HIT: ["Monday: 9:00 AM – 4:30 PM","Tuesday: 9:00 AM – 4:30 PM","Wednesday: 9:00 AM – 4:30 PM","Thursday: 9:00 AM – 4:30 PM","Friday: 9:00 AM – 4:30 PM","Saturday: 9:00 AM – 4:30 PM","Sunday: 9:00 AM – 4:30 PM"] (place_id ChIJQT34nSqkMRkRHSlcNWBVbkM, served from cache)
+[2026-07-22T17:16:13.749Z] [3/15] arlington-national-cemetery — GOOGLE HIT: ["Monday: 8:00 AM – 5:00 PM","Tuesday: 8:00 AM – 5:00 PM","Wednesday: 8:00 AM – 5:00 PM","Thursday: 8:00 AM – 5:00 PM","Friday: 8:00 AM – 5:00 PM","Saturday: 8:00 AM – 5:00 PM","Sunday: 8:00 AM – 5:00 PM"] (place_id ChIJTZ46-u-2t4kRbSok2XbwiC4, served from cache)
+[2026-07-22T17:16:13.750Z] [4/15] becklingen-war-cemetery — GOOGLE HIT: ["Monday: 7:30 AM – 4:30 PM","Tuesday: Open 24 hours","Wednesday: Open 24 hours","Thursday: Open 24 hours","Friday: Open 24 hours","Saturday: Open 24 hours","Sunday: 7:30 AM – 4:30 PM"] (place_id ChIJS3g5ih1KsEcRs62rigPNxUc, served from cache)
+[2026-07-22T17:16:13.752Z] [5/15] weaste-cemetery — GOOGLE HIT: ["Monday: 8:00 AM – 8:00 PM","Tuesday: 8:00 AM – 8:00 PM","Wednesday: 8:00 AM – 8:00 PM","Thursday: 8:00 AM – 8:00 PM","Friday: 8:00 AM – 8:00 PM","Saturday: 8:00 AM – 8:00 PM","Sunday: 8:00 AM – 8:00 PM"] (place_id ChIJSSufuUKue0gRMziM-te1kGw, served from cache)
+[2026-07-22T17:16:13.753Z] [6/15] croydon-cemetery-queensland — GOOGLE HIT: ["Monday: 9:00 AM – 7:00 PM","Tuesday: 9:00 AM – 7:00 PM","Wednesday: 9:00 AM – 7:00 PM","Thursday: 9:00 AM – 7:00 PM","Friday: 9:00 AM – 7:00 PM","Saturday: 9:00 AM – 7:00 PM","Sunday: 9:00 AM – 7:00 PM"] (place_id ChIJidx-TOIGdkgRymwDamh7Jz4, served from cache)
+[2026-07-22T17:16:13.754Z] [7/15] kadina-cemetery — GOOGLE HIT: ["Monday: 8:00 AM – 5:00 PM","Tuesday: 8:00 AM – 5:00 PM","Wednesday: 8:00 AM – 5:00 PM","Thursday: 8:00 AM – 5:00 PM","Friday: 8:00 AM – 5:00 PM","Saturday: 8:00 AM – 5:00 PM","Sunday: 8:00 AM – 5:00 PM"] (place_id ChIJ93YT1pa-umoREsawmZCuB8M, served from cache)
+[2026-07-22T17:16:13.755Z] [8/15] brandhoek-new-military-commonwealth-war-graves-commission-cemetery — GOOGLE HIT: ["Monday: Open 24 hours","Tuesday: Open 24 hours","Wednesday: Open 24 hours","Thursday: Open 24 hours","Friday: Open 24 hours","Saturday: Open 24 hours","Sunday: Open 24 hours"] (place_id ChIJ0ZmQtgDF3EcRKPozAHCaMgA, served from cache)
+[2026-07-22T17:16:13.755Z] [9/15] highgate-cemetery — OSM HIT: "Mar-Oct 10:00-17:00; Nov-Feb 10:00-16:00; Dec 25,Dec 26 off" (direct osm_id (relation/1612806))
+[2026-07-22T17:16:13.756Z] [10/15] colfax-district-cemetery — GOOGLE HIT: ["Monday: 9:00 AM – 5:00 PM","Tuesday: 9:00 AM – 5:00 PM","Wednesday: 9:00 AM – 5:00 PM","Thursday: 9:00 AM – 5:00 PM","Friday: 9:00 AM – 5:00 PM","Saturday: Closed","Sunday: Closed"] (place_id ChIJuX8AoxwLm4AROcUsEFWz_E4, served from cache)
+[2026-07-22T17:16:13.757Z] [11/15] mount-feake-cemetery — GOOGLE HIT: ["Monday: 8:30 AM – 4:30 PM","Tuesday: 8:30 AM – 4:30 PM","Wednesday: 8:30 AM – 4:30 PM","Thursday: 8:30 AM – 4:30 PM","Friday: 8:30 AM – 4:30 PM","Saturday: Closed","Sunday: Closed"] (place_id ChIJz0dkIxiD44kRDH1KbqJodBA, served from cache)
+[2026-07-22T17:16:13.758Z] [12/15] sparkman-hillcrest-memorial-park-cemetery — neither source: OSM: 1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours | Google: Place Details resolved but carries no regularOpeningHours/currentOpeningHours (likely an open-access ground with no gated hours concept)
+[2026-07-22T17:16:13.759Z] [13/15] manila-chinese-cemetery — GOOGLE HIT: ["Monday: 9:00 AM – 3:00 PM","Tuesday: 9:00 AM – 3:00 PM","Wednesday: 9:00 AM – 3:00 PM","Thursday: 9:00 AM – 3:00 PM","Friday: 9:00 AM – 3:00 PM","Saturday: 9:00 AM – 3:00 PM","Sunday: Closed"] (place_id ChIJhZI7NN61lzMRa1404T_5MlM, served from cache)
+[2026-07-22T17:16:36.509Z] [14/15] giri-tunggal-heroes-cemetery — GOOGLE HIT: ["Monday: Open 24 hours","Tuesday: Open 24 hours","Wednesday: Open 24 hours","Thursday: Open 24 hours","Friday: Open 24 hours","Saturday: Open 24 hours","Sunday: Open 24 hours"] (place_id ChIJk5tEN2eLcC4RP6RzYeBQqxY, served from cache)
+[2026-07-22T17:16:36.510Z] [15/15] recoleta-cemetery-asuncion — GOOGLE HIT: ["Monday: Open 24 hours","Tuesday: Open 24 hours","Wednesday: Open 24 hours","Thursday: Open 24 hours","Friday: Open 24 hours","Saturday: Open 24 hours","Sunday: Open 24 hours"] (place_id ChIJEQrqqIOoXZQRuERD9lZBTHM, served from cache)
+[2026-07-22T17:16:36.511Z] 
+===== PROGRESS 15/15 — elapsed 0.4 min — OSM hits 1 — Google hits 13 — neither 1 — no-coords so far 0 — billed Details calls 0 — real running cost $0.00 =====
+
+[2026-07-22T17:16:36.513Z] 
+======================================================================
+FINAL — real run, not predicted
+======================================================================
+[2026-07-22T17:16:36.513Z] {
+  "run_started_at": "2026-07-22T17:16:13.684Z",
+  "run_status": "complete",
+  "total_cemeteries": 15,
+  "cemeteries_with_coordinates": 15,
+  "processed_this_run": 15,
+  "no_coordinates_skipped": 0,
+  "osm_hits": 1,
+  "google_hits": 13,
+  "resolved_total": 14,
+  "neither_source_resolved": 1,
+  "google_key_present": true,
+  "google_tier_available_now": true,
+  "google_circuit_breaker_tripped": false,
+  "billable_place_details_calls_this_run": 0,
+  "real_cost_this_run_usd": 0,
+  "elapsed_minutes_this_run": 0.4
+}
+
+======================================================================
+[2026-07-22T17:17:27.785Z] hours-Claude.mjs run started
+======================================================================
+[2026-07-22T17:17:27.832Z] [setup] 2443 cemeteries total in data/cemeteries-Claude.json; HOURS_LIMIT=14 set, processing only the first 14 this run
+[2026-07-22T17:17:27.838Z] [setup] PUBLIC_GOOGLE_MAPS_KEY resolved — Google Places tier will run for real
+[2026-07-22T17:17:27.839Z] [setup] 14 of 14 cemeteries carry coordinates and are eligible for lookup. Theoretical max spend if EVERY one required a billed Details call: $0.28 (approved ceiling: $50.00)
+[2026-07-22T17:17:27.840Z] [setup] loaded 14 existing real hours record(s) from a prior run — this run adds to them, does not replace them
+[2026-07-22T17:17:28.055Z] [1/14] kerameikos — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:17:28.206Z] [2/14] saqqara — neither source: OSM: 1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:17:28.283Z] [3/14] ming-tombs — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:17:28.284Z] 
+[CIRCUIT BREAKER] 3 consecutive HTTP 403 (permission-denied) responses from the Google Places API — this is a whole-run access problem (e.g. the key gained an HTTP-referrer restriction after validation; server-side requests carry no Referer header, so a referrer-restricted key fails 100% of the time here), not a per-record data miss. Disabling the Google Places tier for the REST of this run to avoid burning time on guaranteed failures. OSM Overpass continues for every remaining record. Real billed Details calls so far this run: 0 ($0.00). No further Google attempts will be made this run.
+
+[2026-07-22T17:17:28.285Z] [4/14] wadi-us-salaam — OSM HIT: "24/7" (nearby search, name-matched, 1500m radius)
+[2026-07-22T17:17:28.286Z] [5/14] dahshur — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:17:28.287Z] [6/14] kremlin-wall-necropolis — OSM miss (resolved osm_id relation/6459366 (Некрополь у Кремлёвской стены), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:17:28.288Z] [7/14] naqsh-e-rostam — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:17:28.289Z] [8/14] giza-pyramid-complex — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:17:28.290Z] [9/14] abusir — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:17:28.291Z] [10/14] umm-el-qaab — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:17:28.292Z] [11/14] tombs-of-the-kings-paphos — OSM HIT: "08:30-16:30; 16:30-17:00 open "tickets office closed; exit-only"" (direct osm_id (relation/13970957))
+[2026-07-22T17:17:28.293Z] [12/14] chellah — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:17:31.738Z] [13/14] theban-necropolis — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:17:31.739Z] [14/14] alyscamps — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:17:31.740Z] 
+===== PROGRESS 14/14 — elapsed 0.1 min — OSM hits 2 — Google hits 0 — neither 12 — no-coords so far 0 — billed Details calls 0 — real running cost $0.00 =====
+
+[2026-07-22T17:17:31.742Z] 
+======================================================================
+FINAL — real run, not predicted
+======================================================================
+[2026-07-22T17:17:31.743Z] {
+  "run_started_at": "2026-07-22T17:17:27.785Z",
+  "run_status": "complete",
+  "total_cemeteries": 14,
+  "cemeteries_with_coordinates": 14,
+  "processed_this_run": 14,
+  "no_coordinates_skipped": 0,
+  "osm_hits": 2,
+  "google_hits": 0,
+  "resolved_total": 2,
+  "neither_source_resolved": 12,
+  "google_key_present": true,
+  "google_tier_available_now": false,
+  "google_circuit_breaker_tripped": true,
+  "billable_place_details_calls_this_run": 0,
+  "real_cost_this_run_usd": 0,
+  "elapsed_minutes_this_run": 0.1
+}

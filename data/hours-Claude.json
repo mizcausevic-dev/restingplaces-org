@@ -1,0 +1,208 @@
+{
+  "pere-lachaise-cemetery": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: 8:00 AM – 6:00 PM",
+      "Tuesday: 8:00 AM – 6:00 PM",
+      "Wednesday: 8:00 AM – 6:00 PM",
+      "Thursday: 8:00 AM – 6:00 PM",
+      "Friday: 8:00 AM – 6:00 PM",
+      "Saturday: 8:30 AM – 6:00 PM",
+      "Sunday: 9:00 AM – 6:00 PM"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJhadpXItt5kcRGWQLUydhz6E"
+  },
+  "national-heroes-acre-zimbabwe": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: 9:00 AM – 4:30 PM",
+      "Tuesday: 9:00 AM – 4:30 PM",
+      "Wednesday: 9:00 AM – 4:30 PM",
+      "Thursday: 9:00 AM – 4:30 PM",
+      "Friday: 9:00 AM – 4:30 PM",
+      "Saturday: 9:00 AM – 4:30 PM",
+      "Sunday: 9:00 AM – 4:30 PM"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJQT34nSqkMRkRHSlcNWBVbkM"
+  },
+  "arlington-national-cemetery": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: 8:00 AM – 5:00 PM",
+      "Tuesday: 8:00 AM – 5:00 PM",
+      "Wednesday: 8:00 AM – 5:00 PM",
+      "Thursday: 8:00 AM – 5:00 PM",
+      "Friday: 8:00 AM – 5:00 PM",
+      "Saturday: 8:00 AM – 5:00 PM",
+      "Sunday: 8:00 AM – 5:00 PM"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJTZ46-u-2t4kRbSok2XbwiC4"
+  },
+  "becklingen-war-cemetery": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: 7:30 AM – 4:30 PM",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: 7:30 AM – 4:30 PM"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJS3g5ih1KsEcRs62rigPNxUc"
+  },
+  "weaste-cemetery": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: 8:00 AM – 8:00 PM",
+      "Tuesday: 8:00 AM – 8:00 PM",
+      "Wednesday: 8:00 AM – 8:00 PM",
+      "Thursday: 8:00 AM – 8:00 PM",
+      "Friday: 8:00 AM – 8:00 PM",
+      "Saturday: 8:00 AM – 8:00 PM",
+      "Sunday: 8:00 AM – 8:00 PM"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJSSufuUKue0gRMziM-te1kGw"
+  },
+  "croydon-cemetery-queensland": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: 9:00 AM – 7:00 PM",
+      "Tuesday: 9:00 AM – 7:00 PM",
+      "Wednesday: 9:00 AM – 7:00 PM",
+      "Thursday: 9:00 AM – 7:00 PM",
+      "Friday: 9:00 AM – 7:00 PM",
+      "Saturday: 9:00 AM – 7:00 PM",
+      "Sunday: 9:00 AM – 7:00 PM"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJidx-TOIGdkgRymwDamh7Jz4"
+  },
+  "kadina-cemetery": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: 8:00 AM – 5:00 PM",
+      "Tuesday: 8:00 AM – 5:00 PM",
+      "Wednesday: 8:00 AM – 5:00 PM",
+      "Thursday: 8:00 AM – 5:00 PM",
+      "Friday: 8:00 AM – 5:00 PM",
+      "Saturday: 8:00 AM – 5:00 PM",
+      "Sunday: 8:00 AM – 5:00 PM"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJ93YT1pa-umoREsawmZCuB8M"
+  },
+  "brandhoek-new-military-commonwealth-war-graves-commission-cemetery": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJ0ZmQtgDF3EcRKPozAHCaMgA"
+  },
+  "highgate-cemetery": {
+    "source": "osm-overpass",
+    "weekday_text": [
+      "Mar-Oct 10:00-17:00; Nov-Feb 10:00-16:00; Dec 25,Dec 26 off"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": null
+  },
+  "colfax-district-cemetery": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: 9:00 AM – 5:00 PM",
+      "Tuesday: 9:00 AM – 5:00 PM",
+      "Wednesday: 9:00 AM – 5:00 PM",
+      "Thursday: 9:00 AM – 5:00 PM",
+      "Friday: 9:00 AM – 5:00 PM",
+      "Saturday: Closed",
+      "Sunday: Closed"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJuX8AoxwLm4AROcUsEFWz_E4"
+  },
+  "mount-feake-cemetery": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: 8:30 AM – 4:30 PM",
+      "Tuesday: 8:30 AM – 4:30 PM",
+      "Wednesday: 8:30 AM – 4:30 PM",
+      "Thursday: 8:30 AM – 4:30 PM",
+      "Friday: 8:30 AM – 4:30 PM",
+      "Saturday: Closed",
+      "Sunday: Closed"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJz0dkIxiD44kRDH1KbqJodBA"
+  },
+  "manila-chinese-cemetery": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: 9:00 AM – 3:00 PM",
+      "Tuesday: 9:00 AM – 3:00 PM",
+      "Wednesday: 9:00 AM – 3:00 PM",
+      "Thursday: 9:00 AM – 3:00 PM",
+      "Friday: 9:00 AM – 3:00 PM",
+      "Saturday: 9:00 AM – 3:00 PM",
+      "Sunday: Closed"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJhZI7NN61lzMRa1404T_5MlM"
+  },
+  "giri-tunggal-heroes-cemetery": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJk5tEN2eLcC4RP6RzYeBQqxY"
+  },
+  "recoleta-cemetery-asuncion": {
+    "source": "google-places",
+    "weekday_text": [
+      "Monday: Open 24 hours",
+      "Tuesday: Open 24 hours",
+      "Wednesday: Open 24 hours",
+      "Thursday: Open 24 hours",
+      "Friday: Open 24 hours",
+      "Saturday: Open 24 hours",
+      "Sunday: Open 24 hours"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": "ChIJEQrqqIOoXZQRuERD9lZBTHM"
+  },
+  "wadi-us-salaam": {
+    "source": "osm-overpass",
+    "weekday_text": [
+      "24/7"
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": null
+  },
+  "tombs-of-the-kings-paphos": {
+    "source": "osm-overpass",
+    "weekday_text": [
+      "08:30-16:30; 16:30-17:00 open \"tickets office closed; exit-only\""
+    ],
+    "last_checked": "2026-07-22",
+    "google_place_id": null
+  }
+}

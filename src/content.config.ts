@@ -32,7 +32,15 @@ const photo = z.object({
 const hours = z.object({
   weekday_text: z.array(z.string()),
   last_checked: z.string(), // ISO date, only ever set from a live API response
-  source: z.literal('google-places'),
+  // 'google-places': weekday_text is Google's real day-by-day
+  // weekdayDescriptions array. 'osm-overpass': weekday_text is a single-
+  // element array holding the raw OSM opening_hours DSL string verbatim —
+  // no parser in this repo splits it into 7 lines, so it isn't reformatted
+  // into something that only looks like Google's shape. Broadened from the
+  // original z.literal('google-places') when the OSM Overpass tier was
+  // wired into the real hours pipeline (scripts/hours-Claude.mjs) so an
+  // OSM-sourced value is never mislabeled under the Google literal.
+  source: z.enum(['google-places', 'osm-overpass']),
 });
 
 const cemeteryType = z.enum([

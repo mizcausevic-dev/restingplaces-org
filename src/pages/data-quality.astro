@@ -15,6 +15,14 @@ const all = await getCollection('cemeteries');
 const total = coverage.total_entities;
 const pct = (n: number) => ((n / total) * 100).toFixed(1);
 
+// Real, computed live from the shipped collection (not the enrich-time
+// coverage-report-Claude.json, which predates the hours pipeline) — this
+// stays honest automatically as scripts/hours-Claude.mjs coverage changes
+// run over run, without a second report file to keep in sync.
+const withHours = all.filter((c) => c.data.hours).length;
+const hoursFromOsm = all.filter((c) => c.data.hours?.source === 'osm-overpass').length;
+const hoursFromGoogle = all.filter((c) => c.data.hours?.source === 'google-places').length;
+
 const fields: { label: string; n: number; note?: string }[] = [
   { label: 'Coordinates', n: coverage.coordinates, note: `${coverage.coordinates_wikidata.toLocaleString('en-US')} from Wikidata, ${coverage.coordinates_nominatim.toLocaleString('en-US')} from OpenStreetMap Nominatim as fallback` },
   { label: 'Country', n: coverage.country },
@@ -25,6 +33,11 @@ const fields: { label: string; n: number; note?: string }[] = [
   { label: 'Area', n: coverage.area },
   { label: 'Find a Grave link-out', n: coverage.findagrave_linkout, note: 'reference link only, never scraped' },
   { label: 'At least one notable interment', n: coverage.with_notable_interments },
+  {
+    label: 'Opening hours',
+    n: withHours,
+    note: `live-checked, not guessed — ${hoursFromOsm.toLocaleString('en-US')} from OpenStreetMap, ${hoursFromGoogle.toLocaleString('en-US')} from Google Places; see Attribution for sourcing and About for the freshness gate`,
+  },
 ];
 
 const photosPassRate = ((rights.pass / rights.checked) * 100).toFixed(1);
@@ -82,8 +95,11 @@ const eraCount = total - (classification.era_distribution['(no established date)
   <h2>What's absent sitewide, and why</h2>
   <ul class="plain">
     <li>
-      <strong>Opening hours</strong> appear on no page. {coverage.google_places_note}. Hours are the kind of fact
-      that goes stale fast, so this site would rather show nothing than a number nobody has checked recently.
+      <strong>Opening hours</strong> appear only on the {withHours.toLocaleString('en-US')} pages where a live source
+      actually returned one, each with a real last-checked date and its source named (see <a href="/attribution/">Attribution</a>).
+      The other {(total - withHours).toLocaleString('en-US')} cemeteries show no "Opening hours" section at all rather
+      than a guess — most are genuinely open-access grounds with no formal published hours to find. Hours are the kind
+      of fact that goes stale fast, so this site would rather show nothing than a number nobody has checked recently.
     </li>
     <li>
       <strong>Narrative history text</strong> is not written for any cemetery. At this scale, templated ~150-word

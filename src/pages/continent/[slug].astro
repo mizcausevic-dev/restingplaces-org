@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import HubPage from '../../components/HubPage-Claude.astro';
+import { hubIntro } from '../../lib/hub-intro-Claude';
+
+export async function getStaticPaths() {
+  const all = await getCollection('cemeteries');
+  const byContinent = new Map<string, { label: string; cems: any[] }>();
+  for (const c of all) {
+    for (const cont of c.data.continents) {
+      if (!byContinent.has(cont.slug)) byContinent.set(cont.slug, { label: cont.label, cems: [] });
+      byContinent.get(cont.slug)!.cems.push(c.data);
+    }
+  }
+  return [...byContinent.entries()].map(([slug, { label, cems }]) => ({
+    params: { slug },
+    props: { cems: cems.sort((a, b) => b.notable_interments_total - a.notable_interments_total), label },
+  }));
+}
+const { cems, label } = Astro.props;
+---
+
+<HubPage
+  title={`Cemeteries in ${label} | Resting Places`}
+  h1={`Cemeteries in ${label}`}
+  intro={hubIntro(`in ${label}`, cems)}
+  path={`/continent/${Astro.params.slug}/`}
+  cems={cems}
+  groupBy="country"
+  crumb={{ name: 'Continents', href: '/continent/' }}
+/>

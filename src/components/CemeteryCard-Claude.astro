@@ -1,15 +1,20 @@
 ---
+import { flagEmoji } from '../lib/flag-Claude';
+
 interface Props {
   slug: string;
   name: string;
   city?: string | null;
   region?: string | null;
   country?: string | null;
+  country_iso2?: string | null;
   established_year?: number | null;
   notable_interments_total?: number;
 }
-const { slug, name, city, region, country, established_year, notable_interments_total } = Astro.props;
-const place = [city ?? region, country].filter(Boolean).join(', ');
+const { slug, name, city, region, country, country_iso2, established_year, notable_interments_total } = Astro.props;
+const flag = flagEmoji(country_iso2 ?? null);
+const placeText = [city ?? region, country].filter(Boolean).join(', ');
+const place = flag && placeText ? `${flag} ${placeText}` : placeText;
 const bits = [
   place,
   established_year ? `est. ${established_year}` : null,

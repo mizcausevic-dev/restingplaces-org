@@ -10,6 +10,7 @@ import { writeJson, ROOT } from './lib/api-Claude.mjs';
 
 const records = JSON.parse(await readFile(path.join(ROOT, 'data', 'enriched-Claude.json'), 'utf8'));
 const rights = JSON.parse(await readFile(path.join(ROOT, 'data', 'image-rights-report-Claude.json'), 'utf8'));
+const geoMetadata = JSON.parse(await readFile(path.join(ROOT, 'data', 'country-metadata-Claude.json'), 'utf8'));
 const PERSON_PAGE_SITELINKS = 15; // /buried/ page threshold, see phase 2 gate note
 
 // ---------- helpers ----------
@@ -48,6 +49,23 @@ function classifyTypes(r) {
   const types = TYPE_RULES.filter(([, re]) => re.test(hay)).map(([t]) => t);
   if (r.heritage_id && !types.includes('historic-heritage')) types.push('historic-heritage');
   return types;
+}
+
+// A handful of countries carry "Eurasia" as a P30 value instead of (or
+// alongside) "Europe"/"Asia" (e.g. Russia lists all three; the Russian
+// Empire, a purely historical entity, lists only "Eurasia" plus a real but
+// unhelpful-for-browsing "North America" from its brief hold on Alaska).
+// For continent HUB browsing specifically (not for the underlying data,
+// which stays exactly as sourced), fold a bare "Eurasia" into both Europe
+// and Asia so it doesn't create a thin third hub. This is a presentation
+// choice, not an assertion about the country's real Wikidata continents.
+function continentsForBrowsing(continents) {
+  const labels = new Set(continents.map((c) => c.label));
+  if (labels.has('Eurasia') && !labels.has('Europe') && !labels.has('Asia')) {
+    const rest = continents.filter((c) => c.label !== 'Eurasia');
+    return [...rest, { label: 'Europe', qid: 'Q46' }, { label: 'Asia', qid: 'Q48' }];
+  }
+  return continents;
 }
 
 function classifyEra(year) {
@@ -208,6 +226,10 @@ const collection = records.map((r) => {
     name_variants: r.name_variants,
     country: r.country,
     country_slug: r.country ? slugify(r.country) : null,
+    country_iso2: r.country ? (geoMetadata[r.country]?.iso2 ?? null) : null,
+    continents: r.country
+      ? continentsForBrowsing(geoMetadata[r.country]?.continents ?? []).map((c) => ({ label: c.label, slug: slugify(c.label) }))
+      : [],
     region: r.region,
     region_slug: regionSlugOf(r),
     city: r.city,

@@ -1,0 +1,28 @@
+{
+  "total": 2443,
+  "type_distribution": {
+    "(untyped)": 1150,
+    "historic-heritage": 1077,
+    "national-military": 265,
+    "religious-churchyard": 145,
+    "garden-rural": 20,
+    "private": 6,
+    "municipal-public": 3
+  },
+  "era_distribution": {
+    "(no established date)": 1402,
+    "1800s": 634,
+    "early-1900s": 194,
+    "pre-1800": 111,
+    "mid-1900s": 68,
+    "contemporary": 34
+  },
+  "notable_interments": {
+    "with": 1678,
+    "without": 765
+  },
+  "photos_cleared": 1887,
+  "buried_pages": 11526,
+  "buried_page_threshold": "sitelinks >= 15 (of 70270 qualifying persons, page tier only; full graph ships in /api/interments.json)",
+  "classification": "generated, unreviewed (classification_reviewed=false on every record)"
+}

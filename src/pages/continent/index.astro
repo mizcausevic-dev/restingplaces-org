@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base-Claude.astro';
+
+const all = await getCollection('cemeteries');
+const counts = new Map<string, { label: string; count: number }>();
+for (const c of all) {
+  for (const cont of c.data.continents) {
+    if (!counts.has(cont.slug)) counts.set(cont.slug, { label: cont.label, count: 0 });
+    counts.get(cont.slug)!.count++;
+  }
+}
+const continents = [...counts.entries()].map(([slug, v]) => ({ slug, ...v })).sort((a, b) => b.count - a.count);
+const noContinent = all.filter((c) => c.data.continents.length === 0).length;
+---
+
+<Base
+  title="Cemeteries by continent | Resting Places"
+  description="Browse documented cemeteries by continent, sourced from each country's real Wikidata continent property."
+>
+  <h1>Browse by continent</h1>
+  <p class="lede">
+    Continents follow each cemetery's country's recorded Wikidata continent property (P30).
+    A transcontinental country such as Russia or Turkey appears in more than one continent hub, which is accurate, not a duplicate.
+    {noContinent > 0 && ` ${noContinent} of ${all.length} entries have no recorded country and so no continent; they're still listed in the full directory.`}
+  </p>
+  <ul class="cards">
+    {continents.map((c) => (
+      <li>
+        <a class="title" href={`/continent/${c.slug}/`}>{c.label}</a>
+        <div class="meta">{c.count} cemeteries</div>
+      </li>
+    ))}
+  </ul>
+</Base>

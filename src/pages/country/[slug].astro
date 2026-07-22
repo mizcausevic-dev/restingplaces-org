@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import HubPage from '../../components/HubPage-Claude.astro';
 import { hubIntro } from '../../lib/hub-intro-Claude';
+import { flagEmoji } from '../../lib/flag-Claude';
 
 export async function getStaticPaths() {
   const all = await getCollection('cemeteries');
@@ -13,15 +14,17 @@ export async function getStaticPaths() {
   }
   return [...byCountry.entries()].map(([slug, cems]) => ({
     params: { slug },
-    props: { cems: cems.sort((a, b) => b.notable_interments_total - a.notable_interments_total), country: cems[0].country },
+    props: { cems: cems.sort((a, b) => b.notable_interments_total - a.notable_interments_total), country: cems[0].country, iso2: cems[0].country_iso2 },
   }));
 }
-const { cems, country } = Astro.props;
+const { cems, country, iso2 } = Astro.props;
+const flag = flagEmoji(iso2);
+const h1 = flag ? `${flag} Cemeteries in ${country}` : `Cemeteries in ${country}`;
 ---
 
 <HubPage
-  title={`Cemeteries in ${country} | Resting Places`}
-  h1={`Cemeteries in ${country}`}
+  title={`${h1} | Resting Places`}
+  h1={h1}
   intro={hubIntro(`in ${country}`, cems)}
   path={`/country/${Astro.params.slug}/`}
   cems={cems}

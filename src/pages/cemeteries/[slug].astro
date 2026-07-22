@@ -4,6 +4,7 @@ import Base from '../../layouts/Base-Claude.astro';
 import PhotoFigure from '../../components/PhotoFigure-Claude.astro';
 import AffiliateNote from '../../components/AffiliateNote-Claude.astro';
 import CemeteryCard from '../../components/CemeteryCard-Claude.astro';
+import { flagEmoji } from '../../lib/flag-Claude';
 
 export async function getStaticPaths() {
   const all = await getCollection('cemeteries');
@@ -135,7 +136,12 @@ if (faq.length >= 2) {
 
     <h2>At a glance</h2>
     <table class="facts">
-      {place && <tr><th>Location</th><td>{place}</td></tr>}
+      {place && (
+        <tr>
+          <th>Location</th>
+          <td>{flagEmoji(cem.country_iso2) && <>{flagEmoji(cem.country_iso2)} </>}{place}</td>
+        </tr>
+      )}
       {cem.coordinates && (
         <tr>
           <th>Coordinates</th>

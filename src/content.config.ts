@@ -54,6 +54,8 @@ const cemeteries = defineCollection({
     name_variants: z.array(z.string()),
     country: z.string().nullable(),
     country_slug: z.string().nullable(),
+    country_iso2: z.string().length(2).nullable(), // null for historical/colonial entities with no modern ISO code
+    continents: z.array(z.object({ label: z.string(), slug: z.string() })), // real Wikidata P30 values, may be 0-3
     region: z.string().nullable(),
     region_slug: z.string().nullable(),
     city: z.string().nullable(),

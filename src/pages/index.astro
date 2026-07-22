@@ -4,20 +4,30 @@ import Base from '../layouts/Base-Claude.astro';
 import CemeteryCard from '../components/CemeteryCard-Claude.astro';
 import EmailCapture from '../components/EmailCapture-Claude.astro';
 import { GUIDES } from '../lib/guides-Claude';
+import { flagEmoji } from '../lib/flag-Claude';
 
 const all = (await getCollection('cemeteries')).map((c) => c.data);
 const persons = await getCollection('persons');
 
 const featured = [...all].sort((a, b) => b.notable_interments_total - a.notable_interments_total).slice(0, 8);
 
-const countryCounts = new Map<string, { name: string; slug: string; count: number }>();
+const countryCounts = new Map<string, { name: string; slug: string; count: number; iso2: string | null }>();
 for (const c of all) {
   if (!c.country_slug) continue;
-  if (!countryCounts.has(c.country_slug)) countryCounts.set(c.country_slug, { name: c.country!, slug: c.country_slug, count: 0 });
+  if (!countryCounts.has(c.country_slug)) countryCounts.set(c.country_slug, { name: c.country!, slug: c.country_slug, count: 0, iso2: c.country_iso2 });
   countryCounts.get(c.country_slug)!.count++;
 }
 const countries = [...countryCounts.values()].sort((a, b) => b.count - a.count);
 const totalEdges = all.reduce((a, c) => a + c.notable_interments_total, 0);
+
+const continentCounts = new Map<string, { label: string; slug: string; count: number }>();
+for (const c of all) {
+  for (const cont of c.continents) {
+    if (!continentCounts.has(cont.slug)) continentCounts.set(cont.slug, { label: cont.label, slug: cont.slug, count: 0 });
+    continentCounts.get(cont.slug)!.count++;
+  }
+}
+const continents = [...continentCounts.values()].sort((a, b) => b.count - a.count);
 
 const jsonld = [
   {
@@ -76,10 +86,17 @@ const jsonld = [
   </ul>
   <p class="note"><a href="/guides/most-documented-notable-interments/">See the full ranking</a></p>
 
-  <h2 id="browse">Browse by country</h2>
+  <h2 id="browse">Browse by continent</h2>
+  <ul class="chips">
+    {continents.map((c) => (
+      <a href={`/continent/${c.slug}/`}>{c.label} ({c.count})</a>
+    ))}
+  </ul>
+
+  <h2>Browse by country</h2>
   <ul class="chips">
     {countries.map((c) => (
-      <a href={`/country/${c.slug}/`}>{c.name} ({c.count})</a>
+      <a href={`/country/${c.slug}/`}>{flagEmoji(c.iso2) && <span>{flagEmoji(c.iso2)} </span>}{c.name} ({c.count})</a>
     ))}
   </ul>
 

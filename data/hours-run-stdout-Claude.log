@@ -1,0 +1,125 @@
+[2026-07-22T17:29:48.910Z] [setup] 2443 cemeteries total in data/cemeteries-Claude.json; processing all 2443
+[2026-07-22T17:29:48.915Z] [setup] PUBLIC_GOOGLE_MAPS_KEY resolved — Google Places tier will run for real
+[2026-07-22T17:29:48.916Z] [setup] 2430 of 2443 cemeteries carry coordinates and are eligible for lookup. Theoretical max spend if EVERY one required a billed Details call: $48.60 (approved ceiling: $50.00)
+[2026-07-22T17:29:48.917Z] [setup] loaded 16 existing real hours record(s) from a prior run — this run adds to them, does not replace them
+[2026-07-22T17:29:49.276Z] [1/2443] kerameikos — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:29:49.358Z] [2/2443] saqqara — neither source: OSM: 1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:29:49.509Z] [3/2443] ming-tombs — neither source: OSM: no OSM cemetery feature found nearby with an opening_hours tag | Google: text search error: Text Search HTTP 403: {
+  "error": {
+    "code": 403,
+    "message": "Requests to this API places.googleapis.com method google.maps.places.v1.Places.SearchText are blocked.",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY
+[2026-07-22T17:29:49.510Z] 
+[CIRCUIT BREAKER] 3 consecutive HTTP 403 (permission-denied) responses from the Google Places API — this is a whole-run access problem (e.g. the key gained an HTTP-referrer restriction after validation; server-side requests carry no Referer header, so a referrer-restricted key fails 100% of the time here), not a per-record data miss. Disabling the Google Places tier for the REST of this run to avoid burning time on guaranteed failures. OSM Overpass continues for every remaining record. Real billed Details calls so far this run: 0 ($0.00). No further Google attempts will be made this run.
+
+[2026-07-22T17:29:49.512Z] [4/2443] wadi-us-salaam — OSM HIT: "24/7" (nearby search, name-matched, 1500m radius)
+[2026-07-22T17:29:49.513Z] [5/2443] dahshur — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:29:49.514Z] [6/2443] kremlin-wall-necropolis — OSM miss (resolved osm_id relation/6459366 (Некрополь у Кремлёвской стены), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:29:49.515Z] [7/2443] naqsh-e-rostam — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:29:49.517Z] [8/2443] giza-pyramid-complex — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:29:49.518Z] [9/2443] abusir — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:29:49.519Z] [10/2443] umm-el-qaab — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:29:49.519Z] [11/2443] tombs-of-the-kings-paphos — OSM HIT: "08:30-16:30; 16:30-17:00 open "tickets office closed; exit-only"" (direct osm_id (relation/13970957))
+[2026-07-22T17:29:49.521Z] [12/2443] chellah — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:29:49.522Z] [13/2443] theban-necropolis — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:29:49.523Z] [14/2443] alyscamps — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:30:05.413Z] [15/2443] makli-necropolis — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:31:03.603Z] [16/2443] necropolis-of-pantalica — OSM miss (overpass nearby-search error after retries at both radii: HTTP 429 (rate-limited/unavailable) for https://overpass-api.de/api/interpreter#bfea336745624f8e34779d5535f62ecbc742de90), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:31:59.592Z] [17/2443] karacaahmet-cemetery — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#3acf21f29f78fac832d015d16b8b14fc70e8fc91), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:32:51.623Z] [18/2443] st-erasmus-cave-church — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#c2783a2bdacc767382bd7e4b6857e6f052cc3146), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:33:18.400Z] [19/2443] tumulus-of-bougon — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:34:38.547Z] [20/2443] western-xia-mausoleums — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#cd9ebdfbe39c1b61b5e2f2c4be467058dbe3df26), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:34:53.406Z] [21/2443] stecak-necropolis-radimlja — OSM miss (resolved osm_id relation/16145675 (Nekropola Radimlja), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:35:54.671Z] [22/2443] vatican-necropolis — OSM miss (overpass nearby-search error after retries at both radii: HTTP 429 (rate-limited/unavailable) for https://overpass-api.de/api/interpreter#65ce919001ca55d6523fd623f54a995394a0909f), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:36:32.660Z] [23/2443] tyre-necropolis — OSM HIT: "24/7" (nearby search, name-matched, 1500m radius)
+[2026-07-22T17:36:32.661Z] [24/2443] pere-lachaise-cemetery — OSM miss (resolved osm_id relation/11838120 (Cimetière du Père-Lachaise), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:37:11.070Z] [25/2443] caju-cemetery — OSM miss (resolved osm_id relation/7161240 (Cemitério São Francisco Xavier), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:38:28.099Z] [26/2443] necropolis-of-monte-luna — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:39:28.542Z] [27/2443] mramorje — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#0cb244507a78334368349d330d5227a2834ec06e), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:39:30.218Z] [28/2443] monterozzi-necropolis — OSM HIT: "Tu-Su 08:30-19:30" (direct osm_id (relation/1537040))
+[2026-07-22T17:40:22.602Z] [29/2443] necropolis-of-soderstorf — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#6dd6523980b6154c5c449f7e8807c790e90d15d4), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:41:06.864Z] [30/2443] eyup-cemetery — OSM miss (14 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:41:49.948Z] [31/2443] tuvixeddu-necropolis — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:43:00.585Z] [32/2443] kasta-tomb — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:43:35.673Z] [33/2443] necropolis-of-cyrene — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:44:23.029Z] [34/2443] marathon-tumuli — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:45:21.067Z] [35/2443] necropolis-of-emesa — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:46:22.796Z] [36/2443] valley-of-the-tombs — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:47:10.737Z] [37/2443] bin-tepe — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:47:28.748Z] [38/2443] mount-pleasant-cemetery-toronto — OSM miss (resolved osm_id relation/2370880 (Mount Pleasant Cemetery), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:47:44.499Z] [39/2443] la-recoleta-cemetery — OSM HIT: "Mo-Su 07:00-17:30" (nearby search, first candidate (no name match), 300m radius)
+[2026-07-22T17:48:00.198Z] [40/2443] australian-war-memorial — OSM HIT: "10:00-17:00; Dec 25 off" (direct osm_id (relation/7527080))
+[2026-07-22T17:48:32.951Z] [41/2443] mount-royal-cemetery — OSM miss (4 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:49:06.934Z] [42/2443] libingan-ng-mga-bayani — OSM miss (resolved osm_id relation/9653300 (Libingan ng mga Bayani), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:49:56.679Z] [43/2443] shah-i-zinda — OSM miss (5 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:50:44.560Z] [44/2443] fiume-road-graveyard — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#f1a7554d62985440178b817070f9c0fa66ff2d7f), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:51:04.148Z] [45/2443] makam-pahlawan — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:52:06.039Z] [46/2443] seoul-national-cemetery — OSM miss (overpass direct-id error after retries: HTTP 429 (rate-limited/unavailable) for https://overpass-api.de/api/interpreter#527dd0030c7da54d6f6de9f7f3012ab9eaffad74; 7 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:53:15.181Z] [47/2443] mirogoj-cemetery — OSM miss (7 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:54:08.561Z] [48/2443] royal-tombs-of-the-joseon-dynasty — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#eb8d670b05d3c8ff37dcae57680f710ebfbf7abd), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:54:36.367Z] [49/2443] cementerio-presbitero-matias-maestro — OSM miss (resolved osm_id relation/8483449 (Cementerio Presbítero Matías Maestro), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:55:14.056Z] [50/2443] central-cemetery-of-bogota — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:55:14.057Z] [51/2443] national-heroes-acre-zimbabwe — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:56:05.833Z] [52/2443] mahmoodiah-royal-mausoleum — OSM miss (4 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:56:50.550Z] [53/2443] alley-of-honor — OSM miss (4 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:56:53.561Z] [54/2443] powazki-military-cemetery — OSM HIT: "Apr-Sep 07:00-20:00; Oct-Mar 08:00-sunset" (nearby search, first candidate (no name match), 300m radius)
+[2026-07-22T17:57:51.485Z] [55/2443] musashi-imperial-graveyard — OSM miss (14 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:58:48.711Z] [56/2443] bismarck-mausoleum — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T17:59:24.535Z] [57/2443] el-alia-cemetery — OSM miss (5 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:00:20.396Z] [58/2443] royal-mausoleum-brunei — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#17dc65b21cc2e4f0d7e975a61eecdc5040e042d8), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:00:57.621Z] [59/2443] al-ghufran-royal-mausoleum — OSM miss (4 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:02:10.416Z] [60/2443] martyrs-mausoleum — OSM miss (no OSM cemetery feature found nearby with an opening_hours tag), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:02:57.514Z] [61/2443] santa-ifigenia-cemetery — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:03:50.370Z] [62/2443] grave-of-sukarno — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:03:52.050Z] [63/2443] fairview-lawn-cemetery — OSM miss (resolved osm_id relation/9457387 (Fairview Lawn Cemetery), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:04:48.552Z] [64/2443] fernhill-cemetery — OSM miss (7 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:05:46.102Z] [65/2443] camp-hill-cemetery — OSM miss (5 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:06:48.193Z] [66/2443] notre-dame-cemetery-ottawa — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:07:59.647Z] [67/2443] ross-bay-cemetery — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#2b8ddf948905fda3d9e8401a870c25f13642a104), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:08:12.800Z] [68/2443] mount-olivet-cemetery-halifax-nova-scotia — OSM miss (resolved osm_id relation/17432631 (Mount Olivet Cemetery), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:08:55.320Z] [69/2443] cataraqui-cemetery — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:09:54.956Z] [70/2443] cimetiere-notre-dame-de-belmont — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:10:39.536Z] [71/2443] notre-dame-des-neiges-cemetery — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#9272bc28431d758ceca0cf9c176dd586215dafac), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:10:54.212Z] [72/2443] old-burying-ground-halifax-nova-scotia — OSM miss (4 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:12:02.616Z] [73/2443] mountain-view-cemetery-vancouver — OSM miss (overpass direct-id error after retries: HTTP 504 for https://overpass-api.de/api/interpreter#400d027073f081fc26e7451984c5ee013c5a8cae; 3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:12:58.512Z] [74/2443] woodlawn-cemetery-saskatoon — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:13:23.855Z] [75/2443] forest-lawn-memorial-park-burnaby — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:14:21.482Z] [76/2443] garrison-cemetery-annapolis-royal-nova-scotia — OSM miss (overpass nearby-search error after retries at both radii: HTTP 429 (rate-limited/unavailable) for https://overpass-api.de/api/interpreter#19e1c91969f4284c313354c690e635bcb1ad59be), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:14:26.032Z] [77/2443] st-marys-cemetery — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:15:22.583Z] [78/2443] holy-cross-cemetery-halifax-nova-scotia — OSM miss (4 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:16:16.670Z] [79/2443] national-field-of-honour — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#cc003e19ee7c3f84f7371d355ac45cc66838f676), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:16:53.587Z] [80/2443] beechwood-cemetery — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:17:47.223Z] [81/2443] holy-cross-cemetery-edmonton — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:18:58.729Z] [82/2443] nutana-pioneer-cemetery — OSM miss (1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:20:00.154Z] [83/2443] hamilton-cemetery — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:20:58.246Z] [84/2443] mount-hermon-cemetery — OSM miss (overpass nearby-search error after retries at both radii: HTTP 429 (rate-limited/unavailable) for https://overpass-api.de/api/interpreter#0caaa38f395de28925d4d1c5d081e0ec4dc8d25a), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:21:23.162Z] [85/2443] general-protestant-cemetery — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:22:42.073Z] [86/2443] st-volodymyr-ukrainian-cemetery — OSM miss (3 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:23:49.506Z] [87/2443] burnsland-cemetery — OSM miss (overpass nearby-search error after retries at both radii: HTTP 504 for https://overpass-api.de/api/interpreter#371e04a42bbdc3bb94fc345422466d790511dae5), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:24:11.252Z] [88/2443] union-cemetery-calgary — OSM miss (6 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:24:11.253Z] [89/2443] arlington-national-cemetery — OSM miss (resolved osm_id relation/2475077 (Arlington National Cemetery), no opening_hours tag present), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:25:23.897Z] [90/2443] green-wood-cemetery — OSM miss (overpass direct-id error after retries: HTTP 429 (rate-limited/unavailable) for https://overpass-api.de/api/interpreter#c7c26bd4959d2344b09132aeee873fb1699c8fbd; 1 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:26:23.895Z] [91/2443] calvary-cemetery-queens — OSM miss (overpass direct-id error after retries: HTTP 504 for https://overpass-api.de/api/interpreter#877e67c073abb096a239d4263d85e590eea3fa21; 8 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:27:12.819Z] [92/2443] bonaventure-cemetery — OSM miss (4 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:28:30.605Z] [93/2443] kensico-cemetery — OSM miss (4 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)
+[2026-07-22T18:29:35.822Z] [94/2443] mount-hope-cemetery-rochester — OSM miss (2 nearby OSM cemetery feature(s) within 1500m, none carry opening_hours), Google tier disabled (circuit breaker tripped this run)

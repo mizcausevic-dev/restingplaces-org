@@ -8,6 +8,10 @@ interface Props {
 }
 const { title, description, jsonld = [], ogImage = null, canonicalPath } = Astro.props;
 const canonical = new URL(canonicalPath ?? Astro.url.pathname, Astro.site).href;
+// Real cemetery photo when the page has one; otherwise a static, on-brand
+// text card (public/og-default-Claude.png) — never a photo standing in for
+// one that doesn't exist, just the site's own generic social-share image.
+const resolvedOgImage = ogImage ?? new URL('/og-default-Claude.png', Astro.site).href;
 ---
 
 <!doctype html>
@@ -26,8 +30,8 @@ const canonical = new URL(canonicalPath ?? Astro.url.pathname, Astro.site).href;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
-    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {jsonld.map((block) => (

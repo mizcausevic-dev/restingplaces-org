@@ -1,28 +1,42 @@
 {
   "total": 2443,
   "type_distribution": {
-    "(untyped)": 1150,
+    "(untyped)": 1149,
     "historic-heritage": 1077,
     "national-military": 265,
-    "religious-churchyard": 145,
+    "religious-churchyard": 146,
     "garden-rural": 20,
     "private": 6,
     "municipal-public": 3
   },
   "era_distribution": {
-    "(no established date)": 1402,
+    "(no established date)": 1401,
     "1800s": 634,
     "early-1900s": 194,
-    "pre-1800": 111,
+    "pre-1800": 112,
     "mid-1900s": 68,
     "contemporary": 34
   },
   "notable_interments": {
-    "with": 1678,
-    "without": 765
+    "with": 1679,
+    "without": 764
   },
-  "photos_cleared": 1887,
-  "buried_pages": 11526,
+  "photos_cleared": 1891,
+  "gallery_images_cleared": 4233,
+  "cemeteries_with_gallery": 1524,
+  "buried_pages": 11558,
   "buried_page_threshold": "sitelinks >= 15 (of 70270 qualifying persons, page tier only; full graph ships in /api/interments.json)",
-  "classification": "generated, unreviewed (classification_reviewed=false on every record)"
+  "classification": "generated, unreviewed (classification_reviewed=false on every record)",
+  "nearby_slugs": {
+    "cemeteries_with_coordinates": 2430,
+    "cemeteries_without_coordinates": 13,
+    "method": "haversine distance in km over real coordinates, top 5 nearest per record"
+  },
+  "hours": {
+    "with_hours": 1671,
+    "from_osm_overpass": 1,
+    "from_google_places": 1670,
+    "without_hours": 772,
+    "note": "freshness-gated: null unless live-fetched this run by scripts/hours-Claude.mjs, see data/hours-report-Claude.json for the real run cost/timing"
+  }
 }

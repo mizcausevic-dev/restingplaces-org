@@ -436,7 +436,17 @@ for (let i = 0; i < allCemeteries.length; i++) {
     continue; // no per-record log line for the routine no-coordinates skip; keeps the log readable. Counted in the periodic progress line below.
   }
 
-  const osm = await tryOverpass(cemetery);
+  // The free public Overpass instance (overpass-api.de) was heavily
+  // rate-limited during the first full-scale run (2026-07-23): most calls
+  // took 30-75s across retries and found almost nothing (OSM tags opening
+  // hours on only a small fraction of cemetery-adjacent features), while
+  // Google Places resolved fast and found most of the real hits anyway.
+  // SKIP_OSM=1 (site owner's real, explicit call, not a default) drops the
+  // free tier entirely and goes straight to Google for every record — a
+  // few cents more in the worst case, hours less wall-clock time. The OSM
+  // path stays intact and unset-by-default for any future run that wants
+  // to prioritize it again.
+  const osm = process.env.SKIP_OSM === '1' ? { found: false, reason: 'OSM tier skipped this run (SKIP_OSM=1)' } : await tryOverpass(cemetery);
 
   if (osm.found) {
     osmHits++;
